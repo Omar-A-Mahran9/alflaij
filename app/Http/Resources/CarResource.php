@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Http\Resources;
+
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class CarResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     */
+    public function toArray($request)
+    {
+        return[  
+        'id' => $this->id,
+        "brand"=> $this->brand->name,
+        "model"=>$this->model->name,
+        'name'=> $this->name .' - '.$this->brand->name.' - '.$this->model->name ,
+        // "price"=> $this->price,
+        "price"=>$this->discount_price,
+        "price_after_vat"=>$this->price_after_vat ==$this->price ? 0 :$this->price_after_vat ,
+        "fuel_type"=>__($this->fuel_type),
+        "gear_shifter"=>__($this->gear_shifter),
+        "year"=>$this->year,
+        'have_discount'=>$this->have_discount,
+        'discount_percentage' => $this->discount_price != 0 ? number_format((($this->price - $this->discount_price) / $this->price) * 100, 2): 0,
+        // 'brand'=>$this->brand->name
+        'image'=>getImagePathFromDirectory($this->main_image,'Cars')
+        ];
+    
+    }
+}
