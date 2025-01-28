@@ -19,11 +19,11 @@ class SettingSeeder extends Seeder
         $data = [
             [
                 'option_name' => 'website_name_ar',
-                'option_value' => 'قطاف للسيارات'
+                'option_value' => 'الفليج للسيارات'
             ],
             [
                 'option_name' => 'website_name_en',
-                'option_value' => 'Qitaf Motors'
+                'option_value' => 'AL-Flaij Motors'
             ],
             [
                 'option_name' => 'notification_status',
@@ -158,36 +158,36 @@ class SettingSeeder extends Seeder
                 'option_value' => NULL
             ],
             [
-                'option_name' => 'why_Qitaf_cars_ar',
-                'option_value' => 'لماذا قطاف بالعربية'
+                'option_name' => 'why_AL-Flaij_cars_ar',
+                'option_value' => 'لماذا الفليج بالعربية'
             ],
             [
-                'option_name' => 'why_Qitaf_cars_en',
+                'option_name' => 'why_AL-Flaij_cars_en',
                 'option_value' => 'dfs'
             ],
             [
-                'option_name' => 'why_Qitaf_cars_card_1_ar',
-                'option_value' => 'كارت 1 لماذا قطاف بالعربية'
+                'option_name' => 'why_AL-Flaij_cars_card_1_ar',
+                'option_value' => 'كارت 1 لماذا الفليج بالعربية'
             ],
             [
-                'option_name' => 'why_Qitaf_cars_card_1_en',
+                'option_name' => 'why_AL-Flaij_cars_card_1_en',
                 'option_value' => 'ddd'
             ],
             [
-                'option_name' => 'why_Qitaf_cars_card_2_ar',
-                'option_value' => 'كارت 2 لماذا قطاف بالعربية'
+                'option_name' => 'why_AL-Flaij_cars_card_2_ar',
+                'option_value' => 'كارت 2 لماذا الفليج بالعربية'
             ],
             [
-                'option_name' => 'why_Qitaf_cars_card_2_en',
+                'option_name' => 'why_AL-Flaij_cars_card_2_en',
                 'option_value' => 'fgd'
             ],
             [
-                'option_name' => 'why_Qitaf_cars_card_3_ar',
-                'option_value' => 'كارت 3 لماذا قطاف بالعربية'
+                'option_name' => 'why_AL-Flaij_cars_card_3_ar',
+                'option_value' => 'كارت 3 لماذا الفليج بالعربية'
             ],
             [
-                'option_name' => 'why_Qitaf_cars_card_3_en',
-                'option_value' => 'كارت 3 لماذا قطاف بالانجليزية'
+                'option_name' => 'why_AL-Flaij_cars_card_3_en',
+                'option_value' => 'كارت 3 لماذا الفليج بالانجليزية'
             ],
             [
                 'option_name' => 'footer_text_ar',
@@ -218,7 +218,7 @@ class SettingSeeder extends Seeder
                 'option_value' => 'قسم ميزة التمويل في الصفحة الرئيسية بالإنجليزية'
             ],
             [
-                'option_name' => 'who_Qitaf_photo',
+                'option_name' => 'who_AL-Flaij_photo',
                 'option_value' => NULL
             ],
             [
@@ -291,12 +291,12 @@ class SettingSeeder extends Seeder
             ],
             [
                 'option_name' => 'about_us_description_ar',
-                'option_value' => 'منصة موقع قطاف تختص في بيع وشراء وتمويل السيارات بطرق حديثة ومتطورة لتصل الى كل من يرغب أن يعلن او يبحث عن سيارة أحلامه نقداً او عن طريق التمويل التأجيري مع أفضل جهات التمويل بالمملكة العربية السعودية .
+                'option_value' => 'منصة موقع الفليج تختص في بيع وشراء وتمويل السيارات بطرق حديثة ومتطورة لتصل الى كل من يرغب أن يعلن او يبحث عن سيارة أحلامه نقداً او عن طريق التمويل التأجيري مع أفضل جهات التمويل بالمملكة العربية السعودية .
                 نحن ثقتكم التي نفتخر بها و التميز الذي نضعه بين أيديكم لننال رضاكم ولنكون الطريق المتميز لأيصالكم لأهدافكم بالحصول على طلبك بكل سهولة وسرعة وبشكل مرضي ..'
             ],
             [
                 'option_name' => 'about_us_description_en',
-                'option_value' => 'The Qitaf T website platform specializes in buying, purchasing and financing cars in modern and advanced ways, so that Onoki is sure to advertise the car of his dreams in cash or through leasing financing with the best financing agencies in the Kingdom of Saudi Arabia.
+                'option_value' => 'The AL-Flaij T website platform specializes in buying, purchasing and financing cars in modern and advanced ways, so that Onoki is sure to advertise the car of his dreams in cash or through leasing financing with the best financing agencies in the Kingdom of Saudi Arabia.
                 We are your trust, which we are proud of, and the distinction that we enjoy in your hands to gain your satisfaction and to be the distinguished way to deliver your goals to your benefit with ease and satisfactory speed..'
             ],
             [
@@ -368,28 +368,28 @@ class SettingSeeder extends Seeder
                 'option_value' => 'نص كارت 2 ميزة التمويل في الصفحة الرئيسية بالإنجليزية'
             ],
             [
-                'option_name' => 'why_Qitaf_section_card_1_ar',
-                'option_value' => 'نص كارت 1 لماذا قطاف بالعربية'
+                'option_name' => 'why_AL-Flaij_section_card_1_ar',
+                'option_value' => 'نص كارت 1 لماذا الفليج بالعربية'
             ],
             [
-                'option_name' => 'why_Qitaf_section_card_1_en',
+                'option_name' => 'why_AL-Flaij_section_card_1_en',
                 'option_value' => 'eee'
             ],
             [
-                'option_name' => 'why_Qitaf_section_card_2_ar',
-                'option_value' => 'نص كارت 2 لماذا قطاف بالعربية'
+                'option_name' => 'why_AL-Flaij_section_card_2_ar',
+                'option_value' => 'نص كارت 2 لماذا الفليج بالعربية'
             ],
             [
-                'option_name' => 'why_Qitaf_section_card_2_en',
+                'option_name' => 'why_AL-Flaij_section_card_2_en',
                 'option_value' => 'dddd'
             ],
             [
-                'option_name' => 'why_Qitaf_section_card_3_ar',
-                'option_value' => 'نص كارت 3 لماذا قطاف بالإنجليزية'
+                'option_name' => 'why_AL-Flaij_section_card_3_ar',
+                'option_value' => 'نص كارت 3 لماذا الفليج بالإنجليزية'
             ],
             [
-                'option_name' => 'why_Qitaf_section_card_3_en',
-                'option_value' => 'نص كارت 3 لماذا قطاف بالعربية'
+                'option_name' => 'why_AL-Flaij_section_card_3_en',
+                'option_value' => 'نص كارت 3 لماذا الفليج بالعربية'
             ],
             [
                 'option_name' => 'add_ads_ar',
@@ -400,15 +400,15 @@ class SettingSeeder extends Seeder
                 'option_value' => NULL
             ],
             [
-                'option_name' => 'why_Qitaf_icon_card_1',
+                'option_name' => 'why_AL-Flaij_icon_card_1',
                 'option_value' => NULL
             ],
             [
-                'option_name' => 'why_Qitaf_icon_card_2',
+                'option_name' => 'why_AL-Flaij_icon_card_2',
                 'option_value' => NULL
             ],
             [
-                'option_name' => 'why_Qitaf_icon_card_3',
+                'option_name' => 'why_AL-Flaij_icon_card_3',
                 'option_value' => NULL
             ],
             [

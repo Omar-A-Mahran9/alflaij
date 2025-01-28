@@ -60,8 +60,8 @@ class OrderController extends Controller
             'otp' => $otp,
              'order_id' => $order,
         ]);
-        $sender = "Nasser Matar El-Mutairi";
-        $body = App()->getLocale() == 'ar' ? 'تم ارسال طلبك بنجاح الي شركة ناصر مطر المطيري برجاء ادخال رمز التحقق  : ' . $otp: 'Thank you for registering. Our verification code is : ' . $otp;
+        $sender = "Ahmed Al-Flaij Cars";
+        $body = App()->getLocale() == 'ar' ? 'تم ارسال طلبك بنجاح الي شركة احمد الفليج للسيارات برجاء ادخال رمز التحقق  : ' . $otp: 'Thank you for registering. Our verification code is : ' . $otp;
         // $message = $taqnyt->sendMsg($body, $phone, $sender);
  
      

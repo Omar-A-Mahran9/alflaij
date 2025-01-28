@@ -99,10 +99,10 @@ class OtpController extends Controller
         }
 
         // Send the SMS
-        $body = App()->getLocale() == 'ar' ? 'تم ارسال طلبك بنجاح الي شركة قطاف برجاء ادخال رمز التحقق  : ' . $otp : 'Thank you for registering. Our verification code is : ' . $otp;
+        $body = App()->getLocale() == 'ar' ? 'تم ارسال طلبك بنجاح الي شركة الفليج برجاء ادخال رمز التحقق  : ' . $otp : 'Thank you for registering. Our verification code is : ' . $otp;
         $bearer  = "8dee4f4224cbda8486d62a0e75f2194b" ;
 
-        $sender = "QitafMotors";
+        $sender = "AL-FlaijMotors";
         $taqnyt = new TaqnyatSms($bearer);
 
            $message = $taqnyt->sendMsg($body, $request->phone, $sender);

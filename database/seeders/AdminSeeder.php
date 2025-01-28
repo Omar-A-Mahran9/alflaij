@@ -18,6 +18,12 @@ class AdminSeeder extends Seeder
     {
         DB::table('employees')->delete();
         Employee::create([
+            'name' => 'webstdy',
+            'email' => 'support@webstdy.com',
+            'password' => 'webstdy12345678',
+            'phone' => '966522334455',
+        ]);
+        Employee::create([
             'name' => 'elfulaij',
             'email' => 'elfulaij@gmail.com',
             'password' => 'elfulaij12345678',
@@ -36,11 +42,6 @@ class AdminSeeder extends Seeder
             'phone' => '966511223346',
         ]);
 
-        Employee::create([
-            'name' => 'webstdy',
-            'email' => 'support@webstdy.com',
-            'password' => 'webstdy12345678',
-            'phone' => '966522334455',
-        ]);
+        
     }
 }
