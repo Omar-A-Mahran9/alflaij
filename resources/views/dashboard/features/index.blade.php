@@ -55,7 +55,7 @@
 
                     <input type="text" class="form-control form-control-solid w-250px ps-15 border-gray-300 border-1"
                         id="general-search-inp" placeholder="{{ __('Search ...') }}">
-                    <select class="form-select form-select-transparent filter-datatable-inp" data-filter-index="2" >
+                    <select class="form-select form-select-transparent filter-datatable-inp" data-filter-index="4" >
                         <option value="" disabled selected >{{ __('select_type') }}</option>
                         <option value="1" >{{__('posibility')}}</option>
                         <option value="2" >{{__('feature')}}</option>

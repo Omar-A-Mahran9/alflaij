@@ -4,6 +4,7 @@
 @include('partials.dashboard.head')
 <!--begin::Body-->
 <style>
+
     @keyframes pulse {
         0% {
             transform: scale(1);

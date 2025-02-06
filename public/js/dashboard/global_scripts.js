@@ -140,7 +140,7 @@ let errorAlert = function (message = __("something went wrong"), time = 5000) {
 
 let successAlert = function (
   message = __("Operation done successfully"),
-  timer = 1000
+  timer = 300000
 ) {
   return Swal.fire({
     text: message,
@@ -148,6 +148,7 @@ let successAlert = function (
     buttonsStyling: false,
     showConfirmButton: false,
     timer: timer,
+    
   });
 };
 
