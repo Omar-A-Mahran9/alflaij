@@ -140,7 +140,7 @@ let errorAlert = function (message = __("something went wrong"), time = 5000) {
 
 let successAlert = function (
   message = __("Operation done successfully"),
-  timer = 300000
+  timer = 1000
 ) {
   return Swal.fire({
     text: message,
