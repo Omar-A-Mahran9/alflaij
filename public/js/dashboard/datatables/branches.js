@@ -36,7 +36,7 @@ let KTDatatable = function () {
                 {data: 'address'},
                 {data: 'phone'},
                 {data: 'whatsapp'},
-                {data: 'google_map_url'},
+                // {data: 'google_map_url'},
                 {data: 'created_at'},
                 {data: null},
             ],

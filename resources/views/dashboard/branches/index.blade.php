@@ -98,7 +98,7 @@
                     <th>{{ __("address") }}</th>
                     <th>{{ __("phone") }}</th>
                     <th>{{ __("whatsapp") }}</th>
-                    <th>{{ __("location") }}</th>
+                    {{-- <th>{{ __("location") }}</th> --}}
                     <th>{{ __("created date") }}</th>
                     <th class="min-w-100px">{{ __("actions") }}</th>
                 </tr>
