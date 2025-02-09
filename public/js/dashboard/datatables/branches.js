@@ -41,12 +41,12 @@ let KTDatatable = function () {
                 {data: null},
             ],
             columnDefs: [
-                {
-                    targets: 6,
-                    render : function (data, type, row) {
-                        return `<a href="${ data }" target="_blank" >${ __('open location') }</a>`;
-                    }
-                },
+                // {
+                //     targets: 6,
+                //     render : function (data, type, row) {
+                //         return `<a href="${ data }" target="_blank" >${ __('open location') }</a>`;
+                //     }
+                // },
                 {
                     targets: -1,
                     data: null,
