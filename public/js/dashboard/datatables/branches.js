@@ -36,17 +36,17 @@ let KTDatatable = function () {
                 {data: 'address'},
                 {data: 'phone'},
                 {data: 'whatsapp'},
-                // {data: 'google_map_url'},
+                {data: 'google_map_url'},
                 {data: 'created_at'},
                 {data: null},
             ],
             columnDefs: [
-                // {
-                //     targets: 6,
-                //     render : function (data, type, row) {
-                //         return `<a href="${ data }" target="_blank" >${ __('open location') }</a>`;
-                //     }
-                // },
+                {
+                    targets: 6,
+                    render : function (data, type, row) {
+                        return `<a href="${ data }" target="_blank" >${ __('open location') }</a>`;
+                    }
+                },
                 {
                     targets: -1,
                     data: null,
