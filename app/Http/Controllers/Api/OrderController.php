@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-use TaqnyatSms;
 
 use App\Models\Car;
 use App\Models\Order;
@@ -9,15 +8,13 @@ use App\Models\CarOrder;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
-use App\Http\Resources\CompanyOrderResource;
+use App\Models\CarColorImage;
 use App\Rules\NotNumbersOnly;
 use App\Traits\NotificationTrait;
 use App\Models\Otp;
-use Exception;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 
 
@@ -25,6 +22,38 @@ class OrderController extends Controller
 {
 
     use NotificationTrait;
+
+    public function getColorsByCarId($id)
+    {
+        try{
+              // Fetch car color images with their related color
+            $colors = CarColorImage::where('car_id', $id)
+            ->with('color:id,name_ar,name_en') // Ensure 'color' relationship exists
+            ->get()
+            ->map(function ($carColorImage) {
+                return [
+                    'color_id' => $carColorImage->color->id,
+                    'color_name' => $carColorImage->color->name,
+                ];
+            })
+            ->unique('color_id')
+            ->values();
+            if($colors->isEmpty())return $this->success(data:[],message:__("no data found"));
+            return $this->success(data:$colors );
+        }catch(ModelNotFoundException $e){return $this->success(data:[],message:__("no data found"));}
+    }
+    public function allCar()
+    {
+        $cars = Car::all()->map(function($car){
+            return [
+                'id'=>$car->id,
+                'name'=>$car->name." - ".$car->brand->name." - ".$car->model->name." - ".$car->year,
+                'price'=>$car->price_after_vat
+            ];
+        });
+        if($cars->isEmpty()) return $this->success(data:[],message:__("no data found"));
+        return $this->success(data:$cars);
+    }
     private function sendOtp(Request $request , $phone , $order)
     {
         $request->validate([
@@ -60,8 +89,8 @@ class OrderController extends Controller
             'otp' => $otp,
              'order_id' => $order,
         ]);
-        $sender = "Ahmed Al-Flaij Cars";
-        $body = App()->getLocale() == 'ar' ? 'تم ارسال طلبك بنجاح الي شركة احمد الفليج للسيارات برجاء ادخال رمز التحقق  : ' . $otp: 'Thank you for registering. Our verification code is : ' . $otp;
+        $sender = "Nasser Matar El-Mutairi";
+        $body = App()->getLocale() == 'ar' ? 'تم ارسال طلبك بنجاح الي شركة ناصر مطر المطيري برجاء ادخال رمز التحقق  : ' . $otp: 'Thank you for registering. Our verification code is : ' . $otp;
         // $message = $taqnyt->sendMsg($body, $phone, $sender);
  
      
@@ -132,20 +161,19 @@ class OrderController extends Controller
          $request->validate([
             'name'=>['required','string'],
             'car_id'=>['required','integer','exists:cars,id'],
-            
-             'salary'=>['required','integer'],
-             'year'=>['required','integer'],
+            'salary'=>['required','integer'],
+            'year_installment'=>['required','integer'],
             'city_id'=>['required','integer','exists:cities,id'], 
             'first_payment_value'=>['required','numeric'],
             'last_payment_value'=>['required','numeric'],
             'bank_id'=>['required','integer','exists:banks,id'],
             'work'=>['required','string',new NotNumbersOnly()],
             'color_id'    => ['required','exists:colors,id'],
-            'stumbles' => ['required', 'in:0,1'], // Only accepts 0 or 1
+            'stumbles' => ['required', 'in:0,1'], 
             
             'commitments'    => ['required', 'numeric'],
             
-            'having_loan'    =>['required', 'in:0,1'], //قرض عقاري
+            'having_loan'    =>['required', 'in:0,1'], 
             
             'driving_license' => ['required', Rule::in(['available', 'expired', 'doesnt_exist'])],
             
@@ -154,10 +182,10 @@ class OrderController extends Controller
         ]);
   
     
-            $car = Car::select('id', 'price', 'name_' . getLocale())
+            $car = Car::select('id', 'price','year','name_' . getLocale())
                 ->where('id', $request->car_id)
                 ->first();
-    
+            
             if (!$car) {
                 throw ValidationException::withMessages([
                     'car_id' => __("You must select a car")
@@ -177,13 +205,13 @@ class OrderController extends Controller
             ]);
     
             $this->distribute($order->id);
-            $otp = $this->sendOtp($request, $request->phone,$order->id);
+            // $otp = $this->sendOtp($request, $request->phone,$order->id);
 
             $carOrder = CarOrder::create([
                 'type' => 'individual',
                 'payment_type' => 'finance',
                 'salary' => $request->salary,
-                'year' => $request->year,
+                'year' => $car->year,
                 'first_payment_value' => $request->first_payment_value,
                 'last_payment_value' => $request->last_payment_value,
                 'commitments' => $request->commitments,
@@ -192,6 +220,8 @@ class OrderController extends Controller
                 'order_id' => $order->id, 
                 'having_loan' => $request->having_loan,//
                 'driving_license' => $request->driving_license,
+                'year_installment'=>$request->year_installment
+
 
             ]);
     
@@ -199,7 +229,7 @@ class OrderController extends Controller
     return response()->json([
         'message'=>'success',
         'data'=>new OrderResource($order),
-        'otp'=>$otp,
+        // 'otp'=>$otp,
     ]);
     
     
@@ -211,7 +241,7 @@ class OrderController extends Controller
     $request->validate([
         'car_id'=>['required','integer','exists:cars,id'],
         'color_id'    => ['required','exists:colors,id'],
-        'organization_seo'=>['required','string',new NotNumbersOnly()],
+        'name'=>['required','string',new NotNumbersOnly()],
         'phone' => ['required', 'string', 'regex:/^(05|5)\d{8}$/'],
 
         'city_id'=>['required','integer','exists:cities,id'],
@@ -240,20 +270,13 @@ $order = Order::create([
      
 ]);
 $this->distribute($order->id);
-$otp = $this->sendOtp($request, $request->phone,$order->id);
+// $otp = $this->sendOtp($request, $request->phone,$order->id);
 
 $carOrder = CarOrder::create([
     'type' => 'individual',
     'payment_type' => 'cash',
      'organization_seo' => $request->organization_seo,
-
-
- 
-
-  
-    
     'order_id' => $order->id, 
-
     
 ]);
 
@@ -263,7 +286,7 @@ $carOrder = CarOrder::create([
 return response()->json([
     'message'=>'success',
     'data'=>$order,
-    'otp'=>$otp
+    // 'otp'=>$otp
 
 ]);
 
@@ -282,13 +305,14 @@ public function companyFinance(Request $request)
         'organization_activity'=>['required','string',new NotNumbersOnly()],
         'organization_location'=>['required','string',new NotNumbersOnly()],
         'organization_seo'=>['required','string',new NotNumbersOnly()],
-        'year'=>['required','integer'],
+        // 'year'=>['required','integer'],
+        'year_installment'=>['required','integer'],
 
         'phone' => ['required', 'string', 'regex:/^(05|5)\d{8}$/'],
         'bank_id'=>['required','integer','exists:banks,id'],
 
      ]);
-    $car = Car::select('id', 'price', 'name_' . getLocale())
+    $car = Car::select('id', 'price','year', 'name_' . getLocale())
     ->where('id', $request->car_id)
     ->first();
 
@@ -310,7 +334,7 @@ $order = Order::create([
      
 ]);
 $this->distribute($order->id);
-$otp = $this->sendOtp($request, $request->phone,$order->id);
+// $otp = $this->sendOtp($request, $request->phone,$order->id);
 
 $carOrder = CarOrder::create([
     'type' => 'organization',
@@ -321,17 +345,10 @@ $carOrder = CarOrder::create([
     'organization_activity' => $request->organization_activity,
     'organization_location' => $request->organization_location,
     'organization_seo' => $request->organization_seo,
-
-
     'bank_id' => $request->bank_id,
-    'year' => $request->year,
-
-
-  
-    
-    'order_id' => $order->id, 
-
-    
+    'year' => $car->year,
+    'order_id' => $order->id,   
+    'year_installment'=>$request->year_installment
 ]);
 
 
@@ -340,8 +357,7 @@ $carOrder = CarOrder::create([
 return response()->json([
     'message'=>'success',
     'data'=>$order,
-    'otp'=>$otp
-
+    // 'otp'=>$otp
 ]);
 
 }
@@ -358,11 +374,8 @@ public function companyCash(Request $request)
         'organization_activity'=>['required','string',new NotNumbersOnly()],
         'organization_location'=>['required','string',new NotNumbersOnly()],
         'organization_seo'=>['required','string',new NotNumbersOnly()],
-        
-        
-        
         'phone' => ['required', 'string', 'regex:/^(05|5)\d{8}$/'],
-        'bank_id'=>['required','integer','exists:banks,id'],
+        // 'bank_id'=>['required','integer','exists:banks,id'],
  
     ]);
     $car = Car::select('id', 'price', 'name_' . getLocale())
@@ -387,21 +400,17 @@ public function companyCash(Request $request)
     ]);
 $this->distribute($order->id);
 
-    $otp = $this->sendOtp($request, $request->phone,$order->id);
+    // $otp = $this->sendOtp($request, $request->phone,$order->id);
 
     $carOrder = CarOrder::create([
         'type' => 'organization',
         'payment_type' => 'cash',
         'organization_name'=>$request->organization_name,
         'organization_activity' => $request->organization_activity,
-
         'organization_location' => $request->organization_location,
         'organization_seo' => $request->organization_seo,
         'order_id'=>$order->id,
         'bank_id'=>$request->bank_id
-
-
-
     ]);
 
 
@@ -409,20 +418,10 @@ $this->distribute($order->id);
     return response()->json([
         'message'=>'success',
         'data'=>$order,
-        'otp'=>$otp
+        // 'otp'=>$otp
     ]);
 
 
 }
-
-
-    
-
-// public function serviceOrder(Request $request)
-// {
-//     $request->validate([
-//         ''
-//     ])
-// }
 
 }
