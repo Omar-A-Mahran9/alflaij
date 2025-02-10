@@ -149,14 +149,14 @@ class OrderController extends Controller
         // {
         //     $approve_amount = ($salary - $commitment) * ($precentage_approve / 100);
         // }
-
+        $this->authorize('show_orders'); 
+        $order->load('employee');
         $employees = Employee::select('id', 'name')->whereHas('roles.abilities', function ($query) {
             $query->where('name', 'show_orders');
         })->get();
          $userAssign = $order->employee;
         $employee = Employee::find($order->employee_id) ?? null;
 
-        $this->authorize('show_orders');
 
         $order->load('car', 'orderDetailsCar');
         $organization_activity = optional($order->orderDetailsCar)->organization_activity
