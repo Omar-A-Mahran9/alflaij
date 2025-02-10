@@ -394,6 +394,32 @@ private function prepareFeatures($features)
     public function show(Car $car)
     {
       
+        // $models        = CarModel::select('id', 'name_' . getLocale())->where('brand_id', $car->brand_id)->get();
+        // $brands        = Brand::select('id', 'name_' . getLocale())->get();
+        // $cities        = City::select('id', 'name_' . getLocale())->get();
+        // $categories    = Category::select('id', 'name_' . getLocale())->where('car_model_id', $car->model_id)->get();
+        // $colors        = Color::select('id', 'image', 'name_' . getLocale(), 'hex_code')->get();
+        // $relatedImages = $car->images;
+        // $tags          = Tag::select('id', 'name_' . getLocale())->get();
+        // $carvideoId    = $car->video_url;
+        // $this->getYoutubeVideoUrl($carvideoId);
+        // $fullYoutubeUrl = ($carvideoId) ? $this->getYoutubeVideoUrl($carvideoId) : null;
+        // $car->load('colors');
+
+        // $colorsWithUniqueImages = $car->colors->groupBy('id')->map(function ($colors) {
+        //     return [
+        //         'color_id' => $colors->first()->id,
+        //         'color_name' => $colors->first()->name,
+        //         'hex_code' => $colors->first()->hex_code,
+        //         'stock' => $colors->first()->pivot->stock,
+        //         'images' => $colors->unique('pivot.image')->pluck('pivot.image')->toArray(),
+        //     ];
+        // })->values()->toArray();
+        // $selectedtagsIds    = $car->tags->pluck('id')->toArray();
+        $carImageSorted= CarColorImage::where('car_id',$car->id)
+        ->orderBy('sort')
+        ->get();
+         
         $models        = CarModel::select('id', 'name_' . getLocale())->where('brand_id', $car->brand_id)->get();
         $brands        = Brand::select('id', 'name_' . getLocale())->get();
         $cities        = City::select('id', 'name_' . getLocale())->get();
@@ -407,15 +433,20 @@ private function prepareFeatures($features)
         $car->load('colors');
 
         $colorsWithUniqueImages = $car->colors->groupBy('id')->map(function ($colors) {
+     
             return [
                 'color_id' => $colors->first()->id,
                 'color_name' => $colors->first()->name,
                 'hex_code' => $colors->first()->hex_code,
+                'stock' => $colors->first()->pivot->stock,
                 'images' => $colors->unique('pivot.image')->pluck('pivot.image')->toArray(),
+
             ];
-        })->values()->toArray();
+        })->values();
+
+        
         $selectedtagsIds    = $car->tags->pluck('id')->toArray();
-        return view('dashboard.cars.show', compact( 'colors','brands', 'car', 'models', 'cities', 'categories', 'relatedImages', 'tags', 'selectedtagsIds', 'fullYoutubeUrl', 'colorsWithUniqueImages'));
+        return view('dashboard.cars.show', compact( 'colors','brands', 'car', 'models', 'cities', 'categories', 'relatedImages', 'tags', 'selectedtagsIds', 'fullYoutubeUrl', 'colorsWithUniqueImages','carImageSorted'));
     }
     // private  function cleanColorsArray($colors , $oldCarColorImages)
     // {
