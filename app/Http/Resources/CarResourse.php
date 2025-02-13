@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use app\Enums\CarBodyType;
 use App\Enums\CarStatus;
 use App\Enums\FeatureOrPossibility;
 use App\Enums\PriceFieldStatus;
@@ -25,6 +26,7 @@ class CarResourse extends JsonResource
     public function toArray($request)
     {
         $price_field_status = PriceFieldStatus::values()[$this->price_field_status]??'available_upon_request';
+        $show_status = $price_field_status === PriceFieldStatus::show_details->name ? 0 : 1;
         $features= $this->features->filter(function($feature){
             return $feature->type === FeatureOrPossibility::feature->value; 
         })
@@ -32,7 +34,7 @@ class CarResourse extends JsonResource
             return [
                 'id' => $feature->id,
                 'title'=> $feature->title,
-                'description' => $feature->pivot->description,
+                'description' => $feature->description,
                 'icon' => getImagePathFromDirectory($feature->icon,'Icons'),
                 
 
@@ -45,7 +47,7 @@ class CarResourse extends JsonResource
             return [
                 'id' => $feature->id,
                 'title'=> $feature->title,
-                'description' => $feature->pivot->description,
+                'description' => $feature->description,
                 'icon' => getImagePathFromDirectory($feature->icon,'Icons'),
                 
 
@@ -95,42 +97,44 @@ class CarResourse extends JsonResource
             'gear_shifter'=>__($this->gear_shifter),
             'gear_shifterkey'=>$this->gear_shifter,
             'year'=>$this->year,
+            'show_status'=>$show_status,
             'price_field_status'=>__($price_field_status) === __('others') ? $this->other_description:__($price_field_status),
             //'price'=> $price_field_status === PriceFieldStatus::show_details->name ?$this->price:0,
             'supplier'=>__($this->supplier),
             'supplier_english'=>$this->supplier,
             'have_discount'=>$this->have_discount,
-            'video_url'=>$this->video_url,
-            'price'=>$price_field_status === PriceFieldStatus::show_details->name ?$this->discount_price:0,
+            'video_url'=>$this->video_url,  
+            'price'=>$price_field_status === PriceFieldStatus::show_details->name ?number_format($this->discount_price):0,
+            'price_before_discount'=>$price_field_status === PriceFieldStatus::show_details->name && $this->have_discount?number_format($this->price) :0,
+            'price_after_tax' =>$price_field_status === PriceFieldStatus::show_details->name ? ($this->price_after_vat ==$this->price ? 0 :number_format($this->price_after_vat) ):0,
            // 'discount_percentage' =>$price_field_status === PriceFieldStatus::show_details->name ? $this->discount_price != 0 ? round(($this->price - $this->discount_price) / $this->price * 100, 2): 0:null,
-            'selling_price'=>$price_field_status === PriceFieldStatus::show_details->name ?$this->getSellingPriceAttribute():0,
+            //'selling_price'=>$price_field_status === PriceFieldStatus::show_details->name ?$this->getSellingPriceAttribute():0,
             'tax'=>settings()->getSettings('maintenance_mode') == 1 ? settings()->getSettings('tax') : 0,
-            'price_after_tax' =>$price_field_status === PriceFieldStatus::show_details->name ? ($this->getPriceAfterVatAttribute()==$this->price?0:$this->getPriceAfterVatAttribute()):0,
             'show_in_home_page' => (bool) $this->show_in_home_page,
-            'car_style'=>$this->car_body,
+            'car_body'=>$this->car_body,
             'fuel_tank_capacity'=>$this->fuel_tank_capacity, 
             'brand' => [
-                'id' => $this->brand->id,
-                'title'=>$this->brand->name_ . getLocale(),
-                "image"=> getImagePathFromDirectory($this->brand->image,'Brands'),
-                "cover"=> $this->brand->cover,
-                'car_available_types'=>$this->brand->car_available_types
+                'id' => $this->brand->id??"",
+                'title'=>$this->brand->name??"",
+                "image"=> getImagePathFromDirectory($this->brand->image,'Brands')??"",
+                "cover"=> $this->brand->cover??"",
+                'car_available_types'=>$this->brand->car_available_types??""
             ],
             'model' => [
-                'id' => $this->model->id,
-                'title'=>$this->model->name_ . getLocale(),
+                'id' => $this->model->id??"",
+                'title'=>$this->model->name??"",
             ],
             'categories' => [
                 'id' => $this->category->id??"",
-                'title'=>$this->category->name_ . getLocale()??"",
-            ],
+                'title'=>$this->category->name??"",
+            ]  ,
             'city' => [
                 'id' => $this->city->id??' ',
                 'title'=>$this->city->name??' ',
             ],
-            'features' =>!empty($features) ? $features : null,
-            'possibilities'=>!empty($possibilities) ? $possibilities :null,  
-            'colors' => !empty($colorDetails) ? $colorDetails   :null,
+            'features' =>!empty($features) ? $features : [],
+            'possibilities'=>!empty($possibilities) ? $possibilities :[],  
+            'colors' => !empty($colorDetails) ? $colorDetails   :[],
         ];
     }
 }
