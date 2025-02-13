@@ -247,38 +247,28 @@
 
                 <!-- end :: finance approvals -->
 
-                @canany(['view_careers', 'view_news', 'view_faq', 'view_services', 'view_offers','view_organization_types','view_partners'])
+                @canany(['view_partners','view_news', 'view_faq', 'view_services', 'view_offers','view_organization_types'])
                     <div class="menu-item">
                         <div class="menu-content pt-8 pb-0">
                             <span class="menu-section text-muted text-uppercase fs-8 ls-1">{{ __('Website') }}</span>
                         </div>
                     </div>
                 @endcanany
-                @can('view_partners')
-                <div class="menu-item">
-                    <a class="menu-link {{ isTabActive('partners') }}"
-                        href="{{ route('dashboard.partners.index') }}" data-bs-toggle="tooltip"
-                        data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
-                        <span class="menu-icon">
-                            <i class="fa fa-handshake"></i>
-                        </span>
-                        <span class="menu-title"> {{ __('partners') }}</span>
-                    </a>
-                </div>
-            @endcan
 
-                @can('view_careers')
+               
+                @can('view_partners')
                     <div class="menu-item">
-                        <a class="menu-link {{ isTabActive('careers') }}" href="{{ route('dashboard.careers.index') }}"
-                            data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
-                            data-bs-placement="right">
+                        <a class="menu-link {{ isTabActive('partners') }}"
+                            href="{{ route('dashboard.partners.index') }}" data-bs-toggle="tooltip"
+                            data-bs-trigger="hover" data-bs-dismiss="click" data-bs-placement="right">
                             <span class="menu-icon">
-                                <i class="fa fa-briefcase"></i>
+                                <i class="fa fa-handshake"></i>
                             </span>
-                            <span class="menu-title"> {{ __('Careers') }}</span>
+                            <span class="menu-title"> {{ __('partners') }}</span>
                         </a>
                     </div>
                 @endcan
+                
                 @can('view_news')
                     <div class="menu-item">
                         <a class="menu-link {{ isTabActive('news') }}" href="{{ route('dashboard.news.index') }}"
