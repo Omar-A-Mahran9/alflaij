@@ -530,7 +530,8 @@ return [
         'profit_margin' => 'نسبة هامش الربح',
         'calculator' => 'حاسبة',
         'calculators' => 'حاسبة',
-        '' => '',
+        'car_id' => 'السيارة',
+        'year_installment'=>'سنوات القسط'
     ],
 
     'values' => [

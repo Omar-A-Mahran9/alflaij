@@ -23,13 +23,15 @@ class SettingController extends Controller
             $data = [
                 'logo' => getImagePathFromDirectory(settings()->getSettings('logo'), 'Settings'),
                 'description' => settings()->getSettings('footer_text_' . getLocale()),
-                'whatsapp_phone' => settings()->getSettings('whatsapp'),
+                'phone'=>settings()->getSettings('phone'),
+                'whatsapp_phone' => settings()->getSettings('whatsapp_url'),
                 'facebook' => settings()->getSettings('facebook_url'),
                 'twitter' => settings()->getSettings('twitter_url'),
                 'instagram' => settings()->getSettings('instagram_url'),
                 'youtube' => settings()->getSettings('youtube_url'),
                 'snapchat' => settings()->getSettings('snapchat_url'),
                 'tiktok' => settings()->getSettings('tiktok'),
+                'linkedIn'=>settings()->getSettings('linkedIn'),
                 'whatsapp' => settings()->getSettings('whatsapp_url'),
                 'working_time' => settings()->getSettings('working_time'),
                 'email'=>settings()->getSettings('email'),
@@ -146,6 +148,7 @@ class SettingController extends Controller
                 'instagram' => settings()->getSettings('instagram_url'),
                 'youtube' => settings()->getSettings('youtube_url'),
                 'snapchat' => settings()->getSettings('snapchat_url'),
+                'linkedIn'=>settings()->getSettings('linkedIn')
             ];
             return $this->success(data: $data);
         } catch (\Exception $e)

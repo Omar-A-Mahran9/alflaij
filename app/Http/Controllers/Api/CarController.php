@@ -11,6 +11,7 @@ use App\Http\Resources\ModelResourse;
 use App\Models\Bank;
 use App\Models\Brand;
 use App\Models\Car;
+use App\Models\CarColorImage;
 use App\Models\CarModel;
 use App\Models\Category;
 use App\Models\City;
@@ -277,13 +278,13 @@ class CarController extends Controller
         } else {
         
         try{
+            
             $tab = request('tags');
             $type = request('is_new',[]);
             $gear_shifters = request('gear_shifters', []);
             $fuel_types = request('fuel_types', []);
             $car_bodies = request('car_bodies', []);
-            $color_ids = request('color_ids', []);
-            $years = request('years', []);
+            $years = request('years', []); 
             $model_ids = request('model_ids', []);
             $minPrice = request('min_price');
             $maxPrice = request('max_price');
@@ -291,11 +292,11 @@ class CarController extends Controller
             $orderDirection= request('sort');
             $fuel_tank_capacities = request('fuel_tank_capacities', []);
             $brand_ids = request('brand_ids', []);
-           
+            
             $query = Car::query()->where('publish', 1);
-         
+            
              //best Selling car
-             $query->when($tab, function ($q, $tab) {
+             $query->when(!empty($tab), function ($q, $tab) {
                 $tag = Tag::with('cars')->find($tab);
               
                 if ($tag) {
@@ -346,37 +347,40 @@ class CarController extends Controller
                 });
 
                 // Color IDs with multiple values
-                $query->whereHas('colors',function($q) use($color_ids){
+                $query->when(!empty($color_ids), function ($q) use ($color_ids) {
                     if (in_array('all', $color_ids)) {
-                        return $q;
-                    } else {
-                        return $q->whereIn('color_id', $color_ids);
-                    }    
-                });
+                        return $q->whereHas('colors',function($qc) {
+                            return $qc->get();
+                        });
+                    }
+                    else{
     
+                        return $q->whereHas('colors',function($qc) use($color_ids){
+                           return $qc->whereIn('color_id',$color_ids);
+                        });
+                    }
+                });
         
                
                 // Years with multiple values
-            $query->when(!empty($years), function ($q) use ($years) {
+                $query->when(!empty($years), function ($q) use ($years) {
+                    if (in_array('all', $years)) {
+                        return $q;
+                    }
                 
-                if (in_array('all', $years)) {
-                    return $q;
-                } else {
-                    foreach ($years as $year) {
-                        if($year==1){
-                           return $q->where(function ($query) use ($years) {
-                               $query->where('year', '<', 2010)
-                                   ->orWhereIn('year', $years);
-                           });
-                       }
-                       return $q->whereIn('year', $years);
-       
-                   }
-                }    
+                    if (in_array(1, $years)) {
+                        return $q->where(function ($query) use ($years) {
+                            $query->where('year', '<', 2010)
+                                  ->orWhereIn('year', $years);
+                        });
+                    }
+                    
+                    return $q->whereIn('year', $years);
+                    
                 });
 
               
-         
+        
                 // Model IDs with multiple values
             $query->when(!empty($model_ids), function ($q) use ($model_ids) {
                 if (in_array('all', $model_ids)) {
@@ -385,7 +389,6 @@ class CarController extends Controller
                     return $q->whereIn('model_id', $model_ids);
                 }  
                 });
-
                 //brand_id
             $query->when(!empty($brand_ids), function ($q) use ($brand_ids) {
                 if (in_array('all', $brand_ids)) {
@@ -458,15 +461,165 @@ class CarController extends Controller
 
     }
 
+    public function carFilter()
+    {
+       
+        if (request()->has('search')) {
+            $searchKeyword = request()->input('search');
+            $query = Car::query();
+    
+           $query->where(function ($query) use ($searchKeyword) {
+               $query->where('name_ar', 'LIKE', "%$searchKeyword%")
+               ->orWhere('name_en', 'LIKE', "%$searchKeyword%")->orWhere('description_ar','LIKE', "%$searchKeyword%")->orWhere('description_en', "%$searchKeyword%");
+           });
+   
+           if ($searchKeyword) {
+               $query->with('brand')->orWhereHas('brand', function ($brandQuery) use ($searchKeyword) {
+                   $brandQuery->where('name_ar', 'LIKE', "%$searchKeyword%")->orWhere('name_en','LIKE',"%$searchKeyword%")->orWhere('meta_desc_en','LIKE', "%$searchKeyword%")->orWhere('meta_keyword_ar', "%$searchKeyword%")->orWhere('meta_keyword_ar', "%$searchKeyword%");
+               });
+           }
+       
+           if ($searchKeyword) {
+               $query->with('model')->orWhereHas('model', function ($modelQuery) use ($searchKeyword) {
+                   $modelQuery->where('name_ar', 'LIKE', "%$searchKeyword%")->orWhere('name_en','LIKE',"%$searchKeyword%")->orWhere('meta_keyword_ar','LIKE',"%$searchKeyword%")->orWhere('meta_keyword_en','LIKE',"%$searchKeyword%")->orWhere('meta_desc_ar','LIKE',"%$searchKeyword%");
+               });
+           }
+   
+           $perPage = 9; 
+           $cars = $query->paginate($perPage);
+           $data=CarResource::collection( $cars );
+   
+           return $this->successWithPagination(message:"All Pagination Car",data: $data);
+       } else {
+        try {
+        // Convert comma-separated strings to arrays and handle defaults
+        $type = $this->getArrayFromRequest(request('is_new'));
+        $gear_shifters = $this->getArrayFromRequest(request('gear_shifters'));
+        $fuel_types = $this->getArrayFromRequest(request('fuel_types'));
+        $car_bodies = $this->getArrayFromRequest(request('car_bodies'));
+        $years = $this->getArrayFromRequest(request('years'));
+        $model_ids = $this->getArrayFromRequest(request('model_ids'));
+        $color_ids = $this->getArrayFromRequest(request('color_ids'));
+        $fuel_tank_capacities = $this->getArrayFromRequest(request('fuel_tank_capacities'));
+        $brand_ids = $this->getArrayFromRequest(request('brand_ids'));
+        
+        $minPrice = request('min_price');
+        $maxPrice = request('max_price');
+        ['maxPrice'=>$defaultMaxPrice,'minPrice'=>$defaultMinPrice] = $this->getMaxMinPrices();
+        $orderDirection = request('sort', 'desc'); 
+        $query = Car::query()->where('publish', 1);
+        if(!empty($type)){    
+            $query->when(!empty($type), fn($q) => $this->filterInArray($q, 'is_new', $type));
+        }
+        if(!empty($gear_shifters)){ 
+            $query->when(!empty($gear_shifters), fn($q) => $this->filterInArray($q, 'gear_shifter', $gear_shifters));
 
-    public function prices(){
-        $minPrice = Car::min('price');
-        $maxPrice = Car::max('price');
+        }
+        if(!empty($fuel_types)){ 
+            $query->when(!empty($fuel_types), fn($q) => $this->filterInArray($q, 'fuel_type', $fuel_types));
+        }
 
-        return response()->json([
+        if(!empty($car_bodies)){ 
+            $query->when(!empty($car_bodies), fn($q) => $this->filterInArray($q, 'car_body', $car_bodies));
+        }
+        if(!empty($color_ids)){ 
+            $query->when(!empty($color_ids), function ($q) use ($color_ids) {
+                return $q->whereHas('colors', function ($qc) use ($color_ids) {
+                    $qc->WhereIn('color_id', $color_ids);
+                });
+            });
+        }
+        if(!empty($years)){ 
+            
+            $query->when(!empty($years), fn($q)=> $this->filterInArray($q,'year',$years));
+        }
+        
+        if(!empty($model_ids)){ 
+            
+            $query->when(!empty($model_ids), fn($q) => $this->filterInArray($q, 'model_id', $model_ids));
+        }
+        if(!empty($brand_ids)){ 
+            $query->when(!empty($brand_ids), fn($q) => $this->filterInArray($q, 'brand_id', $brand_ids));
+        }
+        if(isset($minPrice)){ 
+            if($defaultMinPrice!=$minPrice)
+                $query->when(isset($minPrice), fn($q) => $q->Where('price', '>=', $minPrice)->where('price_field_status',1));
+            
+        }
+        if(isset($maxPrice)){
+            if($defaultMaxPrice!=$maxPrice)
+                $query->when(isset($maxPrice), fn($q) => $q->Where('price', '<=', $maxPrice)->where('price_field_status',1));
+        }
+        if(!empty($fuel_tank_capacities)){ 
+            $query->when(!empty($fuel_tank_capacities),fn($q)=>$this->filterInArray($q,'fuel_tank_capacity',$fuel_tank_capacities));
+            // $query->when(!empty($fuel_tank_capacities), function ($q) use ($fuel_tank_capacities) {
+            //     foreach ($fuel_tank_capacities as $choice) {
+            //         switch ($choice) {
+            //             case 0:
+            //                 $q->orWhereBetween('fuel_tank_capacity', [800, 1200]);
+            //                 break;
+            //             case 1:
+            //                 $q->orWhereBetween('fuel_tank_capacity', [1300, 1400]);
+            //                 break;
+            //             case 2:
+            //                 $q->orWhereBetween('fuel_tank_capacity', [1500, 1600]);
+            //                 break;
+            //             case 3:
+            //                 $q->orWhereBetween('fuel_tank_capacity', [1800, 2000]);
+            //                 break;
+            //             case 4:
+            //                 $q->orWhereBetween('fuel_tank_capacity', [2200, 3000]);
+            //                 break;
+            //             case 5:
+            //                 $q->orWhere('fuel_tank_capacity', '>', 3000);
+            //                 break;
+            //             default:
+            //                 $q->whereBetween('fuel_tank_capacity', [0, 3000]);
+            //         }
+            //     }
+            // });
+        }
+        
+        $query->orderBy('price_field_status','asc')->orderBy('created_at', $orderDirection);
+
+        $perPage = 9;
+        $cars = $query->paginate($perPage);
+  
+        $data = CarResource::collection($cars);
+
+        return $this->successWithPagination(message: "Cars per page", data: $data);
+    } catch (\Exception $e) {
+        return $this->failure(message: $e->getMessage());
+    }
+
+       }
+    }
+    private function getArrayFromRequest($param): array
+    {
+        return is_array($param) ? $param : (isset($param) ? explode(',', $param) : []);
+    }
+    private function filterInArray($query, $column, $values)
+    {   
+        
+        if(!is_array($values)) return $query->Where($column,$values);
+        elseif (in_array('all', $values)) return $query; // Skip filtering if 'all' is present
+        else return $query->WhereIn($column, $values);
+    }
+ 
+
+
+    public function getMaxMinPrices(){
+       $prices = Car::selectRaw('
+            MAX(CASE WHEN discount_price IS NOT NULL THEN discount_price ELSE price END) as max_price,
+            MIN(CASE WHEN discount_price IS NOT NULL THEN discount_price ELSE price END) as min_price
+        ')->first();
+        $maxPrice = $prices->max_price;
+        $minPrice = $prices->min_price;
+        
+        return [
             'minPrice'=>$minPrice,
             'maxPrice'=>$maxPrice,
-        ]);
+        ];
 
     }
 
@@ -554,10 +707,24 @@ class CarController extends Controller
             return $this->success(data:['models'=>$result]);
         }
     }
-    public function getColorImages(Car $car,Color $color)
+    public function getColorImages(Car $car,Color $color=null)
     {
-     
-        $carColors = $car->colors()->where('color_id',$color->id)->get();
+
+
+        // DB::enableQueryLog();
+        $colorSelected = CarColorImage::where('car_id',$car->id)->first()->color_id;
+        //  dd($colorSelected);
+        // $query = DB::getQueryLog();
+        // dd($query);
+
+        $carColors=[];
+        if(!$color){
+             $carColors = $car->colors()->where('color_id', $colorSelected )->orderBy('sort')->get();    
+        }
+        else
+        {
+            $carColors = $car->colors()->where('color_id',$color->id)->orderBy('sort')->get();
+        }
       
         if($carColors->isEmpty())
         {
@@ -574,9 +741,15 @@ class CarController extends Controller
         $models                 = CarModel::all();
         $colors                 = Color::all();
         $car                    = Car::query()->where('publish',1);
-        $max_price              = $car->max('price');
-        $min_price              = $car->min('price');
+        // $max_price              = $car->max('price');
+        $max_price =  $car->clone()->selectRaw('MAX(CASE WHEN discount_price IS NOT NULL THEN discount_price ELSE price END) as max_price')
+        ->value('max_price');
+        // $min_price              = $car->min('price');
+        $min_price = $car->clone()->selectRaw('MIN(CASE WHEN discount_price IS NOT NULL THEN discount_price ELSE price END) as min_price')
+        ->value('min_price');
+ 
         $years                  = $car->pluck('year')->unique()->sortDesc()->values()->toArray();
+       
         $fuelTankCapacities     = $car->pluck('fuel_tank_capacity')->unique()->sortDesc()->values()->toArray();                            
         $result = [
             'brand_ids'=>$brands->map(function($brand){
@@ -636,9 +809,10 @@ class CarController extends Controller
     }
     public function advancedSelect2($id){
         
-        $cars=Car::with('colors')->where('model_id',$id)->get();        
-        $lowest_price=$cars->min('price');
-        $highest_price=$cars->max('price');
+        $carsQyery=Car::query()->with('colors')->where('model_id',$id);        
+        $lowest_price=$carsQyery->clone()->selectRaw('MIN(case when discount_price IS NOT NULL then discount_price ELSE price end) as max_price')->value('max_price');
+        $highest_price=$carsQyery->clone()->selectRaw('MAX(case when discount_price IS NOT NULL then discount_price ELSE price end) as min_price')->value('min_price');
+        $cars=$carsQyery->get();
         // Collect all unique colors separately
         $available_colors = $cars->flatMap(function ($car) {
             return $car->colors; 
