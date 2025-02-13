@@ -31,6 +31,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         return $request->user();
     });
+    Route::get('/filterCar',[CarController::class,'carFilter']);
     Route::post('/register', 'Api\Auth\AuthController@register');
     Route::post('/login', 'Api\Auth\AuthController@login');
     Route::post('/send-otp', 'Api\Auth\ForgetPasswordController@sendOtp');
@@ -67,7 +68,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('/add-favorite-withoutauth', 'Api\FavoriteController@store');
     
     // ------------------------- Home ---------------------------------------
-
+    Route::get('/bankSelection','Api\BankController@bankSelection');
     Route::get('/models', 'Api\HomeController@models');
     Route::get('/cars', 'Api\HomeController@cars');
     Route::get('/brands', 'Api\HomeController@brands');
@@ -90,7 +91,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('/getColorsWithPrice/{car}',[HomeController::class,'getColorsWithPrice']);
     // Route::post('/car/search', 'Api\HomeController@carSearch');
     // ----------------------- colors filter ---------------------------
-    Route::get('/cars/{car}/colors/{color}',[CarController::class,'getColorImages']);
+    Route::get('/cars/{car}/colors/{color?}',[CarController::class,'getColorImages']);
     // ----------------------- Settings --------------------------------
     Route::get('/calc_data', 'Api\HomeController@act_mod');
     Route::get('/partners', 'Api\PartnerController@index');
@@ -174,7 +175,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('/categories', [CategoryController::class, 'categories']);
     Route::get('/car-type', [CarController::class, 'cartype']);
  
-    Route::get('/prices', [CarController::class, 'prices']);
+    Route::get('/prices', [CarController::class, 'getMaxMinPrices']);
     Route::get('/search-car-prices', [CarController::class, 'searchCar']);
 
 
@@ -190,7 +191,8 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('/individuals-cash',[OrderController::class,'individualsCash'])->name('individualsCash');
     Route::post('/company-finance',[OrderController::class,'companyFinance'])->name('companyFinance');
     Route::post('/company-cash',[OrderController::class,'companyCash'])->name('companyCash');
-
+    Route::get('/Cars',[OrderController::class,'allCar']);
+    Route::get('/cars/{id}/colorIds',[OrderController::class,"getColorsByCarId"]);
 
     // Route::get('/requests','Api\RequestController@index')->name('get-requests');
     Route::get('/requests-search','Api\RequestController@search');

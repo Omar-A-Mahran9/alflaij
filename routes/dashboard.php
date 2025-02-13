@@ -40,12 +40,11 @@ Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard', 'as' => 'dash
     /** ajax for features and it can't be after features resource route */
     Route::get('/features/get-options',[FeatureController::class,'getOptions']); //  add car features and possibilities 
     Route::resource('features', 'FeatureController');
-
+    Route::resource('partners','PartnerController');
     Route::resource('orders', 'OrderController');
     Route::resource('questions', 'QuestionController');
     Route::resource('roles', 'RoleController');
     Route::resource('brands', 'BrandController');
-    Route::resource('partners','PartnerController');
     Route::resource('models', 'ModelController');
     Route::resource('cars', 'CarController');
     Route::resource('categories', 'CategoriesController');
@@ -65,7 +64,6 @@ Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard', 'as' => 'dash
     Route::resource('contact-us', 'ContactUsController')->except(['store', 'create', 'destroy']);
     Route::resource('news-subscribers', 'NewsSubscriberController')->except(['store', 'create', 'show']);
     Route::resource('settings', 'SettingController')->only(['index', 'store']);
-    Route::resource('careers', 'CareerController');
     Route::get('/applicants', 'CareerController@applicants');
 
 
