@@ -11,7 +11,7 @@ trait RespondsWithHttpStatus
         return response([
             'success' => true,
             'data' => $data,
-            'message' => $message,
+            'message' => __($message),
         ], $status);
     }
 

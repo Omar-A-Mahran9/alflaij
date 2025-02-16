@@ -23,14 +23,22 @@ class HomeController extends Controller
     public function brands(){
          
         $brands = Brand::all();
-        return   BrandHomeResource::collection($brands);
+        if($brands->isEmpty())
+        {
+            return $this->success(__("no data found"),data:[]);
+        }
+        return   $this->success(data:BrandHomeResource::collection($brands));
 
 
    }
    public function brandsSearch()
    {
         $brands = Brand::all();
-        return BrandSearchResource::collection($brands);
+        if($brands->isEmpty())
+        {
+            return $this->success(__("no data found"),data:[]);
+        }
+        return $this->success(data:BrandSearchResource::collection($brands));
 
    }
 
@@ -47,13 +55,17 @@ class HomeController extends Controller
         {
             return $this->success(data:$models);
         }
-        return $this->failure("No Models found");    
+        return $this->success(__("no data found"),[]);    
    }
 
    public function cars(){
 
        $cars = Car::all();
-       return new CarResourse($cars);
+       if($cars->isEmpty())
+       {
+            return $this->success(__("no data found"),[]);    
+       }
+       return $this->success(data:new CarResourse($cars));
        // return $this->success('successfully',$cars);
 
 }
@@ -61,7 +73,11 @@ class HomeController extends Controller
 public function models(){ 
         
    $model = CarModel::all();
-   return   CarModelResource::collection($model);
+   if($model->isEmpty())
+   {
+        return $this->success(__("no data found"),[]);
+   }
+   return   $this->success(data:CarModelResource::collection($model));
 
 }
 public function getAllData(){
@@ -128,7 +144,7 @@ public function questions(){
     $cars = $query->paginate(10);
     if($cars->isEmpty())
     {
-        return $this->failure("No cars found");
+        return $this->success(__("no data found"),[]);
     }
     return $this->success(data:CarResource::collection($cars));
  }
@@ -140,7 +156,7 @@ public function questions(){
      ->orderBy('id','desc')->paginate(10);
      if($cars->isEmpty())
      {
-        return $this->failure("No cars found");
+        return $this->success(__("no data found"),[]);
      } 
      return $this->success(data:CarResource::collection($cars));
  }
@@ -152,7 +168,7 @@ public function questions(){
     })->paginate(10);
     if($carOffers->isEmpty())
     {
-        return $this->failure("No cars found");
+        return $this->success(__("no data found"),[]);
     }
     return $this->success(data:CarResource::collection($carOffers));
  }
@@ -182,7 +198,10 @@ public function questions(){
     }
 
     $results = $query->get();
-    
+    if($results->isEmpty())
+    {
+        return $this->success(__("no data found"),data:[]);
+    }
     return $this->success(data:CarResource::collection($results));
 }
 
@@ -200,7 +219,7 @@ public function getAllCars()
     });
     if($res->isEmpty())
     {
-        return $this->failure("No cars found");
+        return $this->success(__("no data found"),[]);
     }
     return $this->success(data:$res);
 }
@@ -209,7 +228,7 @@ public function getColorsWithPrice(Car $car)
 {
     
     if(!$car){
-        return $this->failure("No cars found");
+        return $this->success(__("no data found"),[]);
     }
     $colors = $car->colors->map(function($color){
         return [
