@@ -18,6 +18,6 @@ class BankController extends Controller
             
             return $this->success("success",data:BankResource::collection($banks));
         }
-        return $this->failure("No data Exist");
+        return $this->success(__("no data found"),[]);
     }
 }
