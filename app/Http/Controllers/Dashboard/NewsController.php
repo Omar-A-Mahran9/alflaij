@@ -111,6 +111,7 @@ class NewsController extends Controller
 
         if ($request->ajax())
         {
+             deleteImage($news->main_image,'News');
             $news->delete();
         }
     }
