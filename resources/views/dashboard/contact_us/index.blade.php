@@ -75,7 +75,7 @@
                         <th>{{ __('phone') }}</th>
                         {{-- <th>{{ __('name') }}</th> --}}
                         <th>{{ __('message') }}</th>
-                        <!-- <th>{{ __('reply') }}</th> -->
+                        <th>{{ __('reply') }}</th> 
                         <!-- <th class="min-w-100px">{{ __('actions') }}</th> -->
                     </tr>
                 </thead>
