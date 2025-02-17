@@ -36,9 +36,9 @@ class NewsController extends Controller
                 "recordsFiltered" => $model->count(),
                 'data' => $model->get()
             ];
+            
             return response($response);
         }
-
         return view('dashboard.news.index');
     }
 
@@ -81,21 +81,7 @@ class NewsController extends Controller
 
         $news = News::create($data);
 
-        // NewsSubscriber::get()->map( function ($user) use ($news) {
-
-        //     try {
-
-        //         Mail::send('mails.newsletter', compact('news') ,function($message) use ($news , $user){
-        //             $message->to([$user->email])
-        //                 ->subject($news->title);
-        //         });
-
-        //     } catch (\Throwable $th) {
-        //         dd($th->getMessage()) ;
-        //     }
-
-        // });
-
+       
     }
 
     public function update(UpdateNewsRequest $request, News $news)
@@ -108,13 +94,10 @@ class NewsController extends Controller
         {
             deleteImage($news['main_image'], "News");
             $data['main_image'] = uploadImage($request->file('main_image'), "News");
+           
         }
 
-        if ($request->file('highlighted_image'))
-        {
-            deleteImage($news['highlighted_image'], "News");
-            $data['highlighted_image'] = uploadImage($request->file('highlighted_image'), "News");
-        }
+       
 
         $data['highlighted_news'] = $request['highlighted_news'] == "on";
 
