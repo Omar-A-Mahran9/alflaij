@@ -17,8 +17,12 @@ class NewsController extends Controller
         try
         {
             $news                      = News::find($id);
+            if(!$news)
+            {
+                return $this->failure(__("no data found"));
+            }
     
-            return new NewsResource($news);
+            return $this->success(data:new NewsResource($news));
         } catch (\Exception $e)
         {
             return $this->failure(message: $e->getMessage());
@@ -28,7 +32,11 @@ class NewsController extends Controller
 
     public function index(){
         $news = News::all();
-        return NewsListResource::collection($news);
+        if($news->isEmpty())
+        {
+            return $this->success(__("no data found"),[]);   
+        }
+        return $this->success(data:NewsListResource::collection($news));
     }
 
 }
