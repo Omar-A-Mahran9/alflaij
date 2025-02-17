@@ -44,13 +44,22 @@ class OrderController extends Controller
     }
     public function allCar()
     {
-        $cars = Car::all()->map(function($car){
-            return [
-                'id'=>$car->id,
-                'name'=>$car->name." - ".$car->brand->name." - ".$car->model->name." - ".$car->year,
-                'price'=>$car->price_after_vat
-            ];
-        });
+        // $cars = Car::where('price_field_status',1)->get()->map(function($car){
+        //     return [
+        //         'id'=>$car->id,
+        //         'name'=>$car->name." - ".$car->brand->name." - ".$car->model->name." - ".$car->year,
+        //         'price'=>$car->price_after_vat
+        //     ];
+        // });
+        $cars = Car::with(['brand', 'model'])  //  Eager load brand & model to prevent N+1 problem
+        ->get()
+        ->map(function ($car) {
+        return [
+            'id' => $car->id,
+            'name'=>$car->name." - ".$car->brand->name." - ".$car->model->name." - ".$car->year,
+            'price' => $car->price_field_status==1?$car->price_after_vat:0
+        ];
+    });
         if($cars->isEmpty()) return $this->success(data:[],message:__("no data found"));
         return $this->success(data:$cars);
     }
@@ -265,7 +274,7 @@ $order = Order::create([
      'car_name'=>$car->name,
      'phone' => '+966'. $request->phone,
     'price' => $car->price_after_vat,
-    'name' => $request->organization_seo,
+    'name'=>$request->name,
     'status_id' => 8,
      
 ]);
@@ -275,7 +284,6 @@ $this->distribute($order->id);
 $carOrder = CarOrder::create([
     'type' => 'individual',
     'payment_type' => 'cash',
-     'organization_seo' => $request->organization_seo,
     'order_id' => $order->id, 
     
 ]);
@@ -333,6 +341,7 @@ $order = Order::create([
     'status_id' => 8,
      
 ]);
+
 $this->distribute($order->id);
 // $otp = $this->sendOtp($request, $request->phone,$order->id);
 
@@ -365,6 +374,7 @@ return response()->json([
 
 public function companyCash(Request $request)
 {
+ 
    
     $request->validate([
         'car_id'=>['required','integer','exists:cars,id'],
@@ -389,6 +399,7 @@ public function companyCash(Request $request)
     }
   
     $order = Order::create([
+        'name'=>$request->organization_name,
         'car_id' => $request->car_id,
         'color_id' => $request->color_id,
         'car_name'=>$car->name,
@@ -415,9 +426,11 @@ $this->distribute($order->id);
 
 
 
+
     return response()->json([
         'message'=>'success',
         'data'=>$order,
+ 
         // 'otp'=>$otp
     ]);
 
