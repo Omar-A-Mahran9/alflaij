@@ -17,17 +17,12 @@ use App\Models\Category;
 use App\Models\City;
 use App\Models\Color;
 use App\Models\Nationality;
-use App\Models\Order;
 use App\Models\Organizationactive;
 use App\Models\OrganizationType;
-use App\Models\Sector;
 use App\Models\Tag;
-use DB;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
-use function PHPUnit\Framework\returnSelf;
 
 class CarController extends Controller
 {
@@ -543,12 +538,16 @@ class CarController extends Controller
         }
         if(isset($minPrice)){ 
             // if($defaultMinPrice!=$minPrice)
-                $query->when(isset($minPrice), fn($q) => $q->Where('price', '>=', $minPrice));
+                $query->clone()->when(isset($minPrice), function($q) use($minPrice){
+                  $q->WhereRaw('coalesce(discount_price,price)>= ?', $minPrice);
+                } );  
             
         }
         if(isset($maxPrice)){
             // if($defaultMaxPrice!=$maxPrice)
-                $query->when(isset($maxPrice), fn($q) => $q->Where('price', '<=', $maxPrice));
+                $query->when(isset($maxPrice), function($q) use($maxPrice){
+                    $q->WhereRaw('coalesce(discount_price,price) <= ?', $maxPrice);
+                }) ;
         }
         if(!empty($fuel_tank_capacities)){ 
             $query->when(!empty($fuel_tank_capacities),fn($q)=>$this->filterInArray($q,'fuel_tank_capacity',$fuel_tank_capacities));
@@ -556,13 +555,14 @@ class CarController extends Controller
         
         $query->orderBy('price_field_status','asc')->orderBy('created_at', $orderDirection);
 
-        $perPage = 9;
-        $cars = $query->paginate($perPage);
-  
+        // $perPage = 9;
+        // $cars = $query->paginate($perPage);
+        $cars= $query->get();
         $data = CarResource::collection($cars);
 
-        return $this->successWithPagination(message: "Cars per page", data: $data);
-        } catch (\Exception $e) {
+        // return $this->successWithPagination(message: "Cars per page", data: $data);
+        return $this->success(data:$data);
+    } catch (\Exception $e) {
             return $this->failure(message: $e->getMessage());
         }
 
