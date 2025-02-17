@@ -20,6 +20,7 @@ class OfferController extends Controller
         {
             $offer = Offer::findOrFail($id);
             //$cars=CarResource::collection($offer->cars);
+
               $data=[
                     'offers' =>  
                          
