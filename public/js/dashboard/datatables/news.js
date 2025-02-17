@@ -53,10 +53,7 @@ let KTDatatable = (function () {
                 {
                     targets: 3,
                     render: function (data, type, row) {
-                        return `<img style="height:50px;width:50px;border-radius:4px" src="${getImagePathFromDirectory(
-                            data,
-                            "News"
-                        )}" class="me-3" >`;
+                        return `<img style="height:50px;width:50px;border-radius:4px" src="${data}" class="me-3" >`;
                     },
                 },
                 // {
