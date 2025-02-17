@@ -37,7 +37,7 @@ let KTDatatable = (function () {
                 { data: "id" },
                 { data: "title_ar" },
                 { data: "title_en" },
-                { data: "main_image" },
+                { data: "full_image_path", },
                 { data: "highlighted_news", name: "highlighted_news" },
                 { data: "created_at", name: "created_at" },
                 { data: null },
@@ -53,10 +53,7 @@ let KTDatatable = (function () {
                 {
                     targets: 3,
                     render: function (data, type, row) {
-                        return `<img style="height:50px;width:50px;border-radius:4px" src="{getImagePathFromDirectory(
-                            data,
-                            "News"
-                        )}" class="me-3" >`;
+                        return `<img style="height:50px;width:50px;border-radius:4px" src="${data}" class="me-3" >`;
                     },
                 },
                 // {
