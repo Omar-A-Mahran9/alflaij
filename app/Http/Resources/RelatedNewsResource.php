@@ -18,7 +18,7 @@ class RelatedNewsResource extends JsonResource
         return [
             'id'=>$this->id,
             'title'=>$this->title,
-            'image'=>$this->main_image,
+            'image'=>$this->full_image_path,
             'created_at'=>$this->created_at->toDateString(),
         ];
     }

@@ -12,7 +12,7 @@ class News extends Model
     protected $guarded = [
         'id'
     ];
-    protected $appends = ['title','description'];
+    protected $appends = ['title','description','full_image_path'];
     protected $casts   = [
         'created_at' => 'date:Y-m-d',
         'updated_at' => 'date:Y-m-d'
@@ -32,11 +32,12 @@ class News extends Model
         return $this->attributes['description_' . getLocale() ];
     }
  
-    public function getMainImageAttribute()
+    
+    public function getFullImagePathAttribute()
     {
         return getImagePathFromDirectory($this->attributes['main_image'],'News');
+
     }
-    
    
     
 
