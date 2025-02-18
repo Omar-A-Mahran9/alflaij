@@ -119,6 +119,7 @@ class ServiceController extends Controller
 
         if($request->ajax())
         {
+           
             $service->delete();
         }
     }
