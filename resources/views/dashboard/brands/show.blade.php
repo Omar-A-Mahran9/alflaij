@@ -64,13 +64,7 @@
                             <!-- end   :: Upload image component -->
                         </div>
 
-                        <div class="d-flex flex-column">
-                            <!-- begin :: Upload image component -->
-                            <label class="text-center fw-bold mb-4">{{ __("Cover") }}</label>
-                            <x-dashboard.upload-image-inp name="cover" :image="$brand->cover" directory="Brands" placeholder="default.jpg" type="show"  ></x-dashboard.upload-image-inp>
-                            <p class="invalid-feedback" id="cover" ></p>
-                            <!-- end   :: Upload image component -->
-                        </div>
+                        
 
                     </div>
                     <!-- end   :: Column -->

@@ -18,7 +18,7 @@ class BrandResource extends JsonResource
             'id' => $this->id,
             'name'=>$this->name,
             "image"=>getImagePathFromDirectory($this->image, 'Brands'),
-            "cover"=>getImagePathFromDirectory($this->cover, 'Brands'),
+            // "cover"=>getImagePathFromDirectory($this->cover, 'Brands'),
             "car_available_types"=> $this->car_available_types,
             "keyword"=> $this->meta_keyword_ . getLocale(),
              "meta_desc"=> $this->meta_desc_ . getLocale(),

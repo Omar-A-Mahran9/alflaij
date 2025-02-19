@@ -34,7 +34,7 @@ let KTDatatable = function () {
                 {data: 'name_ar'},
                 {data: 'name_en'},
                 {data: 'image'},
-                {data: 'cover'},
+                // {data: 'cover'},
                 {data: 'created_at'},
                 {data: null},
             ],

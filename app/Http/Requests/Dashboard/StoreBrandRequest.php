@@ -33,7 +33,7 @@ class StoreBrandRequest extends FormRequest
             'meta_desc_en'    => 'nullable|string|max:255' ,
             'meta_desc_ar'    => 'nullable|string|max:255' ,
             'image'           => 'required|mimes:jpeg,png,jpg,webp,svg|max:2048' ,
-            'cover'           => 'required|mimes:jpeg,png,jpg,webp,svg|max:2048' ,
+            // 'cover'           => 'required|mimes:jpeg,png,jpg,webp,svg|max:2048' ,
         ];
     }
 }

@@ -73,10 +73,10 @@ let showHidePass = function (fieldId, showPwIcon) {
 
   if (passField.attr("type") === "password") {
     passField.attr("type", "text");
-    showPwIcon.children().eq(0).removeClass("fa-eye").addClass("fa-eye-slash");
+    showPwIcon.children().eq(0).removeClass("fa-eye-slash").addClass("fa-eye");
   } else {
     passField.attr("type", "password");
-    showPwIcon.children().eq(0).removeClass("fa-eye-slash").addClass("fa-eye");
+    showPwIcon.children().eq(0).removeClass("fa-eye").addClass("fa-eye-slash");
   }
 };
 

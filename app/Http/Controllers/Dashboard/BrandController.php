@@ -41,9 +41,7 @@ class BrandController extends Controller
         if ($request->file('image'))
         $data['image'] = uploadImage( $request->file('image') , "Brands");
 
-        if ($request->file('cover'))
-            $data['cover'] = uploadImage( $request->file('cover') , "Brands");
-
+       
 
         if ( $request->file('image') && $request['hex_code'])
             $data['hex_code'] = null;
@@ -80,11 +78,6 @@ class BrandController extends Controller
             $data['image'] = uploadImage( $request->file('image') , "Brands");
         }
 
-        if ($request->file('cover'))
-        {
-            deleteImage( $brand['cover'] , "Brands");
-            $data['cover'] = uploadImage( $request->file('cover') , "Brands");
-        }
 
         $brand->update($data);
 

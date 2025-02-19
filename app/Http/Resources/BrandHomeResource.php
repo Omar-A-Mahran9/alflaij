@@ -18,7 +18,7 @@ class BrandHomeResource extends JsonResource
             'id' => $this->id,
             'name'=>$this->name,
             "image"=>getImagePathFromDirectory($this->image, 'Brands'),
-            "cover"=>getImagePathFromDirectory($this->cover, 'Brands'),
+            // "cover"=>getImagePathFromDirectory($this->cover, 'Brands'),
             "cars_count"=> $this->cars->count(),
 
         ];

@@ -89,7 +89,6 @@
                     <th>{{ __("arabic name") }}</th>
                     <th>{{ __("english name") }}</th>
                     <th>{{ __("image") }}</th>
-                    <th>{{ __("cover") }}</th>
                     <th>{{ __("created date") }}</th>
                     <th class="min-w-100px">{{ __("actions") }}</th>
                 </tr>
