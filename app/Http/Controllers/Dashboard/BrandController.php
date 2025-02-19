@@ -18,7 +18,7 @@ class BrandController extends Controller
         if ( $request->ajax() ) {
 
             $brands = getModelData( model: new Brand() , searchingColumns: ['name_ar', 'name_en'] );
-
+            
             return response()->json($brands);
         }
 

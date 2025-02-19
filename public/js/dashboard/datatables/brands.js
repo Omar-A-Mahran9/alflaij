@@ -42,18 +42,11 @@ let KTDatatable = function () {
                 {
                     targets: 3,
                     render: function (data, type, row) {
+                        
                         return `<img style="height:50px;width:50px;border-radius:4px" src="${getImagePathFromDirectory(data, 'Brands')}" class="me-3" >`;
                     }
                 },
-                {
-                    targets: 4,
-                    render: function (data, type, row) {
-                        if ( data !== null )
-                            return `<img style="height:50px;width:80px;border-radius:4px" src="${getImagePathFromDirectory(data, 'Brands')}" class="me-3" >`;
-                        else
-                            return "<h1>-</h1>"
-                    }
-                },
+               
                 {
                     targets: -1,
                     data: null,
