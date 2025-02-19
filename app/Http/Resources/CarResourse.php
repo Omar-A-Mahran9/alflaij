@@ -112,7 +112,7 @@ class CarResourse extends JsonResource
             'tax'=>settings()->getSettings('maintenance_mode') == 1 ? settings()->getSettings('tax') : 0,
             'show_in_home_page' => (bool) $this->show_in_home_page,
             'car_body'=>$this->car_body,
-            'fuel_tank_capacity'=>$this->fuel_tank_capacity, 
+            'engine_capacity'=>$this->engine_capacity, 
             'brand' => [
                 'id' => $this->brand->id??"",
                 'title'=>$this->brand->name??"",

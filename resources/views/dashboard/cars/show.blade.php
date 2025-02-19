@@ -340,15 +340,15 @@
                                             <!-- begin :: Column -->
                                             <div class="col-md-4 fv-row">
 
-                                                <label class="fs-5 fw-bold mb-2">{{ __('fuel tank capacity') }}</label>
+                                                <label class="fs-5 fw-bold mb-2">{{ __('Engine capacity') }}</label>
                                                 <div class="form-floating">
                                                     <input type="number" min="30" class="form-control"
-                                                        id="fuel_tank_capacity_inp" name="fuel_tank_capacity"
-                                                        value="{{ $car['fuel_tank_capacity'] }}" placeholder="example" readonly/>
+                                                        id="engine_capacity_inp" name="engine_capacity"
+                                                        value="{{ $car['engine_capacity'] }}" placeholder="example" readonly/>
                                                     <label
-                                                        for="fuel_tank_capacity_inp">{{ __('Enter the fuel tank capactiy in liters') }}</label>
+                                                        for="engine_capacity_inp">{{ __('Enter the Engine capactiy') }}</label>
                                                 </div>
-                                                <p class="invalid-feedback" id="fuel_tank_capacity"></p>
+                                                <p class="invalid-feedback" id="engine_capacity"></p>
                                             </div>
 
                                             <div class="col-md-4 fv-row">

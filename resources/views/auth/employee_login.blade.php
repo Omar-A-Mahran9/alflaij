@@ -47,7 +47,7 @@
             <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
                 <!--begin::Logo-->
                 <a onclick="window.location.reload()" class="mb-12">
-                    <img alt="Logo" src="{{ asset('dashboard-assets/media/logos/Login.svg') }}" class="h-90px" />
+                    <img alt="Logo" src="{{ asset('dashboard-assets/media/logos/Layer_1.png') }}" class="h-90px" />
                 </a>
                 <!--end::Logo-->
                 <!--begin::Wrapper-->

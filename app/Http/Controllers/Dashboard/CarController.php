@@ -145,7 +145,7 @@ class CarController extends Controller
             'colors.*.images.*' => ['file', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
             'colors.*.stock'=>['required','numeric','min:1'],
             'city_id' => ['required'],
-            'fuel_tank_capacity' => 'required|string|max:255',
+            'engine_capacity' => 'required|string|max:255',
             'car_body' => 'required|string',
             'tags.*' => 'nullable',
             'features' => ['sometimes', 'array'],
