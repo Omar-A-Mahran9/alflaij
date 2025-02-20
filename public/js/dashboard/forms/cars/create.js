@@ -56,6 +56,7 @@ $(document).ready(() => {
                                                     <!-- end   :: Column -->
 
                                                     
+                                                    
 
                                                 </div>
                                                 <!-- end   :: Row -->
