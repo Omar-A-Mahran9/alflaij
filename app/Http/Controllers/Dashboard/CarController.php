@@ -143,7 +143,7 @@ class CarController extends Controller
             'colors.*.id' => [$colorImagesRequired ? 'required' : 'nullable', 'integer', 'exists:colors,id'],
             'colors.*.images' => [$colorImagesRequired ? 'required' : 'nullable', 'array', 'min:1'],
             'colors.*.images.*' => ['file', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
-            'colors.*.stock'=>['required','numeric','min:1'],
+            // 'colors.*.stock'=>['required','numeric','min:1'],
             'city_id' => ['required'],
             'engine_capacity' => 'required|string|max:255',
             'car_body' => 'required|string',
