@@ -235,7 +235,7 @@
 
                                         <div class="col-md-2">
                                             <div class="text-center">
-                                                <a href="javascript:;" data-repeater-delete class="btn btn-sm btn-light-danger mt-3">
+                                                <a href="javascript:;" data-repeater-delete class="btn btn-sm btn-light-danger mt-3"  id="features_0_delete_btn">
                                                     <i class="far fa-trash-alt"></i>{{__('Delete')}}
                                                     
                                                 </a>
@@ -331,7 +331,8 @@
                 }
         
             });
-        
+            console.log(document.getElementById('features_0_delete_btn'));
+            document.getElementById('features_0_delete_btn').style.display = 'none'; // Hide delete button for the first item
             $(document).on('change', '.select-type', function() {
                 var selectedType = $(this).val();
                 var $currentOptionsSelect = $(this).closest('[data-repeater-item]').find('.select-options');
@@ -364,7 +365,7 @@
             function updateRepeaterIndex() {
                 
                 $('[data-repeater-item]').each(function (index) {
-                    $(this).find('input, select').each(function () {
+                    $(this).find('input, select,a').each(function () {
                         var name = $(this).attr('name');
                         var id = $(this).attr('id');
                     
