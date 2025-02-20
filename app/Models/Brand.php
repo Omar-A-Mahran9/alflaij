@@ -55,10 +55,10 @@ class Brand extends Model
         return $this->hasMany(Car::class)->where("is_new", 1);
     }
 
-    // public function countCars()
-    // {
-    //     return $this->cars->count();
-    // }
+    public function countModels()
+    {
+        return $this->models()->count();
+    }
 
     public function countCars()
     {

@@ -87,9 +87,15 @@ class BrandController extends Controller
     public function destroy(Request $request,Brand $brand)
     {
         $this->authorize('delete_brands');
-
+        
         if ($request->ajax())
         {
+            if($brand->countModels()>0)
+            {
+                throw ValidationException::withMessages([
+                    'brand'=>__("This brand is assigned to models and can't be deleted")
+                ]); 
+            }
             if($brand->cars->count() > 0)
                 throw ValidationException::withMessages([
                     'brand' => __("This brand is assigned to cars and can't be deleted")
