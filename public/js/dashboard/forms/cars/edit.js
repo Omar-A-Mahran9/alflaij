@@ -48,7 +48,7 @@ $(document).ready(() => {
     
         currentlySelected.forEach((colorId, index) => {
             let selectedColor = colors.find((color) => color['id'] == colorId);
-            let colorData = colorsWithUniqueImages.find((color) => color['color_id'] == colorId) || { stock: 0, images: [] };
+            let colorData = colorsWithUniqueImages.find((color) => color['color_id'] == colorId) || {  images: [] };
     
             let carImagesCount = colorData.images.length > 0 ? `( ${colorData.images.length} )` : '';
     
@@ -79,13 +79,7 @@ $(document).ready(() => {
                             <p class="invalid-feedback" id="colors_${index}_images"></p>
                         </div>
     
-                        <!-- Stock Input -->
-                        <div class="col-md-4 fv-row">
-                            <label class="text-center fw-bold mb-4 d-block">${__("stock")}</label>
-                            <input type="number" class="form-control" name="colors[${index}][stock]" 
-                                   value="${colorData['stock']}" id="colors_stock_inp_${selectedColor['id']}">
-                            <p class="invalid-feedback" id="colors_${index}_stock"></p>
-                        </div>
+                      
                     </div>
                 </div>
             `);

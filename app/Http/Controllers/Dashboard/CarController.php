@@ -87,7 +87,6 @@ class CarController extends Controller
                 'color_id' => $colors->first()->id,
                 'color_name' => $colors->first()->name,
                 'hex_code' => $colors->first()->hex_code,
-                'stock' => $colors->first()->pivot->stock,
                 'images' => $colors->unique('pivot.image')->pluck('pivot.image')->toArray(),
 
             ];
@@ -221,7 +220,7 @@ class CarController extends Controller
                     $colorImages = $this->uploadCarImages($request->file("colors.$index.images"));
                     // $car->colors()->attach($colorId,['stock'=>])
                     foreach ($colorImages as $image) {
-                        $car->colors()->attach($colorId, ['image' => $image,'stock'=>$color['stock']]);
+                        $car->colors()->attach($colorId, ['image' => $image]);
 
                     }
                 }
@@ -342,14 +341,14 @@ public function update(Request $request, Car $car)
         foreach ($request->input('colors') as $index => $colorData) {
             $colorId = $colorData['id'];
 
-            CarColorImage::where('color_id',$colorId)->update(['stock'=>$colorData['stock']]);
+            // CarColorImage::where('color_id',$colorId)->update(['stock'=>$colorData['stock']]);
             if ($request->hasFile("colors.$index.images")) {
                 $colorImages = $this->uploadCarImages($request->file("colors.$index.images"));
             
                 foreach ($colorImages as $image) {
                     if ($image !== null) {
                         CarColorImage::updateOrCreate(
-                            ['car_id' => $car->id, 'color_id' => $colorId, 'image' => $image,'stock'=>$colorData['stock']],
+                            ['car_id' => $car->id, 'color_id' => $colorId, 'image' => $image],
                             ['updated_at' => now()],
                             
                         );
@@ -436,7 +435,7 @@ private function prepareFeatures($features)
                 'color_id' => $colors->first()->id,
                 'color_name' => $colors->first()->name,
                 'hex_code' => $colors->first()->hex_code,
-                'stock' => $colors->first()->pivot->stock,
+                // 'stock' => $colors->first()->pivot->stock,
                 'images' => $colors->unique('pivot.image')->pluck('pivot.image')->toArray(),
 
             ];
