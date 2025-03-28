@@ -26,7 +26,7 @@ class RenameColumnFromFuelTankCapacityToEngineInCars extends Migration
     public function down()
     {
         Schema::table('cars', function (Blueprint $table) {
-            //
+            $table->renameColumn('fuel_tank_capacity','engine_capacity');
         });
     }
 }

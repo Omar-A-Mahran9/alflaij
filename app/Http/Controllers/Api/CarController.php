@@ -17,12 +17,17 @@ use App\Models\Category;
 use App\Models\City;
 use App\Models\Color;
 use App\Models\Nationality;
+use App\Models\Order;
 use App\Models\Organizationactive;
 use App\Models\OrganizationType;
+use App\Models\Sector;
 use App\Models\Tag;
+use DB;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
+use function PHPUnit\Framework\returnSelf;
 
 class CarController extends Controller
 {
@@ -497,7 +502,7 @@ class CarController extends Controller
         $color_ids = $this->getArrayFromRequest(request('color_ids'));
         $fuel_tank_capacities = $this->getArrayFromRequest(request('fuel_tank_capacities'));
         $brand_ids = $this->getArrayFromRequest(request('brand_ids'));
-        
+        $taxFactor = (settings()->getSettings('tax') / 100 + 1);
         $minPrice = request('min_price');
         $maxPrice = request('max_price');
         // ['maxPrice'=>$defaultMaxPrice,'minPrice'=>$defaultMinPrice] = $this->getMaxMinPrices();
@@ -536,18 +541,30 @@ class CarController extends Controller
         if(!empty($brand_ids)){ 
             $query->when(!empty($brand_ids), fn($q) => $this->filterInArray($q, 'brand_id', $brand_ids));
         }
-        if(isset($minPrice)){ 
-            // if($defaultMinPrice!=$minPrice)
-                $query->clone()->when(isset($minPrice), function($q) use($minPrice){
-                  $q->WhereRaw('coalesce(discount_price,price)>= ?', $minPrice);
-                } );  
+        if(settings()->getSettings('maintenance_mode') == 1){
+
+            if(isset($minPrice) && isset($maxPrice)){ 
+                // if($defaultMinPrice!=$minPrice)
+                    $query->when(isset($minPrice), function($q) use($minPrice,$maxPrice,$taxFactor){
+                        $adjustedMinPrice = $minPrice - 0.01;
+                        $adjustedMaxPrice = $maxPrice + 0.01;
+                        $q->WhereRaw('coalesce(discount_price,price) * ?  BETWEEN ? AND ?', [$taxFactor,$adjustedMinPrice,$adjustedMaxPrice]);
+                    } );  
+                    // dd($minPrice,$maxPrice,$taxFactor);
+                    //  dd($query->toSql(),$query->getBindings());
+                
+            }
+        }else
+        {
             
-        }
-        if(isset($maxPrice)){
-            // if($defaultMaxPrice!=$maxPrice)
-                $query->when(isset($maxPrice), function($q) use($maxPrice){
-                    $q->WhereRaw('coalesce(discount_price,price) <= ?', $maxPrice);
-                }) ;
+            if(isset($minPrice) && isset($maxPrice)){ 
+                // if($defaultMinPrice!=$minPrice)
+                    $query->when(isset($minPrice), function($q) use($minPrice,$maxPrice){
+                    $q->WhereRaw('coalesce(discount_price,price) BETWEEN ? AND ?', [$minPrice,$maxPrice]);
+                    } );  
+                    // dd($query->toSql(),$query->getBindings());
+                
+            }
         }
         if(!empty($fuel_tank_capacities)){ 
             $query->when(!empty($fuel_tank_capacities),fn($q)=>$this->filterInArray($q,'fuel_tank_capacity',$fuel_tank_capacities));
@@ -715,12 +732,24 @@ class CarController extends Controller
         $models                 = CarModel::all();
         $colors                 = Color::all();
         $car                    = Car::query()->where('publish',1);
-        // $max_price              = $car->max('price');
-        $max_price =  $car->clone()->selectRaw('MAX(CASE WHEN discount_price IS NOT NULL THEN discount_price ELSE price END) as max_price')
-        ->value('max_price');
-        // $min_price              = $car->min('price');
-        $min_price = $car->clone()->selectRaw('MIN(CASE WHEN discount_price IS NOT NULL THEN discount_price ELSE price END) as min_price')
-        ->value('min_price');
+        $taxFactor = (settings()->getSettings('tax') / 100 + 1);
+        if(settings()->getSettings('maintenance_mode') == 1){
+            $max_price =  $car->clone()->selectRaw('MAX(CASE WHEN discount_price IS NOT NULL THEN discount_price ELSE price END) * ? as max_price',[$taxFactor])
+            ->value('max_price');
+            // $min_price              = $car->min('price');
+            $min_price = $car->clone()->selectRaw('MIN(CASE WHEN discount_price IS NOT NULL THEN discount_price ELSE price END) * ? as min_price',[$taxFactor])
+            ->value('min_price');
+        
+        }else 
+        {
+
+            // $max_price              = $car->max('price');
+            $max_price =  $car->clone()->selectRaw('MAX(CASE WHEN discount_price IS NOT NULL THEN discount_price ELSE price END) as max_price')
+            ->value('max_price');
+            // $min_price              = $car->min('price');
+            $min_price = $car->clone()->selectRaw('MIN(CASE WHEN discount_price IS NOT NULL THEN discount_price ELSE price END) as min_price')
+            ->value('min_price');
+        }
  
         $years                  = $car->pluck('year')->unique()->sortDesc()->values()->toArray();
        

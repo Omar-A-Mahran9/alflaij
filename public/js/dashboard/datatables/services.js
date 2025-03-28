@@ -32,22 +32,22 @@ let KTDatatable = function () {
             columns: [
                 {data: 'id'},
                 {data: 'name_'  + locale},
-                {data: 'title_' + locale},
+                // {data: 'title_' + locale},
                 {data: 'price'},
                 {data: 'image'},
                 {data: 'created_at'},
                 {data: null,orderable: false},
             ],
             columnDefs: [
-                {
-                    targets: 2,
-                    render: function (data, type, row) {
-                        if ( data !== null)
-                            return data;
-                        else
-                            return "<h1>-</h1>";
-                    }
-                },
+                // {
+                //     targets: 2,
+                //     render: function (data, type, row) {
+                //         if ( data !== null)
+                //             return data;
+                //         else
+                //             return "<h1>-</h1>";
+                //     }
+                // },
                 {
                     targets: 4,
                     render: function (data, type, row) {

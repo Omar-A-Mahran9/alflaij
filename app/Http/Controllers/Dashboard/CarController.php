@@ -141,7 +141,7 @@ class CarController extends Controller
             'colors' => [$colorImagesRequired ? 'required' : 'nullable', 'array', 'min:1'],
             'colors.*.id' => [$colorImagesRequired ? 'required' : 'nullable', 'integer', 'exists:colors,id'],
             'colors.*.images' => [$colorImagesRequired ? 'required' : 'nullable', 'array', 'min:1'],
-            'colors.*.images.*' => ['file', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+            'colors.*.images.*' => ['file', 'image', 'mimes:jpeg,jpg,png,bmp,tiff,webp', 'max:2048'],
             // 'colors.*.stock'=>['required','numeric','min:1'],
             'city_id' => ['required'],
             'engine_capacity' => 'required|string|max:255',
@@ -152,7 +152,7 @@ class CarController extends Controller
             'features.*.id' => ['required', 'exists:features,id'],
             'features.*.description_ar' => ['required', 'string', new NotNumbersOnly()],
             'features.*.description_en' => ['required', 'string', new NotNumbersOnly()],
-            'car_Image' => [$carImageRequired?'required':'nullable', 'image', 'mimes:jpeg,png,jpg,gif'],
+            'car_Image' => [$carImageRequired?'required':'nullable', 'image', 'mimes:jpeg,jpg,png,bmp,tiff,webp'],
         
         ];
 

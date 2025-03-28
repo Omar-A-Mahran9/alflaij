@@ -21,7 +21,7 @@ $(document).ready(() => {
     
     initializeColorsSp();
  
-    
+     
     undoDeleteBtn.click(function () {
         let restoredImage = deletedColorsImages.pop();
         if (!restoredImage) return;
@@ -88,7 +88,7 @@ $(document).ready(() => {
         previouslySelected = currentlySelected; // Update the previous selection
     });
     
-    
+  
     $("#discount-price-switch").change(function () {
         discountInp.prop("disabled", !$(this).prop("checked"));
     });

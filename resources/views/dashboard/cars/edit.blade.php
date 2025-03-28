@@ -895,6 +895,62 @@
     <!-- end   :: Card -->
 @endsection
 @push('scripts')
+<script>
+  
+     // Function to populate models based on selected brand
+     function loadModels(brandId) {
+        $('#model-sp').empty().append('<option value="" selected></option>');  // Clear model dropdown
+
+        if (brandId) {
+            $.ajax({
+                url: '/dashboard/get-models/' + brandId,  // Fetch models based on selected brand
+                type: 'GET',
+                success: function(data) {
+                    // Populate model dropdown
+                    $.each(data, function(key, value) {
+                        $('#model-sp').append('<option value="' + value.id + '">' + value.name + '</option>');
+                    });
+
+                    // After loading models, set the selected model (if any)
+                    var selectedModelId = "{{ $car['model_id'] }}";  // Get the selected model from the server-side (Laravel Blade)
+                    if (selectedModelId) {
+                        $('#model-sp').val(selectedModelId);  // Set the selected model
+                    }
+                }
+            });
+        }
+    }
+
+    // Trigger AJAX when brand is changed
+    $('#brand-sp').on('change', function() {
+        var brandId = $(this).val();
+        loadModels(brandId);  // Call the function to load models based on selected brand
+    });
+
+    // On page load, if there's a selected brand, trigger the models loading
+    var selectedBrandId = "{{ $car['brand_id'] }}";  // Get selected brand ID from server-side (Laravel Blade)
+    if (selectedBrandId) {
+        $('#brand-sp').val(selectedBrandId);  // Set the selected brand
+        loadModels(selectedBrandId);  // Load models for the selected brand
+    }
+
+    // Model to Category dropdown change
+    $('#model-sp').on('change', function() {
+        var modelId = $(this).val();
+        $('#category-sp').empty().append('<option value="" selected></option>');
+        if (modelId) {
+            $.ajax({
+                url: '/dashboard/get-categories/' + modelId,
+                type: 'GET',
+                success: function(data) {
+                    $.each(data, function(key, value) {
+                        $('#category-sp').append('<option value="' + value.id + '">' + value.name + '</option>');
+                    });
+                }
+            });
+        }
+    });
+</script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const radioButtons = document.querySelectorAll('input[name="price_field_status"]');
