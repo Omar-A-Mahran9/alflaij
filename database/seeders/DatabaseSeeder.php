@@ -16,29 +16,29 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminSeeder::class,
             RoleSeeder::class,
-            NationalitySeeder::class,
+            // NationalitySeeder::class,
           //  SectorSeeder::class,
-            BankSeeder::class,
-            ColorSeeder::class,
-            TagSeeder::class,
-            BrandSeeder::class,
-            ModelSeeder::class,
-            CitySeeder::class,
-            OffersSeeder::class,
+          //   BankSeeder::class,
+          //   ColorSeeder::class,
+          //   TagSeeder::class,
+          //   BrandSeeder::class,
+          //   ModelSeeder::class,
+          //   CitySeeder::class,
+          //   OffersSeeder::class,
 
-            SettingOrderStatusSeeder::class,
-            CategoriesTableSeeder::class,
-          //  VendorsTableSeeder::class,
-            CarsTableSeeder::class,
-            UserTypeSeeder::class,
-            OrganizationTypesTableSeeder::class,
-            FavoriteSeeder::class,
-            FaqSeeder::class,
-            CareerSeeder::class,
+          //   SettingOrderStatusSeeder::class,
+          //   CategoriesTableSeeder::class,
+          // //  VendorsTableSeeder::class,
+          //   CarsTableSeeder::class,
+          //   UserTypeSeeder::class,
+          //   OrganizationTypesTableSeeder::class,
+          //   FavoriteSeeder::class,
+          //   FaqSeeder::class,
+          //   CareerSeeder::class,
 
 
 
-            SettingSeeder::class,
+          //   SettingSeeder::class,
 
         ]);
     }
