@@ -15,8 +15,8 @@ class OrderCarColorResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'color_id'=> $this->color_id,
-            'color_name'=> $this->color_name,
+            'color_id'=> $this->id,
+            'color_name'=> $this->name,
         ];
     }
 }
