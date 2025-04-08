@@ -16,7 +16,7 @@ use App\Traits\NotificationTrait;
 use App\Models\Otp;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
-use App\Http\Resources\ColorResourse;
+use App\Http\Resources\OrderCarColorResource;
 
 
 class OrderController extends Controller
@@ -44,7 +44,8 @@ class OrderController extends Controller
             
             
 $car = Car::with('colors')->find($id);
-                  return             ColorResourse::collection($car->colors);
+
+                  return    OrderCarColorResource::collection($car->colors);
 
                  
              // if($colors->isEmpty())return $this->success(data:[],message:__("no data found"));
