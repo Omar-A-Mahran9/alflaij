@@ -31,7 +31,7 @@ class CarResource extends JsonResource
         // "price"=> $this->price,
         'show_status'=>$show_status,
         'price_field_status'=>__($price_field_status) === __('others') ? $this->other_description:__($price_field_status),
-        'price'=>$price_field_status === PriceFieldStatus::show_details->name ?number_format($this->discount_price):0,
+        'price'=>$price_field_status === PriceFieldStatus::show_details->name && $this->have_discount ?number_format($this->discount_price):0,
         'price_before_discount'=>$price_field_status === PriceFieldStatus::show_details->name ?number_format($this->price) :0,
         'price_after_tax' => $price_field_status === PriceFieldStatus::show_details->name 
         ? (settings()->getSettings('maintenance_mode') == 1
