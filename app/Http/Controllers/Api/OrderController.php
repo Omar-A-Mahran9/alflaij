@@ -27,25 +27,15 @@ class OrderController extends Controller
     public function getColorsByCarId($id)
     {
         try{
-              // Fetch car color images with their related color
-            // $colors = CarColorImage::where('car_id', $id)
-            // ->with('color:id,name_ar,name_en') // Ensure 'color' relationship exists
-            // ->get()
-            // ->map(function ($carColorImage) {
-            //     return [
-            //         'color_id' => $carColorImage->color->id,
-            //         'color_name' => $carColorImage->color->name,
-            //     ];
-            // })
-            // ->unique('color_id')
-            // ->values();
+ 
             
             
             
             
 $car = Car::with('colors')->find($id);
+$colors = $car->colors->unique('id');
 
-                  return    OrderCarColorResource::collection($car->colors);
+                  return    OrderCarColorResource::collection($colors);
 
                  
              // if($colors->isEmpty())return $this->success(data:[],message:__("no data found"));
