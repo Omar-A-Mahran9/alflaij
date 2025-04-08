@@ -81,7 +81,8 @@ class CarResourse extends JsonResource
         // })->with('orderDetailsCar')->count();
         // $orderCount=$order->count();
 
-     
+        $tax = settings()->getSettings('tax');
+
         return [
             'id' => $this->id,
             'title' => Str::limit($this->name, 35),
@@ -104,10 +105,14 @@ class CarResourse extends JsonResource
             'supplier_english'=>$this->supplier,
             'have_discount'=>$this->have_discount,
             'video_url'=>$this->video_url,  
-            'price'=>$price_field_status === PriceFieldStatus::show_details->name ?number_format($this->discount_price):0,
-            'price_before_discount'=>$price_field_status === PriceFieldStatus::show_details->name && $this->have_discount?number_format($this->price) :0,
-            'price_after_tax' =>$price_field_status === PriceFieldStatus::show_details->name ? ($this->price_after_vat ==$this->price ? 0 :number_format($this->price_after_vat) ):0,
-           // 'discount_percentage' =>$price_field_status === PriceFieldStatus::show_details->name ? $this->discount_price != 0 ? round(($this->price - $this->discount_price) / $this->price * 100, 2): 0:null,
+            'price'=>$price_field_status === PriceFieldStatus::show_details->name && $this->have_discount ?number_format($this->discount_price):0,
+            'price_before_discount'=>$price_field_status === PriceFieldStatus::show_details->name ?number_format($this->price) :0,
+            'price_after_tax' => $price_field_status === PriceFieldStatus::show_details->name 
+            ? (settings()->getSettings('maintenance_mode') == 1
+                ? round($this->price * (1 + $tax / 100)) // Price with VAT for maintenance mode 1
+                : null) // Price with VAT for maintenance mode 0 (as per your requirement)
+            : $this->price, // Default price if not in show_details status
+               // 'discount_percentage' =>$price_field_status === PriceFieldStatus::show_details->name ? $this->discount_price != 0 ? round(($this->price - $this->discount_price) / $this->price * 100, 2): 0:null,
             //'selling_price'=>$price_field_status === PriceFieldStatus::show_details->name ?$this->getSellingPriceAttribute():0,
             'tax'=>settings()->getSettings('maintenance_mode') == 1 ? settings()->getSettings('tax') : 0,
             'show_in_home_page' => (bool) $this->show_in_home_page,
