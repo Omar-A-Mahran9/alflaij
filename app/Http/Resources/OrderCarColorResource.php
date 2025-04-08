@@ -17,6 +17,6 @@ class OrderCarColorResource extends JsonResource
         return [
             'color_id'=> $this->color_id,
             'color_name'=> $this->color_name,
-        ]
+        ];
     }
 }
