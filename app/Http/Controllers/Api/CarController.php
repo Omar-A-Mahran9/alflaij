@@ -168,10 +168,10 @@ class CarController extends Controller
         foreach ($ranges as $index => $range) {
             // For each range, we'll count the cars that fit the criteria
             if ($range === 'greater_than_3000') {
-                $count = Car::where('fuel_tank_capacity', '>', 3000)->where('publish',1)->where('show_in_home_page', 1)->count();
+                $count = Car::where('engine_capacity', '>', 3000)->where('publish',1)->where('show_in_home_page', 1)->count();
                 $title = 'More than 3000';
             } else {
-                $count = Car::whereBetween('fuel_tank_capacity', $range)->where('publish',1)->where('show_in_home_page', 1)->count();
+                $count = Car::whereBetween('engine_capacity', $range)->where('publish',1)->where('show_in_home_page', 1)->count();
                 $title = "{$range[0]} - {$range[1]}";
             }
         
@@ -406,32 +406,32 @@ class CarController extends Controller
                 return $q->where('price', '<=', $maxPrice);
             });
 
-            $query->when('fuel_tank_capacity', function ($q) use ($fuel_tank_capacities) {
+            $query->when('engine_capacity', function ($q) use ($fuel_tank_capacities) {
                 if (in_array('all', $fuel_tank_capacities)) {
                     return $q;
                 } else {
                     foreach ($fuel_tank_capacities as $choice) {
                         switch ($choice) {
                             case 0:
-                                $q->orWhereBetween('fuel_tank_capacity', [800, 1200]);
+                                $q->orWhereBetween('engine_capacity', [800, 1200]);
                                 break;
                             case 1:
-                                $q->orWhereBetween('fuel_tank_capacity', [1300, 1400]);
+                                $q->orWhereBetween('engine_capacity', [1300, 1400]);
                                 break;
                             case 2:
-                                $q->orWhereBetween('fuel_tank_capacity', [1500, 1600]);
+                                $q->orWhereBetween('engine_capacity', [1500, 1600]);
                                 break;
                             case 3:
-                                $q->orWhereBetween('fuel_tank_capacity', [1800, 2000]);
+                                $q->orWhereBetween('engine_capacity', [1800, 2000]);
                                 break;
                             case 4:
-                                $q->orWhereBetween('fuel_tank_capacity', [2200, 3000]);
+                                $q->orWhereBetween('engine_capacity', [2200, 3000]);
                                 break;
                             case 5:
-                                 $q->where('fuel_tank_capacity', '>', 3000);
+                                 $q->where('engine_capacity', '>', 3000);
                                  break;
                             default:
-                                 $q->WhereBetween('fuel_tank_capacity', [0, 3000]);
+                                 $q->WhereBetween('engine_capacity', [0, 3000]);
                                 break;
     
     
@@ -567,7 +567,7 @@ class CarController extends Controller
             }
         }
         if(!empty($fuel_tank_capacities)){ 
-            $query->when(!empty($fuel_tank_capacities),fn($q)=>$this->filterInArray($q,'fuel_tank_capacity',$fuel_tank_capacities));
+            $query->when(!empty($fuel_tank_capacities),fn($q)=>$this->filterInArray($q,'engine_capacity',$fuel_tank_capacities));
         }
         
         $query->orderBy('price_field_status','asc')->orderBy('created_at', $orderDirection);
@@ -676,7 +676,7 @@ class CarController extends Controller
                     ];
                 })->values(); 
                 $manufacturing_years=  $cars->pluck('year')->unique()->values();
-                $tank_capacities = $cars->pluck('fuel_tank_capacity')->unique()->values();
+                $tank_capacities = $cars->pluck('engine_capacity')->unique()->values();
                 $result=['available_colors'=> $available_colors
                 ,'manufacturing_years'=>$manufacturing_years
                 ,'tank_capacities'=>$tank_capacities
@@ -753,7 +753,7 @@ class CarController extends Controller
  
         $years                  = $car->pluck('year')->unique()->sortDesc()->values()->toArray();
        
-        $fuelTankCapacities     = $car->pluck('fuel_tank_capacity')->unique()->sortDesc()->values()->toArray();                            
+        $fuelTankCapacities     = $car->pluck('engine_capacity')->unique()->sortDesc()->values()->toArray();                            
         $result = [
             'brand_ids'=>$brands->map(function($brand){
                 return [
@@ -827,7 +827,7 @@ class CarController extends Controller
             ];
         })->values(); 
         $manufacturing_years=  $cars->pluck('year')->unique()->values();
-        $tank_capacities = $cars->pluck('fuel_tank_capacity')->unique()->values();
+        $tank_capacities = $cars->pluck('engine_capacity')->unique()->values();
         $result=collect(['available_colors'=> $available_colors
         ,'manufacturing_years'=>$manufacturing_years
         ,'tank_capacities'=>$tank_capacities

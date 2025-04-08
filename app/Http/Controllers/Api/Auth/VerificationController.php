@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Enums\VendorStatus;
-use Illuminate\Http\Request;
+ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Vendor;
 use Illuminate\Support\Facades\Auth;
