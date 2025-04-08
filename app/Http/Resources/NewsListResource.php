@@ -19,7 +19,7 @@ class NewsListResource extends JsonResource
             "title" => $this->title,
             "description" => $this->description, // Assuming this is the translated attribute
             "highlighted_news" => $this->highlighted_news,
-            "image" => $this->main_image,
+            'image'=>$this->full_image_path,
             "created_at" => $this->created_at->toDateString(),
 
         ];
