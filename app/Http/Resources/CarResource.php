@@ -15,6 +15,12 @@ class CarResource extends JsonResource
      */
     public function toArray($request)
     {
+
+
+        $price_field_status = PriceFieldStatus::values()[$this->price_field_status]??'available_upon_request';
+        $show_status = $price_field_status === PriceFieldStatus::show_details->name ? 0 : 1;
+        $tax = settings()->getSettings('tax');
+
         $price_field_status = PriceFieldStatus::values()[$this->price_field_status]??'available_upon_request';
         $show_status = $price_field_status === PriceFieldStatus::show_details->name ? 0 : 1;
         return[  
