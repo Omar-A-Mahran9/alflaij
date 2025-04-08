@@ -544,27 +544,17 @@ class CarController extends Controller
         if(settings()->getSettings('maintenance_mode') == 1){
 
             if(isset($minPrice) && isset($maxPrice)){ 
-                // if($defaultMinPrice!=$minPrice)
-                    $query->when(isset($minPrice), function($q) use($minPrice,$maxPrice,$taxFactor){
-                        $adjustedMinPrice = $minPrice - 0.01;
-                        $adjustedMaxPrice = $maxPrice + 0.01;
-                        $q->WhereRaw('coalesce(discount_price,price) * ?  BETWEEN ? AND ?', [$taxFactor,$adjustedMinPrice,$adjustedMaxPrice]);
-                    } );  
-                    // dd($minPrice,$maxPrice,$taxFactor);
-                    //  dd($query->toSql(),$query->getBindings());
-                
+                // Maintenance mode: Filter by price_after_tax
+                $query->whereBetween('price_after_tax', [$minPrice, $maxPrice]);
             }
-        }else
-        {
-            
+        
+        }else{
+        
             if(isset($minPrice) && isset($maxPrice)){ 
-                // if($defaultMinPrice!=$minPrice)
-                    $query->when(isset($minPrice), function($q) use($minPrice,$maxPrice){
-                    $q->WhereRaw('coalesce(discount_price,price) BETWEEN ? AND ?', [$minPrice,$maxPrice]);
-                    } );  
-                    // dd($query->toSql(),$query->getBindings());
-                
+                // Non-maintenance mode: Filter by price
+                $query->whereBetween('price', [$minPrice, $maxPrice]);
             }
+        
         }
         if(!empty($fuel_tank_capacities)){ 
             $query->when(!empty($fuel_tank_capacities),fn($q)=>$this->filterInArray($q,'engine_capacity',$fuel_tank_capacities));
@@ -734,21 +724,21 @@ class CarController extends Controller
         $car                    = Car::query()->where('publish',1);
         $taxFactor = (settings()->getSettings('tax') / 100 + 1);
         if(settings()->getSettings('maintenance_mode') == 1){
-            $max_price =  $car->clone()->selectRaw('MAX(CASE WHEN discount_price IS NOT NULL THEN discount_price ELSE price END) * ? as max_price',[$taxFactor])
-            ->value('max_price');
-            // $min_price              = $car->min('price');
-            $min_price = $car->clone()->selectRaw('MIN(CASE WHEN discount_price IS NOT NULL THEN discount_price ELSE price END) * ? as min_price',[$taxFactor])
-            ->value('min_price');
+
+            $max_price =Car::max('price_after_tax');
+
+            $min_price = Car::min('price_after_tax') ;    
+            $test = '';
+ 
         
         }else 
         {
 
-            // $max_price              = $car->max('price');
-            $max_price =  $car->clone()->selectRaw('MAX(CASE WHEN discount_price IS NOT NULL THEN discount_price ELSE price END) as max_price')
-            ->value('max_price');
-            // $min_price              = $car->min('price');
-            $min_price = $car->clone()->selectRaw('MIN(CASE WHEN discount_price IS NOT NULL THEN discount_price ELSE price END) as min_price')
-            ->value('min_price');
+          
+
+            $max_price = round(Car::max('price')) ;
+            $min_price = round(Car::min('price')) ;
+
         }
  
         $years                  = $car->pluck('year')->unique()->sortDesc()->values()->toArray();
@@ -812,10 +802,24 @@ class CarController extends Controller
     }
     public function advancedSelect2($id){
         
-        $carsQyery=Car::query()->with('colors')->where('model_id',$id);        
-        $lowest_price=$carsQyery->clone()->selectRaw('MIN(case when discount_price IS NOT NULL then discount_price ELSE price end) as max_price')->value('max_price');
-        $highest_price=$carsQyery->clone()->selectRaw('MAX(case when discount_price IS NOT NULL then discount_price ELSE price end) as min_price')->value('min_price');
-        $cars=$carsQyery->get();
+        $carsQyery=Car::query()->with('colors')->where('model_id',$id);      
+        
+        
+
+
+        $lowest_price='';
+        $highest_price='';
+        
+        if(settings()->getSettings('maintenance_mode') == 1 ){
+            $lowest_price=$carsQyery->min('price_after_tax');
+            $highest_price=$carsQyery->max('price_after_tax');
+            
+        }else{
+            $highest_price=round($carsQyery->max('price'));
+            $lowest_price= round($carsQyery->min('price'));
+
+        }
+         $cars=$carsQyery->get();
         // Collect all unique colors separately
         $available_colors = $cars->flatMap(function ($car) {
             return $car->colors; 

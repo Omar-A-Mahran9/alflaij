@@ -198,7 +198,10 @@ class CarController extends Controller
 
         $data                  = $request->except('car_Image', 'deleted_images', 'car_id', 'tags', 'colors', 'features');
         $data['have_discount'] = $request['have_discount'] === "on";
-        
+        if(settings()->getSettings('maintenance_mode') == 1){
+
+            $data["price_after_tax"] = $data['price'] * (1 + settings()->getSettings('tax') / 100);
+        }
         $car = Car::create($data);
         if ($request->hasFile('car_Image')) {
             $image = uploadImage($request->file('car_Image'),"Cars");
@@ -360,6 +363,13 @@ public function update(Request $request, Car $car)
 
     // Update main car data and relationships
     $car->update($data);
+
+
+    if(settings()->getSettings('maintenance_mode') == 1){
+
+        $car->price_after_tax = $car->price * (1 + settings()->getSettings('tax') / 100);
+        $car->save();
+    }
     $car->tags()->sync($request['tags'] ?? []);
     $car->features()->sync($this->prepareFeatures($request->features ?? []));
 
