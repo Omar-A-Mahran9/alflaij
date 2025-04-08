@@ -16,6 +16,7 @@ use App\Traits\NotificationTrait;
 use App\Models\Otp;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
+use App\Http\Resources\ColorResourse;
 
 
 class OrderController extends Controller
@@ -27,19 +28,27 @@ class OrderController extends Controller
     {
         try{
               // Fetch car color images with their related color
-            $colors = CarColorImage::where('car_id', $id)
-            ->with('color:id,name_ar,name_en') // Ensure 'color' relationship exists
-            ->get()
-            ->map(function ($carColorImage) {
-                return [
-                    'color_id' => $carColorImage->color->id,
-                    'color_name' => $carColorImage->color->name,
-                ];
-            })
-            ->unique('color_id')
-            ->values();
-            if($colors->isEmpty())return $this->success(data:[],message:__("no data found"));
-            return $this->success(data:$colors );
+            // $colors = CarColorImage::where('car_id', $id)
+            // ->with('color:id,name_ar,name_en') // Ensure 'color' relationship exists
+            // ->get()
+            // ->map(function ($carColorImage) {
+            //     return [
+            //         'color_id' => $carColorImage->color->id,
+            //         'color_name' => $carColorImage->color->name,
+            //     ];
+            // })
+            // ->unique('color_id')
+            // ->values();
+            
+            
+            
+            
+$car = Car::with('colors')->find($id);
+                  return             ColorResourse::collection($car->colors);
+
+                 
+             // if($colors->isEmpty())return $this->success(data:[],message:__("no data found"));
+            // return $this->success(data:$colors );
         }catch(ModelNotFoundException $e){return $this->success(data:[],message:__("no data found"));}
     }
     public function allCar()
