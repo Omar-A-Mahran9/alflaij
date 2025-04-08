@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Enums\FeatureOrPossibility;
+use App\Http\Resources\ServiceResource;
 use App\Models\Service;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,6 +17,7 @@ class ServiceDetailsResource extends JsonResource
      */
     public function toArray($request)
     {
+        $services = Service::all();
 
         $features= collect($this->features)->filter(function($feature){
             return $feature->type === FeatureOrPossibility::feature->value; 
@@ -42,6 +44,8 @@ class ServiceDetailsResource extends JsonResource
         'image'=>getImagePathFromDirectory($this->image,'Services'),
         'description'=>$this->description,
         'features'=>$features,
+        "related_service"=>ServiceResource::collection($services)
+
      
         ];
     }

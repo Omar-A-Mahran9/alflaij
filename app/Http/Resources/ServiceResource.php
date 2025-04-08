@@ -3,6 +3,8 @@
 namespace App\Http\Resources;
 
 use App\Enums\FeatureOrPossibility;
+use App\Http\Resources\ServiceResource;
+use App\Models\Service;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ServiceResource extends JsonResource
@@ -17,7 +19,7 @@ class ServiceResource extends JsonResource
     {
        
     //    dd($this->discount_price);
-        
+     
         return [
             'id'=>$this->id,
             'name'=>$this->name,
@@ -26,6 +28,8 @@ class ServiceResource extends JsonResource
             'price_after_tax' => $this->getPriceAfterVatAttribute() == $this->price ? 0:$this->getPriceAfterVatAttribute(),
             'image'=>getImagePathFromDirectory($this->image,'Services'),
             'description'=>$this->description,
+
+
            
         ];
     }
