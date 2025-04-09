@@ -171,6 +171,7 @@ $colors = $car->colors->unique('id');
              'car_id'=>['required','integer','exists:cars,id'],
              'color_id'    => ['required','exists:colors,id'],
             'name'=>['required','string'],
+            'age'=>['required','string',new NotNumbersOnly()],
             'phone' => ['required', 'string', 'regex:/^(05|5)\d{8}$/'],
             'city_id'=>['required','integer','exists:cities,id'], 
             'salary'=>['required','integer'],
