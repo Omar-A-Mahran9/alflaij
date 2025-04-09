@@ -35,7 +35,7 @@ class CareerController extends Controller
         $this->authorize('view_careers');
 
         if ($request->ajax()) {
-            $data = getModelData(model: new Applicant(), andsFilters: [['career_id', '=', $request['career_id']]], relations: ['career' => ['id', 'title_' . getLocale(),'long_description_' . getLocale() ,'city_id']]);
+            $data = getModelData(model: new Applicant(), andsFilters: [['career_id', '=', $request['career_id']]], relations: ['career' => ['id', 'title_' . getLocale(),'long_description_' . getLocale() ,'short_description_ar','short_description_en','city_id']]);
             return response()->json($data);
         } else {
             $careerTitle = Career::find($request['career_id'])->title;
