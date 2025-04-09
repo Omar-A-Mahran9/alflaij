@@ -15,7 +15,7 @@ let KTDatatable = function () {
             searchDelay: 500,
             processing: true,
             serverSide: true,
-            order: [[5, 'desc']], // display records number and ordering type
+            order: [[4, 'desc']], // display records number and ordering type
             stateSave: false,
             select: {
                 style: 'os',
@@ -33,39 +33,36 @@ let KTDatatable = function () {
                 {data: 'id'},
                 {data: 'title_ar'},
                 {data: 'title_en'},
-                // {data: 'short_description'},
-                {data: 'city.name',name:'city_id'},
-                // {data: 'address'},
-                {data: 'status',name: 'status'},
-                {data: 'created_at',name:'created_at'},
-                {data: null},
+
+                
+                 {data: 'status',name: 'status'},
+ 
+
+                 {data: 'created_at',name: 'created_at'},
+                 {data: 'city.name',name:'city_id'},
+                 {data: 'long_description_ar',name:'long_description_ar'},
+                 {data: 'long_description_en',name:'long_description_en'},
+
+                 {data: null},
                 {data: null},
             ],
             columnDefs: [
                 {
-                    targets: 4,
-                    render:function (data, type, row) {
-                        if (data == 1)
-                            return __('available');
+                    targets: 3,
+                    render: function (data, type, row) {
+                        if ( data == 1)
+                            return `<h6>${ __('available') }</h6>`;
                         else
-                            return __('unavailable');
+                            return `<h6>${ __('unavailable') }</h6>`;
                     }
                 },
-                // {
-                //     targets: 2,
-                //     width:180,
-                //     render:function (data, type, row) {
-                //         return `<a     onclick="showMoreInDT(this)" > <span  class="cursor-pointer" title="${ __('show more')}" >${ data.substr(0, 20) }</span> </a>
-                //                 <span  title="${ __('show more')}"> ${ data.length > 20 ? '...' : ''} </span>
-                //                 <span  style="display:none"> ${ data.substr(20) } </span>` ;
-                //     }
-                // },
                 {
-                    targets: 6,
+                    targets: 8,
                     render:function (data, type, row) {
                         return `<a href="/dashboard/applicants?career_id=${ data.id }" target="_blank" >${ __('applicants')}</a>` ;
                     }
                 },
+
                 {
                     targets: -1,
                     data: null,
@@ -83,6 +80,7 @@ let KTDatatable = function () {
 
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
+
                                     <a href="/dashboard/careers/${ row.id }/edit" class="menu-link px-3 d-flex justify-content-between edit-row" >
                                        <span> ${__('Edit')} </span>
                                        <span>  <i class="fa fa-edit text-primary"></i> </span>
@@ -93,6 +91,7 @@ let KTDatatable = function () {
 
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
+
                                     <a href="/dashboard/careers/${ row.id }" class="menu-link px-3 d-flex justify-content-between" >
                                        <span> ${__('Show')} </span>
                                        <span>  <i class="fa fa-eye text-black-50"></i> </span>
@@ -103,7 +102,7 @@ let KTDatatable = function () {
 
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
-                                    <a href="#" class="menu-link px-3 d-flex justify-content-between delete-row" data-row-id="${row.id}" data-type="${__('career')}">
+                                    <a href="#" class="menu-link px-3 d-flex justify-content-between delete-row" data-row-id="${row.id}" data-type="${__('offer')}">
                                        <span> ${__('Delete')} </span>
                                        <span>  <i class="fa fa-trash text-danger"></i> </span>
                                     </a>
@@ -122,9 +121,9 @@ let KTDatatable = function () {
         table = datatable.$;
 
         datatable.on('draw', function () {
-            KTMenu.createInstances();
             handleDeleteRows();
             handleFilterDatatable();
+            KTMenu.createInstances();
         });
     }
 
@@ -137,7 +136,22 @@ let KTDatatable = function () {
 
     }
 
+    // Filter Datatable
+    let handleFilterDatatable = () => {
 
+        $('.filter-datatable-inp').each( (index , element) =>  {
+
+            $(element).change( function () {
+
+                let columnIndex = $(this).data('filter-index'); // index of the searching column
+
+                datatable.column(columnIndex).search( $(this).val()).draw();
+            });
+
+        })
+    }
+
+    // Delete record
     let handleDeleteRows = () => {
 
         $('.delete-row').click(function () {
@@ -154,7 +168,7 @@ let KTDatatable = function () {
                     $.ajax({
                         method: 'delete',
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        url: '/dashboard/careers/' + rowId,
+                        url: '/dashboard/offers/' + rowId,
                         success: () => {
 
                             setTimeout( () => {
@@ -189,21 +203,6 @@ let KTDatatable = function () {
         })
     }
 
-    // Filter Datatable
-    let handleFilterDatatable = () => {
-
-        $('.filter-datatable-inp').each( (index , element) =>  {
-
-            $(element).change( function () {
-
-                let columnIndex = $(this).data('filter-index'); // index of the searching column
-                console.log($(this).val())
-               datatable.column(columnIndex).search( $(this).val()).draw();
-            });
-
-        })
-    }
-
 
     // Public methods
     return {
@@ -211,6 +210,7 @@ let KTDatatable = function () {
             initDatatable();
             handleSearchDatatable();
             // handleFilterDatatable();
+
 
         }
     }

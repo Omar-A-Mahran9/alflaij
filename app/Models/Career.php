@@ -17,6 +17,7 @@ class Career extends Model
         'short_description_ar',
         'short_description_en',
         'long_description_ar',
+        'long_description_en',
         'address',
         'status',
         'address',

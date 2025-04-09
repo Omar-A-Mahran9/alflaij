@@ -50,35 +50,22 @@
                 <div class="d-flex align-items-center position-relative my-1 mb-2 mb-md-0">
 
                     <span class="svg-icon svg-icon-1 position-absolute ms-6">
-                        <i class="fa fa-search fa-lg"></i>
+                           <i class="fa fa-search fa-lg" ></i>
                     </span>
 
-                    <input type="text" class="form-control form-control-solid w-250px ps-15 border-gray-300 border-1"
-                        id="general-search-inp" placeholder="{{ __('Search ...') }}">
+                <input type="text" class="form-control form-control-solid w-250px ps-15 border-gray-300 border-1" id="general-search-inp" placeholder="{{ __("Search ...") }}">
 
-                    <input
-                        class="form-control form-control-solid ms-4 datepicker border-gray-300 border-1 filter-datatable-inp me-4"
-                        readonly placeholder="{{ __('Choose the date') }}" data-filter-index="6" />
+                <input class="form-control form-control-solid ms-4 datepicker border-gray-300 border-1 filter-datatable-inp me-4" 
+                readonly placeholder="{{ __('Choose the date') }}" data-filter-index="4" />
 
-                    <select class="form-select form-select-solid border-gray-300 border-1 filter-datatable-inp"
-                        data-filter-index="4" data-control="select2" data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}"
-                        data-placeholder="{{ __('Choose the status') }}">
-                        <option value=""></option>
-                        <option value="all" selected>{{ __('All') }}</option>
-                        <option value="1">{{ __('available') }}</option>
-                        <option value="0">{{ __('unavailable') }}</option>
-                    </select>
-
-                    <select class="form-select form-select-solid border-gray-300 border-1 filter-datatable-inp ms-4"
-                        data-filter-index="3" data-control="select2" data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}"
-                        data-placeholder="{{ __('Choose the city') }}">
-                        <option value=""></option>
-                        <option value="all" selected>{{ __('All') }}</option>
-                        @foreach ($cities as $city)
-                            <option value="{{ $city->id }}">{{ $city->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                <select class="form-select form-select-solid border-gray-300 border-1 filter-datatable-inp" 
+                data-filter-index="3" data-control="select2" data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}" data-placeholder="{{ __("Choose the status") }}" >
+                    <option value="" ></option>
+                    <option value="all" selected>{{ __("All") }}</option>
+                    <option value="1" >{{ __('available') }}</option>
+                    <option value="0" >{{ __('unavailable') }}</option>
+                </select>
+            </div>
                 <!-- end   :: General Search -->
 
                 <!-- begin :: Toolbar -->
@@ -121,11 +108,16 @@
                         <th>#</th>
                         <th>{{ __('Job title in arabic') }}</th>
                         <th>{{ __('Job title in english') }}</th>
-                        <!-- <th>{{ __('short description') }}</th> -->
-                        <th>{{ __('city') }}</th>
-                        <!-- <th>{{ __('address') }}</th> -->
+
+                        
+                        
+
                         <th>{{ __('status') }}</th>
                         <th>{{ __('created date') }}</th>
+                        <th>{{ __('city') }}</th>
+                        <th>{{ __('long description arabic') }}</th>
+                        <th>{{ __('long description english') }}</th>
+
                         <th>{{ __('applicants') }}</th>
                         <th class="min-w-100px">{{ __('actions') }}</th>
                     </tr>

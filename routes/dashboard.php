@@ -66,6 +66,7 @@ Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard', 'as' => 'dash
     Route::resource('settings', 'SettingController')->only(['index', 'store']);
     // Route::get('/applicants', 'CareerController@applicants');
 
+    Route::resource('careers', 'CareerController');
 
     Route::resource('finance-approvals', 'FinanceApprovalsController');
     Route::get('/finance-approvals/pdf/{id}', [FinanceApprovalsController::class, 'financeapprovalPDF']);

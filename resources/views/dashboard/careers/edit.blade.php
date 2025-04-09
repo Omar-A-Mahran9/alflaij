@@ -101,6 +101,47 @@
                     </div>
                     <!-- end   :: Row -->
 
+                    <div class="row mb-8">
+
+<!-- begin :: Column -->
+<div class="col-md-6 fv-row">
+
+    <label class="fs-5 fw-bold mb-2">{{ __('long description arabic') }}</label>
+    <div class="form-floating">
+        <textarea type="text" class="form-control" id="long_description_ar_inp" name="long_description_ar"
+            placeholder="example">
+        {{$career->long_description_ar}}
+        
+        </textarea>
+        <label for="long_description_ar_inp">{{ __('Enter the long description arabic') }}</label>
+    </div>
+    <p class="invalid-feedback" id="long_description_ar"></p>
+
+
+</div>
+<!-- end   :: Column -->
+
+<!-- begin :: Column -->
+<div class="col-md-6 fv-row">
+
+    <label class="fs-5 fw-bold mb-2">{{ __('long description english') }}</label>
+    <div class="form-floating">
+        <textarea type="text" class="form-control" id="long_description_en_inp" name="long_description_en"
+            placeholder="example" >
+            {{$career->long_description_en}}
+        
+        
+        </textarea>
+        <label for="long_description_en_inp">{{ __('Enter the long description english') }}</label>
+    </div>
+    <p class="invalid-feedback" id="long_description_en"></p>
+
+
+</div>
+<!-- end   :: Column -->
+
+</div>
+
                     <!-- begin :: Row -->
                     <div class="row mb-8">
 

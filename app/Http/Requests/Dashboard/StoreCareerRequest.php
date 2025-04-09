@@ -27,12 +27,11 @@ class StoreCareerRequest extends FormRequest
     public function rules()
     {
         return [
-            'title_ar'             => ['required', 'string', 'max:255', new NotNumbersOnly(),new ExistButDeleted(new Career())],
-            'title_en'             => ['required', 'string', 'max:255', new NotNumbersOnly(),new ExistButDeleted(new Career())],
+            'title_ar'             => ['required', 'string', 'max:255', new NotNumbersOnly()],
+            'title_en'             => ['required', 'string', 'max:255', new NotNumbersOnly()],
             'work_type'            => ['required', 'in:full-time,part-time,remotely'],
-            // 'address'           => ['required','string','max:255'],
-            // 'short_description' => ['required','string'],
-            // 'long_description'  => ['required','string'],
+             'long_description_ar'  => ['required','string',new NotNumbersOnly()],
+             'long_description_en'  => ['required','string',new NotNumbersOnly()],
             'city_id'           => ['required'],
         ];
     }

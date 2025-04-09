@@ -13,7 +13,7 @@ class CareerController extends Controller
 {
     public function index()
     {
-        try
+         try
         {
             $careers = Career::with('city')->where('status', 1)->get();
             return  CareerResource::collection($careers);
