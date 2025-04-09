@@ -145,7 +145,7 @@ class CarResourse extends JsonResource
             'features' =>!empty($features) ? $features : [],
             'possibilities'=>!empty($possibilities) ? $possibilities :[],  
             'colors' => !empty($colorDetails) ? $colorDetails   :[],
-            'car'=> carCardDetails::collection($cars)
+            'related_car'=> carCardDetails::collection($cars)
         ];
     }
 }
