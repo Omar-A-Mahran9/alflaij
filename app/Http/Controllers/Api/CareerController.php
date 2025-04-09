@@ -37,6 +37,9 @@ class CareerController extends Controller
         if ($request->file('cv'))
             $data['cv'] = uploadImage($request->file('cv'), "Applicants");
         Applicant::create($data);
-        return $this->success();
+        return $this->response()->json([
+            "success"=> true,
+            "message"=> "تمت العملية بنجاح"
+        ]);
     }
 }
