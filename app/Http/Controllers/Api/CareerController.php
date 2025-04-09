@@ -39,7 +39,7 @@ class CareerController extends Controller
         Applicant::create($data);
         return  response()->json([
             "success"=> true,
-            "message"=> "تمت العملية بنجاح"
+            "message"=> __('تمت العملية بنجاح')
         ]);
     }
 }

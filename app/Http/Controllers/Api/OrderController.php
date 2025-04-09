@@ -168,25 +168,29 @@ $colors = $car->colors->unique('id');
     {
      
          $request->validate([
+             'car_id'=>['required','integer','exists:cars,id'],
+             'color_id'    => ['required','exists:colors,id'],
             'name'=>['required','string'],
-            'car_id'=>['required','integer','exists:cars,id'],
-            'salary'=>['required','integer'],
-            'year_installment'=>['required','integer'],
+            'phone' => ['required', 'string', 'regex:/^(05|5)\d{8}$/'],
             'city_id'=>['required','integer','exists:cities,id'], 
+            'salary'=>['required','integer'],
+            'work'=>['required','string',new NotNumbersOnly()],
+            'bank_id'=>['required','integer','exists:banks,id'],
+            'having_loan'    =>['required', 'in:0,1'], 
+            
+            'driving_license' => ['required', Rule::in(['available', 'expired', 'doesnt_exist'])],
+
+
+            
+
+            'year_installment'=>['required','integer'],
             'first_payment_value'=>['required','numeric'],
             'last_payment_value'=>['required','numeric'],
-            'bank_id'=>['required','integer','exists:banks,id'],
-            'work'=>['required','string',new NotNumbersOnly()],
-            'color_id'    => ['required','exists:colors,id'],
             'stumbles' => ['required', 'in:0,1'], 
             
             'commitments'    => ['required', 'numeric'],
             
-            'having_loan'    =>['required', 'in:0,1'], 
             
-            'driving_license' => ['required', Rule::in(['available', 'expired', 'doesnt_exist'])],
-            
-            'phone' => ['required', 'string', 'regex:/^(05|5)\d{8}$/'],
             
         ]);
   

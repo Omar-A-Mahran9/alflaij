@@ -14,7 +14,7 @@ use App\Models\Order;
 use Auth;
 use Illuminate\Support\Str;
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use \App\Http\Resources\carCardDetails;
 class CarResourse extends JsonResource
 {
     /**
@@ -25,6 +25,10 @@ class CarResourse extends JsonResource
      */
     public function toArray($request)
     {
+
+        $cars = Car::where('id','!=' ,$this->id)
+        ->where('brand_id',$this->brand_id)
+        ->get();
         $price_field_status = PriceFieldStatus::values()[$this->price_field_status]??'available_upon_request';
         $show_status = $price_field_status === PriceFieldStatus::show_details->name ? 0 : 1;
         $features= $this->features->filter(function($feature){
@@ -141,6 +145,7 @@ class CarResourse extends JsonResource
             'features' =>!empty($features) ? $features : [],
             'possibilities'=>!empty($possibilities) ? $possibilities :[],  
             'colors' => !empty($colorDetails) ? $colorDetails   :[],
+            'car'=> carCardDetails::collection($cars)
         ];
     }
 }
