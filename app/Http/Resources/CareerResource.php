@@ -17,15 +17,10 @@ class CareerResource extends JsonResource
         return [
             "id" => $this->id,
             "title" => $this->title,
-            "short_description" => $this->short_description,
-            "long_description" => $this->long_description,
-            "address" => $this->address,
-            'city' => [
+             'city' => [
                 'id' => $this->city->id,
                 'title' => $this->city->name,
             ],
             "work_type" => $this->work_type,
-            "created_at" => $this->created_at->toDateString(),
-            "updated_at" => $this->updated_at->toDateString(),
-        ];    }
+         ];    }
 }
