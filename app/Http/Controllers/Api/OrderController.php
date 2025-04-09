@@ -177,25 +177,12 @@ $colors = $car->colors->unique('id');
             'work'=>['required','string',new NotNumbersOnly()],
             'bank_id'=>['required','integer','exists:banks,id'],
             'having_loan'    =>['required', 'in:0,1'], 
-            
             'driving_license' => ['required', Rule::in(['available', 'expired', 'doesnt_exist'])],
 
-
-            
-
-            'year_installment'=>['required','integer'],
-            'first_payment_value'=>['required','numeric'],
-            'last_payment_value'=>['required','numeric'],
-            'stumbles' => ['required', 'in:0,1'], 
-            
-            'commitments'    => ['required', 'numeric'],
-            
-            
-            
         ]);
   
     
-            $car = Car::select('id', 'price','year','name_' . getLocale())
+            $car = Car::select('id', 'price','name_' . getLocale())
                 ->where('id', $request->car_id)
                 ->first();
             
@@ -206,13 +193,14 @@ $colors = $car->colors->unique('id');
             }
     
             $order = Order::create([
+                'car_id' => $request->car_id,
+                'color_id' => $request->color_id,//
                 'name' => $request->name,
                  'phone' => '+966'. $request->phone,            
-                'car_id' => $request->car_id,
                 'city_id' => $request->city_id,
+
                 'price' => $car->price_after_vat,
                 'status_id' => 8,
-                'color_id' => $request->color_id,//
 
                 'car_name'=>$car->name,
             ]);
@@ -224,16 +212,11 @@ $colors = $car->colors->unique('id');
                 'type' => 'individual',
                 'payment_type' => 'finance',
                 'salary' => $request->salary,
-                'year' => $car->year,
-                'first_payment_value' => $request->first_payment_value,
-                'last_payment_value' => $request->last_payment_value,
-                'commitments' => $request->commitments,
-                'bank_id' => $request->bank_id,
                 'work' => $request->work,
-                'order_id' => $order->id, 
+                'bank_id' => $request->bank_id,
                 'having_loan' => $request->having_loan,//
                 'driving_license' => $request->driving_license,
-                'year_installment'=>$request->year_installment
+                 
 
 
             ]);
