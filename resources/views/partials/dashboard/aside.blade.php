@@ -201,7 +201,18 @@
                     </div>
                 @endcanany
 
-
+                @can('view_careers')
+                <div class="menu-item">
+                    <a class="menu-link {{ isTabActive('careers') }}" href="{{ route('dashboard.careers.index') }}"
+                        data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-dismiss="click"
+                        data-bs-placement="right">
+                        <span class="menu-icon">
+                            <i class="fa fa-briefcase"></i>
+                        </span>
+                        <span class="menu-title"> {{ __('Careers') }}</span>
+                    </a>
+                </div>
+            @endcan
                 @can('view_vendors')
                     <div class="menu-item">
                         <a class="menu-link {{ isTabActive('vendors') }}" href="{{ route('dashboard.vendors.index') }}"

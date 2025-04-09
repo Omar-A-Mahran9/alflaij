@@ -15,7 +15,7 @@ let KTDatatable = function () {
             searchDelay: 500,
             processing: true,
             serverSide: true,
-            order: [[4, 'desc']], // display records number and ordering type
+            order: [[0, 'desc']], // display records number and ordering type
             stateSave: false,
             select: {
                 style: 'os',
@@ -30,15 +30,13 @@ let KTDatatable = function () {
                 }
             },
             columns: [
-            [
-    {data: 'id'},             // 0
-    {data: 'name_' + locale}, // 1
-    {data: 'price'},           // 2
-    {data: 'image'},           // 3
-    {data: 'created_at'},      // 4
-    {data: null,orderable: false}, // 5 ← هذا actions
-]
-
+                {data: 'id'},
+                {data: 'name_'  + locale},
+                // {data: 'title_' + locale},
+                {data: 'price'},
+                {data: 'image'},
+                {data: 'created_at'},
+                {data: null,orderable: false},
             ],
             columnDefs: [
                 // {
