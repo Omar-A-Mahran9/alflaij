@@ -22,10 +22,9 @@ return new class extends Migration
             $table->string('email', 100)->nullable();
             $table->string('phone');
             $table->string('identity_no')->nullable();
-            $table->enum('sex', ['male', 'female', 'other'])->default('other');
             $table->double('price')->nullable();
             $table->string('quantity')->nullable();
-            $table->string('car_name');
+            $table->string('car_name')->nullable();
             $table->boolean('stumbles')->default(false)->nullable();
 
             $table->unsignedBigInteger('car_id')->nullable()->index('orders_car_id_foreign');
