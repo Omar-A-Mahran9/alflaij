@@ -64,7 +64,7 @@ Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard', 'as' => 'dash
     Route::resource('contact-us', 'ContactUsController')->except(['store', 'create', 'destroy']);
     Route::resource('news-subscribers', 'NewsSubscriberController')->except(['store', 'create', 'show']);
     Route::resource('settings', 'SettingController')->only(['index', 'store']);
-    // Route::get('/applicants', 'CareerController@applicants');
+    Route::get('/applicants', 'CareerController@applicants');
 
     Route::resource('careers', 'CareerController');
 
