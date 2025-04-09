@@ -17,7 +17,7 @@ use App\Models\Otp;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 use App\Http\Resources\OrderCarColorResource;
-
+use App\Models\Service;
 
 class OrderController extends Controller
 {
@@ -164,6 +164,38 @@ $colors = $car->colors->unique('id');
         return response()->json($orders);
     }
 
+
+    private function requestService(array $data)
+    {
+        // Format phone with '+966'
+        $data['phone'] = '+966' . ltrim($data['phone']);
+    
+        // Set default status
+        $data['status_id'] = 8;
+    
+        \App\Models\RequestService::create($data);
+    }
+
+
+    public function handleRequest(Request $request, $car, $services)
+    {
+        $phone = '+966' . ltrim($request->phone);
+    
+        foreach ($services as $service) {
+            $this->requestService([
+                'name'       => $request->name,
+                'phone'      => $phone,
+                'car_brand'  => $car->brand_id,
+                'car_model'  => $car->model_id,
+                'service_id' => $service->id,
+                'city_id'    => $request->city_id,
+            ]);
+        }
+    }
+    
+
+
+
     public function individualsFinance(Request $request)
     {
      
@@ -179,20 +211,28 @@ $colors = $car->colors->unique('id');
             'bank_id'=>['required','integer','exists:banks,id'],
             'having_loan'    =>['required', 'in:0,1'], 
             'driving_license' => ['required', Rule::in(['available', 'expired', 'doesnt_exist'])],
-
+            'services' => ['sometimes', 'array','exists:services,id'],
         ]);
-  
-    
-            $car = Car::select('id', 'price','name_' . getLocale())
-                ->where('id', $request->car_id)
-                ->first();
-            
-            if (!$car) {
-                throw ValidationException::withMessages([
-                    'car_id' => __("You must select a car")
-                ]);
-            }
-    
+
+
+        $ids = isset($request->services[0])
+        ? explode(',', $request->services[0])
+        : [];
+
+    $services = Service::whereIn('id', $ids)->get();
+
+    $car = Car::select('id', 'price', 'brand_id', 'model_id', 'name_' . getLocale())
+        ->where('id', $request->car_id)
+        ->first();
+
+    if (!$car) {
+        throw ValidationException::withMessages([
+            'car_id' => __("You must select a car")
+        ]);
+    }
+
+    // Call your logic for creating request services
+    $this->handleRequest($request, $car, $services);
             $order = Order::create([
                 'car_id' => $request->car_id,
                 'color_id' => $request->color_id,//
@@ -242,11 +282,18 @@ $colors = $car->colors->unique('id');
         'phone' => ['required', 'string', 'regex:/^(05|5)\d{8}$/'],
 
         'city_id'=>['required','integer','exists:cities,id'],
- 
+        'services' => ['sometimes', 'array','exists:services,id'],
+
 
        
     ]);
-    $car = Car::select('id', 'price', 'name_' . getLocale())
+    $ids = isset($request->services[0])
+    ? explode(',', $request->services[0])
+    : [];
+
+$services = Service::whereIn('id', $ids)->get();
+
+$car = Car::select('id', 'price', 'brand_id', 'model_id', 'name_' . getLocale())
     ->where('id', $request->car_id)
     ->first();
 
@@ -256,14 +303,18 @@ if (!$car) {
     ]);
 }
 
+// Call your logic for creating request services
+$this->handleRequest($request, $car, $services);
 $order = Order::create([
     'car_id' => $request->car_id,
     'color_id' => $request->color_id,
      'car_name'=>$car->name,
+     'price' => $car->price_after_vat,
+     'name'=>$request->name,
      'phone' => '+966'. $request->phone,
-    'price' => $car->price_after_vat,
-    'name'=>$request->name,
     'status_id' => 8,
+    'city_id' => $request->city_id,
+
      
 ]);
 $this->distribute($order->id);
@@ -292,8 +343,7 @@ return response()->json([
 public function companyFinance(Request $request)
 {
     $request->validate([
-        'first_payment_value'=>['required','numeric'],
-        'last_payment_value'=>['required','numeric'],
+
         'car_id'=>['required','integer','exists:cars,id'],
         'color_id'    => ['required','exists:colors,id'],
         'quantity'=>['required','numeric'],
@@ -301,31 +351,42 @@ public function companyFinance(Request $request)
         'organization_activity'=>['required','string',new NotNumbersOnly()],
         'organization_location'=>['required','string',new NotNumbersOnly()],
         'organization_seo'=>['required','string',new NotNumbersOnly()],
-        // 'year'=>['required','integer'],
-        'year_installment'=>['required','integer'],
-
         'phone' => ['required', 'string', 'regex:/^(05|5)\d{8}$/'],
         'bank_id'=>['required','integer','exists:banks,id'],
+        'services' => ['sometimes', 'array','exists:services,id'],
+
+
 
      ]);
-    $car = Car::select('id', 'price','year', 'name_' . getLocale())
-    ->where('id', $request->car_id)
-    ->first();
+     $ids = isset($request->services[0])
+     ? explode(',', $request->services[0])
+     : [];
 
-if (!$car) {
-    throw ValidationException::withMessages([
-        'car_id' => __("You must select a car")
-    ]);
-}
+ $services = Service::whereIn('id', $ids)->get();
 
+ $car = Car::select('id', 'price', 'brand_id', 'model_id', 'name_' . getLocale())
+     ->where('id', $request->car_id)
+     ->first();
+
+ if (!$car) {
+     throw ValidationException::withMessages([
+         'car_id' => __("You must select a car")
+     ]);
+ }
+
+ // Call your logic for creating request services
+ $this->handleRequest($request, $car, $services);
 $order = Order::create([
     'car_id' => $request->car_id,
-    'quantity' => $request->quantity,
-    'car_name'=>$car->name,
-    'price' => $car->price_after_vat * $request->quantity,
-    'name' => $request->organization_seo,
     'color_id' => $request->color_id,
+    'price' => $car->price_after_vat * $request->quantity,
+    'quantity' => $request->quantity,
     'phone' => '+966' . $request->phone,
+
+
+
+    'car_name'=>$car->name,
+    'name' => $request->organization_seo,
     'status_id' => 8,
      
 ]);
@@ -335,17 +396,14 @@ $this->distribute($order->id);
 
 $carOrder = CarOrder::create([
     'type' => 'organization',
-    'payment_type' => 'cash',
-    'first_payment_value' => $request->first_payment_value,
-    'last_payment_value' => $request->last_payment_value,
+    'payment_type' => 'finance',
     'organization_name' => $request->organization_name,
     'organization_activity' => $request->organization_activity,
     'organization_location' => $request->organization_location,
     'organization_seo' => $request->organization_seo,
     'bank_id' => $request->bank_id,
-    'year' => $car->year,
+
     'order_id' => $order->id,   
-    'year_installment'=>$request->year_installment
 ]);
 
 
@@ -373,7 +431,9 @@ public function companyCash(Request $request)
         'organization_location'=>['required','string',new NotNumbersOnly()],
         'organization_seo'=>['required','string',new NotNumbersOnly()],
         'phone' => ['required', 'string', 'regex:/^(05|5)\d{8}$/'],
-        // 'bank_id'=>['required','integer','exists:banks,id'],
+        'organization_seo'=>['required','string',new NotNumbersOnly()],
+
+        'services' => ['sometimes', 'array','exists:services,id'],
  
     ]);
     $car = Car::select('id', 'price', 'name_' . getLocale())
@@ -387,13 +447,15 @@ public function companyCash(Request $request)
     }
   
     $order = Order::create([
-        'name'=>$request->organization_name,
         'car_id' => $request->car_id,
         'color_id' => $request->color_id,
-        'car_name'=>$car->name,
-        'phone' =>'+966' . $request->phone,
-        'quantity' => $request->quantity,
         'price' => $request->quantity * $car->price_after_vat,
+        'quantity' => $request->quantity,
+        'phone' =>'+966' . $request->phone,
+
+
+        'name'=>$request->organization_name,
+        'car_name'=>$car->name,
         'status_id' => 8,
         
     ]);
@@ -409,7 +471,8 @@ $this->distribute($order->id);
         'organization_location' => $request->organization_location,
         'organization_seo' => $request->organization_seo,
         'order_id'=>$order->id,
-        'bank_id'=>$request->bank_id
+
+
     ]);
 
 
