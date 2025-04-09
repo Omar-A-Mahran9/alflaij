@@ -17,7 +17,7 @@ class ServiceDetailsResource extends JsonResource
      */
     public function toArray($request)
     {
-        $services = Service::where('id',!$this->id)->get();
+        $services = Service::where('id','!=',$this->id)->get();
 
         $features= collect($this->features)->filter(function($feature){
             return $feature->type === FeatureOrPossibility::feature->value; 
