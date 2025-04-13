@@ -19,7 +19,11 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    // 'allowed_origins' => ['*'],
+    'allowed_origins' => [
+    'http://localhost:3000',   // your local frontend
+    'https://al-fulaij-frontend.vercel.app' // your production frontend if it’s still on HTTP
+],
 
     'allowed_origins_patterns' => [],
 
