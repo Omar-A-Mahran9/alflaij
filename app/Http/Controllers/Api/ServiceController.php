@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ServiceRequest;
 use App\Http\Resources\ServiceDetailsResource;
 use App\Http\Resources\ServiceResource;
+use App\Http\Resources\OrderServiceListResource;
 use App\Models\City;
 use App\Models\RequestService;
 use App\Models\Service;
@@ -65,20 +66,7 @@ class ServiceController extends Controller
         return $this->success(data:$cities);
     }
     
-    // public function requestService(Request $request)
-    // {
-    //     $validatedData=$request->validate([
-    //         'service_id'=>['required','exists:services,id'],
-    //         'city_id'=>['required','exists:cities,id'],
-    //         'name'=>['required','string', new NotNumbersOnly()],
-    //         'phone' => ['required', 'string', 'regex:/^\+966(05|5)\d{8}$/'],
-    //         'car_model'=>['required','string', new NotNumbersOnly()],
-    //         'car_brand'=>['required','string', new NotNumbersOnly()]
-    //     ]);
-
-    //     RequestService::create($validatedData);
-    //     return $this->success();
-    // }
+ 
     public function requestService(ServiceRequest $request)
     {
         // Get all request data
@@ -99,5 +87,15 @@ class ServiceController extends Controller
                 ],200);
            
            }
+     }
+
+
+     public function OrderServiceList(){
+        $services = Service::all();
+
+
+        return response()->json([
+            'data'=>OrderServiceListResource::collection($services),
+        ]);
      }
 }
