@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         // $this->app['request']->server->set('HTTPS', true);
+
+
+        if (app()->environment('production')) {
+            \URL::forceScheme('https');
+        }
         Schema::defaultStringLength(191);
 
         if (request()->segment(2) != 'dashboard' && Schema::hasTable('brands'))
