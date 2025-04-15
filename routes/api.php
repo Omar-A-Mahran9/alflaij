@@ -31,6 +31,14 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         return $request->user();
     });
+
+
+
+    Route::get('/careers', 'Api\CareerController@index');
+    Route::post('/apply/{career_id}', 'Api\CareerController@store');
+
+
+
     Route::get('/filterCar',[CarController::class,'carFilter']);
     Route::post('/register', 'Api\Auth\AuthController@register');
     Route::post('/login', 'Api\Auth\AuthController@login');
@@ -222,5 +230,3 @@ Route::post('/update/cars',function(Request $request){
 
    //  -------------------- Career -----------------------
   
-Route::get('/careers', 'Api\CareerController@index');
-Route::post('/apply/{career_id}', 'Api\CareerController@store');
