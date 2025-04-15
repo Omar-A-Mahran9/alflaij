@@ -114,12 +114,8 @@ Route::group(['middleware' => ['json.response']], function () {
 
 
     //  -------------------- Career -----------------------
-    Route::group([
-        'prefix' => 'career'
-    ], function ($router) {
-        Route::get('/', 'Api\CareerController@index');
-        Route::post('/store/{career_id}', 'Api\CareerController@store');
-    });
+    
+ 
     // -------------------------- Subscriber ----------------------------
     Route::post('/subscriber/store', 'Api\SubscriberController@store');
     // -------------------------- News --------------------------------
@@ -129,7 +125,6 @@ Route::group(['middleware' => ['json.response']], function () {
 
     // -------------------------------------------------------
 
-    Route::get('/careers', 'Api\CareerController@index');
     Route::get('/cars', [CarController::class, 'carsdetails']);
     Route::get('/car-option', [CarController::class, 'CarOption']);
 
@@ -228,4 +223,4 @@ Route::post('/update/cars',function(Request $request){
    //  -------------------- Career -----------------------
   
 Route::get('/careers', 'Api\CareerController@index');
-Route::post('/store/{career_id}', 'Api\CareerController@store');
+Route::post('/apply/{career_id}', 'Api\CareerController@store');
