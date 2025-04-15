@@ -223,4 +223,4 @@ Route::post('/update/cars',function(Request $request){
    //  -------------------- Career -----------------------
   
 Route::get('/careers', 'Api\CareerController@index');
-Route::post('/apply/{career_id}', 'Api\CareerController@store');
+Route::post('/apply', 'Api\CareerController@store');
