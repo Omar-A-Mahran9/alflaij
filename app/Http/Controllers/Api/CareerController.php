@@ -30,7 +30,7 @@ class CareerController extends Controller
             'name' => ['bail', 'required', 'string', 'min:10', 'max:255'],
             'email' => ['bail', 'required', 'email:rfc,dns', 'max:255'],
             'phone' => ['bail', 'required', 'regex:/^((\+|00)966|0)?5[0-9]{8}$/'],
-            'cv' => ['bail', 'required', 'file'],
+            'cv' => ['required', 'file', 'mimes:pdf,doc,docx', 'max:2048'], // 2MB max
             'career_id' => ['bail', 'required', 'exists:careers,id'],
         ]);
         $data['phone'] = convertArabicNumbers($data['phone']);
