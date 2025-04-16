@@ -9,7 +9,6 @@
     <script src="https://cdn.moyasar.com/mpf/1.15.0/moyasar.js"></script>
 </head>
 <body>
-    <h2>Pay with Test Card</h2>
 
     <div class="mysr-form"></div>
 
