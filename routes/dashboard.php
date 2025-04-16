@@ -131,4 +131,13 @@ Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard', 'as' => 'dash
         ]);
     })->name('files.download')->middleware('auth');
 
+
+
+
+    Route::view('/pay', 'pay.payment')->name('pay.form'); // Payment form
+
+// Accept GET with optional ID in query string
+    Route::get('/moyasar/callback', [\App\Http\Controllers\PaymentController::class, 'handleCallback']);
+    Route::get('/thanks', [\App\Http\Controllers\PaymentController::class, 'thanks'])->name('payment.thanks');
+    
 });

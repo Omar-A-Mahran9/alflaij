@@ -228,5 +228,13 @@ Route::post('/update/cars',function(Request $request){
 });
 
 
+    Route::get('/payment/form',function(){
+
+        return response()->json([
+            'url'=>url('dashboard/pay'),
+        ]);
+    });
+
+
    //  -------------------- Career -----------------------
   
