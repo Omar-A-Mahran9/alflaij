@@ -21,7 +21,7 @@
             publishable_api_key: 'pk_test_BEUSsbAZsH5r8CajSvqta9gDwEM62tfn4YPweTQs',
 
             // Callback to your Laravel server
-            callback_url: "http://127.0.0.1:8000/dashboard/pay",
+            callback_url: "http://127.0.0.1:8000/api/pay",
 
             methods: ['creditcard']
         });
