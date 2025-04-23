@@ -134,7 +134,6 @@ Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard', 'as' => 'dash
 
 
 
-    Route::view('/pay', 'pay.payment')->name('pay.form'); // Payment form
 
 // Accept GET with optional ID in query string
     Route::get('/moyasar/callback', [\App\Http\Controllers\PaymentController::class, 'handleCallback']);

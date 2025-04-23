@@ -226,12 +226,13 @@ Route::post('/update/cars',function(Request $request){
      
     
 });
+Route::view('/pay', 'pay.payment')->name('pay.form'); // Payment form
 
 
     Route::get('/payment/form',function(){
 
         return response()->json([
-            'url'=>url('dashboard/pay'),
+            'url'=>url('api/pay'),
         ]);
     });
 
