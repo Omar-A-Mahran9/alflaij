@@ -115,21 +115,21 @@ class CarResourse extends JsonResource
             'price_before_discount'=>$price_field_status === PriceFieldStatus::show_details->name && $this->have_discount?(int)$this->price :0,
             
 
-
+//if maintenance_mode = 0 return null if not return result as int
 
                 'price_after_tax' => $price_field_status === PriceFieldStatus::show_details->name
     ? (settings()->getSettings('maintenance_mode') == 1
         ? round(
-            ($this->have_discount == 1 ? $this->discount_price : $this->price) 
+            ($this->have_discount == 1 ?  (int)$this->discount_price :(int) $this->price) 
             * (1 + $tax / 100)
           )
-        : ($this->have_discount == 1 ? $this->discount_price : $this->price)
+        : ($this->have_discount == 1 ?(int) $this->discount_price :(int) $this->price)
       )
-    : round(
-        ($this->have_discount == 1 ? $this->discount_price : $this->price) 
-        * (1 + $tax / 100)
-      ),
-
+    :null,
+    // round(
+    //     ($this->have_discount == 1 ? $this->discount_price : $this->price) 
+    //     * (1 + $tax / 100)
+    //   )
 
 
 
