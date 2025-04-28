@@ -45,10 +45,7 @@ class Service extends Model
     }
     
  
-    public function getDiscountPriceAttribute()
-    {
-        return  $this->attributes['discount_price'] ? $this->attributes['discount_price'] : 0;
-    }
+   
     
    
     public function requestservice(){

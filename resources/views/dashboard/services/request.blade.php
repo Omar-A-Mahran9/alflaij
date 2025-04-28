@@ -78,7 +78,7 @@
                         <th>{{ __('meter_reading') }}</th>
                         <th>{{ __('Services') }}</th> 
                         <th>{{ __('city') }}</th> 
-                        <th>{{__('status')}}</th>
+                        {{-- <th>{{__('status')}}</th> --}}
                      </tr>
                 </thead>
 
