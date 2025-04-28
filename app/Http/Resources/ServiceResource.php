@@ -24,7 +24,7 @@ class ServiceResource extends JsonResource
             'name'=>$this->name,
             'price_before_discount'=>$this->discount_price && $this->discount_price!=0 ? (int)($this->price):0,
             'price'=>$this->discount_price && $this->discount_price !=0 ?(int)($this->discount_price):number_format($this->price),
-            'price_after_tax' => $this->getPriceAfterVatAttribute() == $this->price ? 0:(int)($this->getPriceAfterVatAttribute()),
+            'price_after_tax' => $this->price_after_vat == $this->price ? 0:(int)($this->price_after_vat),
             'image'=>getImagePathFromDirectory($this->image,'Services'),
             'description'=>$this->description,
 
