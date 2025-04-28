@@ -22,7 +22,7 @@ class ServiceDetailsResource extends JsonResource
         $features= collect($this->features)->filter(function($feature){
             return $feature->type === FeatureOrPossibility::feature->value; 
         })
-        ->map(function ($feature) {
+        ->map(function ($feature) { 
             return [
                 'id' => $feature->id,
                 'title'=> $feature->title,
@@ -38,10 +38,10 @@ class ServiceDetailsResource extends JsonResource
         return [  
         'id'=>$this->id,
         'name'=>$this->name,
-        'price_before_discount'=>$this->price,
-        'price'=>$this->discount_price,
-        'price_after_tax' => $this->getPriceAfterVatAttribute() == $this->price ? 0:$this->getPriceAfterVatAttribute(),
-        'image'=>getImagePathFromDirectory($this->image,'Services'),
+        'price_before_discount'=>$this->discount_price && $this->discount_price!=0 ? (int)($this->price):0,
+        'price'=>$this->discount_price && $this->discount_price !=0 ?(int)($this->discount_price):number_format($this->price),
+        'price_after_tax' => $this->price_after_vat == $this->price ? 0:(int)($this->price_after_vat),
+    'image'=>getImagePathFromDirectory($this->image,'Services'),
         'description'=>$this->description,
         'features'=>$features,
         "related_service"=>ServiceResource::collection($services)
