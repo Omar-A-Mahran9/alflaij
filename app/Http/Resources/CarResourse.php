@@ -114,16 +114,32 @@ class CarResourse extends JsonResource
             
             'price_before_discount'=>$price_field_status === PriceFieldStatus::show_details->name && $this->have_discount?(int)$this->price :0,
             
-            'price_after_tax' =>$price_field_status === PriceFieldStatus::show_details->name 
-            ? (settings()->getSettings('maintenance_mode') == 1
-               ? round($this->price * (1 + $tax / 100)) // Price with VAT for maintenance mode 1
-               : null) // Price with VAT for maintenance mode 0 (as per your requirement)
-               :round($this->price * (1 + $tax / 100)), 
+
+
+
+                'price_after_tax' => $price_field_status === PriceFieldStatus::show_details->name
+    ? (settings()->getSettings('maintenance_mode') == 1
+        ? round(
+            ($this->have_discount == 1 ? $this->discount_price : $this->price) 
+            * (1 + $tax / 100)
+          )
+        : ($this->have_discount == 1 ? $this->discount_price : $this->price)
+      )
+    : round(
+        ($this->have_discount == 1 ? $this->discount_price : $this->price) 
+        * (1 + $tax / 100)
+      ),
+
+
+
+
+
+
             //'selling_price'=>$price_field_status === PriceFieldStatus::show_details->name ?$this->getSellingPriceAttribute():0,
             'tax'=>settings()->getSettings('maintenance_mode') == 1 ? settings()->getSettings('tax') : 0,
             'show_in_home_page' => (bool) $this->show_in_home_page,
-            'car_body'=>$this->car_body,
-            'engine_capacity'=>$this->engine_capacity, 
+            'car_body'=>__($this->car_body),
+            'fuel_tank_capacity'=>$this->engine_capacity, 
             'brand' => [
                 'id' => $this->brand->id??"",
                 'title'=>$this->brand->name??"",
