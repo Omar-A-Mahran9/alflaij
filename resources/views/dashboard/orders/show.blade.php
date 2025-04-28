@@ -1,5 +1,4 @@
-
-@extends('partials.dashboard.master')
+ @extends('partials.dashboard.master')
 @push('styles')
     <link href="{{ asset('dashboard-assets/css/wizard' . (isArabic() ? '.rtl' : '') . '.css') }}" rel="stylesheet"
         type="text/css" />
@@ -363,24 +362,22 @@
                                     </td>
                                 </tr>
                                 @endif
-                                @if($order->orderDetailsCar->type == 'individual')
-
+ 
                                 <tr>
                                     <td class="text-muted">
                                         <div class="d-flex align-items-center">
                                             <span>
                                                 <i class="fa fa-clock mx-2"></i>
-                                            </span> {{ __('Email') }}
+                                            </span> {{ __('Colors') }}
                                         </div>
                                     </td>
                                     <td class="fw-bolder text-end">
-                                        {{ $order->email }}
+                                        {{ $color->name  }}
                                         
                                     </td>
                                 </tr>
 
-                                @endif
-
+ 
 
 
                                  @if($order->orderDetailsCar->payment_type == 'finance' && $order->orderDetailsCar->type == 'individual')
@@ -587,47 +584,78 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                            @if(settings()->getSettings('maintenance_mode') == 1 )
+                                            @if(settings()->getSettings('maintenance_mode') == 1)
                                             @if($order->orderDetailsCar->type == 'organization')
-                                            <tr>
-                                                <td class="text-start fw-boldest" colspan="4">{{ __('price') }}
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex justify-content-end align-items-center">
-                                                        <!--be  gin::Title-->
-                                                        <div class="ms-5">
-                                                            <a href="#"
-                                                                class="fw-boldest text-gray-600 text-hover-primary">
-                                                                {{  $order->car->price_field_status!='show'?$order->car->price_field_status:$order->price}}
-
-                                                            
-                                                            </a>
+                                                <tr>
+                                                    <td class="text-start fw-boldest" colspan="4">{{ __('price') }}</td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-end align-items-center">
+                                                            <div class="ms-5">
+                                                                <a href="#" class="fw-boldest text-gray-600 text-hover-primary">
+                                                                    {{ $order->car->price_field_status != 'show' 
+                                                                        ? $order->car->price_field_status 
+                                                                        : $order->quantity * $order->car->price_after_vat }}
+                                                                </a>
+                                                            </div>
                                                         </div>
-                                                        <!--end::Title-->
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                </tr>
                                             @else 
-                                            <tr>
-                                                <td class="text-start fw-boldest" colspan="4">{{ __('price') }}
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex justify-content-end align-items-center">
-                                                        <!--be  gin::Title-->
-                                                        <div class="ms-5">
-                                                            <a href="#"
-                                                                class="fw-boldest text-gray-600 text-hover-primary">
-                                                                {{  $order->car->price_field_status!='show'?$order->car->price_field_status:$order->price}}
-
-                                                            
-                                                            </a>
+                                                <tr>
+                                                    <td class="text-start fw-boldest" colspan="4">{{ __('price') }}</td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-end align-items-center">
+                                                            <div class="ms-5">
+                                                                <a href="#" class="fw-boldest text-gray-600 text-hover-primary">
+                                                                    {{ $order->car->price_field_status != 1
+                                                                        ?App\Enums\PriceFieldStatus::values()[$order->car->price_field_status]
+                                                                        : $order->car->price_after_vat }}
+                                                                </a>
+                                                            </div>
                                                         </div>
-                                                        <!--end::Title-->
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                </tr>
                                             @endif
+                                        @else
+                                            @if($order->orderDetailsCar->type == 'organization')
+                                                <tr>
+                                                    <td class="text-start fw-boldest" colspan="4">{{ __('price') }}</td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-end align-items-center">
+                                                            <div class="ms-5">
+                                                                <a href="#" class="fw-boldest text-gray-600 text-hover-primary">
+                                                                    {{ $order->car->price_field_status != 1
+                                                                        ? $order->car->price_field_status 
+                                                                        : $order->quantity * $order->car->price }}
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @else 
+                                                <tr>
+                                                    <td class="text-start fw-boldest" colspan="4">{{ __('price') }}</td>
+                                                    <td>
+                                                        <div class="d-flex justify-content-end align-items-center">
+                                                            <div class="ms-5">
+                                                                <a href="#" class="fw-boldest text-gray-600 text-hover-primary">
+                                                                    {{ $order->car->price_field_status != 1
+                                                                        ?  
+                                                                        App\Enums\PriceFieldStatus::values()[$order->car->price_field_status]
+
+                                                                    : $order->car->price
+                                                                        
+                                                                        
+                                                                        }}
+                                                                       
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             @endif
+                                        @endif
+                                        
                                             @if($order->orderDetailsCar->type == 'organization')
 
 <tr>
@@ -680,24 +708,7 @@
  @endif
 
 
- @if($order->orderDetailsCar->payment_type == 'finance' && $order->orderDetailsCar->type == 'individual')
-                                            <tr>
-                                                <td class="fw-boldest">{{ __('The first installment') }}</td>
-                                                <td class="text-end fw-boldest" colspan="4">
-                                                {{ $order->orderDetailsCar->first_payment_value }}
-                                                </tr>
- 
-@endif
-@if($order->orderDetailsCar->payment_type == 'finance' && $order->orderDetailsCar->type == 'individual')
-
-<tr>
-                                                <td class="fw-boldest"> {{ __('The last installment') }}</td>
-                                                <td class="text-end fw-boldest" colspan="4">
-
-                                                {{ $order->orderDetailsCar->last_payment_value }}                                                </tr>
-
-@endif
-                          
+                           
 
 
                                         </tbody>

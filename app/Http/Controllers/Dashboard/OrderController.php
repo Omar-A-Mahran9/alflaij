@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
-use App\Models\Employee;
-use App\Models\Order;
-use App\Models\OrderHistory;
-use App\Models\OrderNotification;
-use App\Models\Organizationactive;
-use App\Models\OrganizationType;
-use App\Models\SettingOrderStatus;
-use App\Traits\NotificationTrait;
-use Auth;
 use DB;
-use Illuminate\Http\Request;
+use Auth;
 use Carbon\Carbon;
+use App\Models\Color;
+use App\Models\Order;
+use App\Models\Employee;
+use App\Models\OrderHistory;
+use Illuminate\Http\Request;
+use App\Models\OrganizationType;
+use App\Models\OrderNotification;
+use App\Traits\NotificationTrait;
+use App\Models\Organizationactive;
+use App\Models\SettingOrderStatus;
+use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
@@ -183,7 +184,8 @@ class OrderController extends Controller
         }
         // dD( $userAssign->name);
 
-        return view('dashboard.orders.show', compact('order','userAssign', 'organization_activity', 'organization_type', 'employees', 'employee'));
+        $color = Color::where('id',$order->color_id)->first();
+        return view('dashboard.orders.show', compact('order','color','userAssign', 'organization_activity', 'organization_type', 'employees', 'employee'));
     }
 
 

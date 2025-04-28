@@ -11,7 +11,7 @@ class Service extends Model
     use HasFactory,SoftDeletes;
 
     protected $guarded = [];
-    protected $appends = ['name', 'description', 'price_after_vat'];
+    protected $appends = ['name', 'price_after_vat'];
     protected $casts   = [
         'created_at' => 'date:Y-m-d',
         'updated_at' => 'date:Y-m-d'
@@ -44,10 +44,7 @@ class Service extends Model
         return $price; // or return null if you want no value when maintenance_mode == 0
     }
     
-    public function features()
-    {
-        return $this->belongsToMany(Feature::class,'service_features','service_id','feature_id')->withPivot('description_ar', 'description_en');
-    }
+ 
     public function getDiscountPriceAttribute()
     {
         return  $this->attributes['discount_price'] ? $this->attributes['discount_price'] : 0;

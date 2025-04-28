@@ -21,7 +21,10 @@ class Color extends Model
     {
         return $this->attributes[ 'name_' . getLocale() ];
     }
-
+    public function order()
+    {
+        return $this->belongsTo(order::class );
+    }
     public function cars()
     {
         return $this->belongsToMany(Car::class,'car_color_images')

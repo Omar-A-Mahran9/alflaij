@@ -86,8 +86,7 @@
                 <tr class="text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                     <th>#</th>
                     <th>{{ __("arabic name") }}</th>
-                    <!-- <th>{{ __("arabic title") }}</th> -->
-                    <th>{{ __("price") }}</th>
+                     <th>{{ __("price") }}</th>
                     <th>{{ __("image") }}</th>
                     <th>{{ __("created date") }}</th>
                     <th class="min-w-100px">{{ __("actions") }}</th>

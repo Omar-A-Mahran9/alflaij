@@ -62,21 +62,14 @@ class ServiceController extends Controller
             'image'             => ['nullable' , 'mimes:webp,jpeg,png','max:600'] ,
             'price'             => 'required | integer | not_in:0',
             'discount_price'    => 'nullable | integer | not_in:0',
-            'features' => ['sometimes', 'array'],
-            'features.*.type' => ['required', 'exists:features,id'],
-            'features.*.id' => ['required', 'exists:features,id'],
-            'features.*.description_ar' => ['required', 'string', new NotNumbersOnly()],
-            'features.*.description_en' => ['required', 'string', new NotNumbersOnly()],
+
         ]);
 
-        $features = $request->features ?? [];
-       
+        
         if ($request->file('image'))
             $data['image'] = uploadImage( $request->file('image') , "Services");
-        unset($data['features']);
-        $service=Service::create($data);
-        $service->features()->attach($this->prepareFeatures($features));
-
+         $service=Service::create($data);
+ 
 
     }
 
@@ -94,23 +87,15 @@ class ServiceController extends Controller
             'image'             => ['nullable' , 'mimes:webp,jpeg,png','max:600'] ,
             'price'             => 'required | integer | not_in:0',
             'discount_price'    => 'nullable | integer | not_in:0',
-            'features' => ['sometimes', 'array'],
-            'features.*.type' => ['required', 'exists:features,id'],
-            'features.*.id' => ['required', 'exists:features,id'],
-            'features.*.description_ar' => ['required', 'string', new NotNumbersOnly()],
-            'features.*.description_en' => ['required', 'string', new NotNumbersOnly()],
-        ]);
+         ]);
 
-        $features = $request->features ?? [];
-        if ($request->file('image'))
+         if ($request->file('image'))
         {
             deleteImage( $service['image'] , "Services");
             $data['image'] = uploadImage( $request->file('image') , "Services");
         }
-        unset($data['features']);
-        $service->update($data);
-        $service->features()->sync($this->prepareFeatures($features));
-    }
+         $service->update($data);
+     }
 
 
     public function destroy(Request $request, Service $service)

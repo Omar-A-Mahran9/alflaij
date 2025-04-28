@@ -240,8 +240,8 @@ $colors = $car->colors->unique('id');
                  'phone' => '+966'. $request->phone,            
                 'city_id' => $request->city_id,
 
-                'price' => $car->price_after_vat,
-                'status_id' => 8,
+                'price' =>settings()->getSettings('maintenance_mode') == 1 ? $car->price_after_vat : $car->price,
+                 'status_id' => 8,
 
                 'car_name'=>$car->name,
             ]);
@@ -257,7 +257,8 @@ $colors = $car->colors->unique('id');
                 'bank_id' => $request->bank_id,
                 'having_loan' => $request->having_loan,//
                 'driving_license' => $request->driving_license,
-                 
+                
+                'order_id' => $order->id,
 
 
             ]);
@@ -309,7 +310,7 @@ $order = Order::create([
     'car_id' => $request->car_id,
     'color_id' => $request->color_id,
      'car_name'=>$car->name,
-     'price' => $car->price_after_vat,
+     'price' =>settings()->getSettings('maintenance_mode') == 1 ? $car->price_after_vat : $car->price,
      'name'=>$request->name,
      'phone' => '+966'. $request->phone,
     'status_id' => 8,
@@ -379,11 +380,11 @@ public function companyFinance(Request $request)
 $order = Order::create([
     'car_id' => $request->car_id,
     'color_id' => $request->color_id,
-    'price' => $car->price_after_vat * $request->quantity,
-    'quantity' => $request->quantity,
+     'quantity' => $request->quantity,
     'phone' => '+966' . $request->phone,
 
 
+    'price' =>settings()->getSettings('maintenance_mode') == 1 ? $car->price_after_vat * $request->quantity : $car->price * $request->quantity,
 
     'car_name'=>$car->name,
     'name' => $request->organization_seo,
@@ -449,7 +450,7 @@ public function companyCash(Request $request)
     $order = Order::create([
         'car_id' => $request->car_id,
         'color_id' => $request->color_id,
-        'price' => $request->quantity * $car->price_after_vat,
+        'price' =>settings()->getSettings('maintenance_mode') == 1 ? $car->price_after_vat * $request->quantity : $car->price * $request->quantity,
         'quantity' => $request->quantity,
         'phone' =>'+966' . $request->phone,
 

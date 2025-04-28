@@ -51,7 +51,7 @@
                         {{-- <th>{{ __("image") }}</th> --}}
                         <th>{{ getLocale() == 'ar' ? __("arabic name") : __("english name") }}</th>
                         <th>{{ __("price") }}</th>
-                        <th>{{ __("Brand") }}</th>
+                        {{-- <th>{{ __("Brand") }}</th> --}}
                         <th class="min-w-100px">{{ __("actions") }}</th>
                     </tr>
                 </thead>
@@ -86,7 +86,7 @@
         tableHeaderColumns.set('Car', `<th>#</th>
                      <th>{{ getLocale() == 'ar' ? __("arabic name") : __("english name") }}</th>
                     <th>{{ __("price") }}</th>
-                    <th>{{ __("Brand") }}</th>
+                    // <th>{{ __("Brand") }}</th>
                     <th class="min-w-100px">{{ __("actions") }}</th>` );
 
         tableHeaderColumns.set('Order', `<th>#</th>
@@ -108,7 +108,7 @@
                 {data: 'id'},
                  {data: 'name_' + locale },
                 {data: 'price'},
-                {data: 'brand.name' , name:'brand_id',orderable: false},
+                // {data: 'brand.name' , name:'brand_id',orderable: false},
                 {data: null,orderable: false},
         ]);
 
@@ -131,7 +131,7 @@
         let dataTableColumnsDefs = new Map();
         dataTableColumnsDefs.set('Car', [
                 {
-                    targets: 3,
+                    targets: 2,
                     render : function (data, type, row) {
                         if(/^</.test(data))
                             return __('Price') + " " + data + " " + __(currency);

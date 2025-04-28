@@ -36,7 +36,6 @@ let KTDatatable = function () {
                 {data: 'phone'},
                 // {data: 'last_name'},
                 {data: 'message'},
-                {data: 'reply'},
                 // {data: null},
             ],
             columnDefs: [
