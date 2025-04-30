@@ -184,11 +184,11 @@ class OrderController extends Controller
             }
         }
         // dD( $userAssign->name);
-        $service = RequestService::where('order_id',$order->id)->first();
+        $services = RequestService::where('order_id',$order->id)->get();
 
  
         $color = Color::where('id',$order->color_id)->first();
-        return view('dashboard.orders.show', compact('order','service','color','userAssign', 'organization_activity', 'organization_type', 'employees', 'employee'));
+        return view('dashboard.orders.show', compact('order','services','color','userAssign', 'organization_activity', 'organization_type', 'employees', 'employee'));
     }
 
 
