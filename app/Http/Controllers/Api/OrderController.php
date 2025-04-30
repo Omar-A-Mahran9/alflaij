@@ -219,12 +219,12 @@ $colors = $car->colors->unique('id');
             'bank_id'=>['required','integer','exists:banks,id'],
             'having_loan'    =>['required', 'in:0,1'], 
             'driving_license' => ['required', Rule::in(['available', 'expired', 'doesnt_exist'])],
-            'services' => ['sometimes', 'array','exists:services,id'],
+            'service_id' => ['sometimes', 'array','exists:services,id'],
         ]);
 
-        $ids = is_array($request->services) 
-        ? $request->services 
-        : explode(',', $request->services);
+        $ids = is_array($request->service_id) 
+        ? $request->service_id 
+        : explode(',', $request->service_id);
 
     $services = Service::whereIn('id', $ids)->get();
 
