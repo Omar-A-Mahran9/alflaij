@@ -643,7 +643,7 @@
                                                                 
                                                             <a href="#"
                                                                 class="fw-boldest text-gray-600 text-hover-primary">
-                                                                {{ $service->service->name + ',' }}
+                                                                {{ $service->service->name . ',' }}
 
                                                             
                                                             </a>
