@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
+ use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\Order;
 use App\Models\OrderHistory;
@@ -13,10 +13,11 @@ use App\Models\RequestService;
 use App\Models\SettingOrderStatus;
 use App\Traits\NotificationTrait;
 use Auth;
-use DB;
-use Illuminate\Http\Request;
+ use DB;
 use Carbon\Carbon;
-
+use App\Models\Color;
+use Illuminate\Http\Request;
+ 
 class OrderController extends Controller
 {
     use NotificationTrait;
@@ -185,7 +186,9 @@ class OrderController extends Controller
         // dD( $userAssign->name);
         $service = RequestService::where('order_id',$order->id)->first();
 
-         return view('dashboard.orders.show', compact('order','service','userAssign', 'organization_activity', 'organization_type', 'employees', 'employee'));
+ 
+        $color = Color::where('id',$order->color_id)->first();
+        return view('dashboard.orders.show', compact('order','service','color','userAssign', 'organization_activity', 'organization_type', 'employees', 'employee'));
     }
 
 

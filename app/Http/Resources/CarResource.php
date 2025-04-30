@@ -36,15 +36,16 @@ class CarResource extends JsonResource
        
        
        
-            'price_after_vat' =>$price_field_status === PriceFieldStatus::show_details->name 
-            ? (settings()->getSettings('maintenance_mode') == 1
-               ? round($this->price * (1 + $tax / 100)) // Price with VAT for maintenance mode 1
-               : null) // Price with VAT for maintenance mode 0 (as per your requirement)
-               :round($this->price * (1 + $tax / 100)), 
-            
-            
-            
-            
+         'price_after_vat' => $price_field_status === PriceFieldStatus::show_details->name
+    ? (settings()->getSettings('maintenance_mode') == 1
+        ? round(
+            ($this->have_discount == 1 ? (int) $this->discount_price : (int) $this->price) 
+            * (1 + $tax / 100)
+          )
+        : null // Force NULL if maintenance_mode == 0
+      )
+    : null,
+
             
             
             

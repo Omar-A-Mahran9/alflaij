@@ -35,10 +35,10 @@ let KTDatatable = function () {
                 {data: 'phone'},
                 {data: 'car_brand'},
                 {data: 'car_model'},
-                {data: 'Meter_reading'},
+                {data: 'meter_reading'},
                 {data:'service.name'  ,name:'service_id'},
                 {data:'city.name' ,name:'city_id'},
-                {data:'status.name', name:'status_id'}
+                // {data:'status.id', name:'status_id'}
                 // {data: 'reply'},
                 // {data: null},
             ],

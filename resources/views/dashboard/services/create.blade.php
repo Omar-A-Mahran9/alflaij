@@ -186,76 +186,7 @@
                     <!-- end   :: Row -->
 
                     <!-- begin  :: Row -->
-                    <div class="row mt-5">
-                        <hr>
-                        <div class="mt-5 mb-5">{{__('features and possibilities')}}</div>
-                    </div>
-                    <!-- end    :: Row -->
-                    
-                    <!--begin::Repeater-->
-                    <div id="kt_docs_repeater_basic">
-                        <!--begin::Form group-->
-                        <div class="form-group">
-                            <div data-repeater-list="features">
-                                <div data-repeater-item>
-                                    <div class="form-group row align-items-center">
-                                        <div class="col-md-10">  
-                                          <div class="row align-items-center">
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">{{__('type')}}</label>
-                                                    <select class="form-select select-type" id="features_0_type_inp" name=features[0][type] data-placeholder="Select an option">
-                                                        <option value="" selected disabled>{{__("Select Type")}}</option>
-                                                        <!-- <option value="1">{{__("possibility")}}</option> -->
-                                                        <option value="2">{{__("feature")}}</option>
-                                                    </select>
-                                                    <div class="text-danger m-0 invalid-feedback" id="features_0_type"></div>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">{{ __('Select Options') }}</label>
-                                                    <select  id="features_0_id_inp" name=features[0][id] class="form-select select-options" data-placeholder="Select an option" required>
-                                                        <option value="" selected disabled>{{__("Select an option")}}</option>
-                                                        <!-- Options will be populated by AJAX -->
-                                                    </select>
-                                                    <div class="text-danger m-0 invalid-feedback" id="features_0_id"></div>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">{{__('Description in arabic')}}</label>
-                                                    <input type="text" class="form-control mb-2 mb-md-0" id="features_0_description_ar_inp" name="features[0][description_ar]" placeholder="{{__('Description in arabic')}}" required />
-                                                    <div class="text-danger m-0 invalid-feedback" id="features_0_description_ar"></div>
-                                                </div>
-                                            
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label">{{__('Description in english')}}</label>
-                                                    <input type="text" class="form-control mb-2 mb-md-0" id="features_0_description_en_inp" name="features[0][description_en]" placeholder="{{__('Description in english')}}" required/>
-                                                    <div class="text-danger m-0 invalid-feedback" id="features_0_description_en"></div>
-                                                    
-                                                </div>
-                                            </div>   
-                                        </div>
-
-                                        <div class="col-md-2">
-                                            <div class="text-center">
-                                                <a href="javascript:;" data-repeater-delete class="btn btn-sm btn-light-danger mt-3"  id="features_0_delete_btn">
-                                                    <i class="far fa-trash-alt"></i>{{__('Delete')}}
-                                                    
-                                                </a>
-                                            </div> 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--end::Form group-->
-
-                        <!--begin::Form group-->
-                        <div class="form-group mt-5">
-                            <a href="javascript:;" data-repeater-create class="btn btn-light-primary">
-                                <i class="fa fa-plus"></i>
-                                {{__('Add')}}
-                            </a>
-                        </div>
-                        <!--end::Form group-->
-                    </div>
+                
                     <!--end::Repeater-->
                    
 
