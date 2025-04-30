@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderCarColorResource;
+use App\Http\Resources\OrderResource;
 use App\Models\Car;
-use App\Models\Order;
+use App\Models\CarColorImage;
 use App\Models\CarOrder;
 use App\Models\Employee;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\OrderResource;
-use App\Models\CarColorImage;
+use App\Models\Order;
+use App\Models\Otp;
+use App\Models\Service;
 use App\Rules\NotNumbersOnly;
 use App\Traits\NotificationTrait;
-use App\Models\Otp;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
-use App\Http\Resources\OrderCarColorResource;
-use App\Models\Service;
 
 class OrderController extends Controller
 {
@@ -165,34 +165,42 @@ $colors = $car->colors->unique('id');
     }
 
 
-    private function requestService(array $data)
+    private function requestService(array $allData)
     {
-        // Format phone with '+966'
-        $data['phone'] = '+966' . ltrim($data['phone']);
+        foreach ($allData as &$data) {
+            // Normalize each record
+            $data['phone'] = '+966' . ltrim($data['phone']);
+            $data['status_id'] = 8;
+        }
     
-        // Set default status
-        $data['status_id'] = 8;
-    
-        \App\Models\RequestService::create($data);
+        // Bulk insert all records
+        \App\Models\RequestService::insert($allData);
     }
+    
 
 
-    public function handleRequest(Request $request, $car, $services)
+    public function handleRequest(Request $request, $car, $services,$order_id)
     {
         $phone = '+966' . ltrim($request->phone);
     
+        $records = [];
+    
         foreach ($services as $service) {
-            $this->requestService([
+            $records[] = [
                 'name'       => $request->name,
-                'phone'      => $phone,
+                'phone'      => $request->phone, // phone is normalized inside requestService
                 'car_brand'  => $car->brand_id,
                 'car_model'  => $car->model_id,
                 'service_id' => $service->id,
                 'city_id'    => $request->city_id,
-            ]);
+                'order_id'    => $order_id,
+            ];
         }
-    }
     
+        // Send all at once
+        $this->requestService($records);
+    }
+        
 
 
 
@@ -214,10 +222,9 @@ $colors = $car->colors->unique('id');
             'services' => ['sometimes', 'array','exists:services,id'],
         ]);
 
-
-        $ids = isset($request->services[0])
-        ? explode(',', $request->services[0])
-        : [];
+        $ids = is_array($request->services) 
+        ? $request->services 
+        : explode(',', $request->services);
 
     $services = Service::whereIn('id', $ids)->get();
 
@@ -231,8 +238,6 @@ $colors = $car->colors->unique('id');
         ]);
     }
 
-    // Call your logic for creating request services
-    $this->handleRequest($request, $car, $services);
             $order = Order::create([
                 'car_id' => $request->car_id,
                 'color_id' => $request->color_id,//
@@ -245,6 +250,7 @@ $colors = $car->colors->unique('id');
 
                 'car_name'=>$car->name,
             ]);
+            $this->handleRequest($request, $car, $services,$order->id);
     
             $this->distribute($order->id);
             // $otp = $this->sendOtp($request, $request->phone,$order->id);
@@ -304,7 +310,6 @@ if (!$car) {
 }
 
 // Call your logic for creating request services
-$this->handleRequest($request, $car, $services);
 $order = Order::create([
     'car_id' => $request->car_id,
     'color_id' => $request->color_id,
@@ -317,7 +322,9 @@ $order = Order::create([
 
      
 ]);
+
 $this->distribute($order->id);
+$this->handleRequest($request, $car, $services,$order->id);
 // $otp = $this->sendOtp($request, $request->phone,$order->id);
 
 $carOrder = CarOrder::create([

@@ -9,6 +9,7 @@ use App\Models\OrderHistory;
 use App\Models\OrderNotification;
 use App\Models\Organizationactive;
 use App\Models\OrganizationType;
+use App\Models\RequestService;
 use App\Models\SettingOrderStatus;
 use App\Traits\NotificationTrait;
 use Auth;
@@ -182,8 +183,9 @@ class OrderController extends Controller
             }
         }
         // dD( $userAssign->name);
+        $service = RequestService::where('order_id',$order->id)->first();
 
-        return view('dashboard.orders.show', compact('order','userAssign', 'organization_activity', 'organization_type', 'employees', 'employee'));
+         return view('dashboard.orders.show', compact('order','service','userAssign', 'organization_activity', 'organization_type', 'employees', 'employee'));
     }
 
 

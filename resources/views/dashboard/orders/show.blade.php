@@ -626,8 +626,33 @@
                                                     </div>
                                                 </td>
                                             </tr>
+                                           
                                             @endif
                                             @endif
+                                            @if($service)
+                                                
+
+                                            <tr>
+                                                <td class="text-start fw-boldest" colspan="4">{{ __('service') }}
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex justify-content-end align-items-center">
+                                                        <!--be  gin::Title-->
+                                                        <div class="ms-5">
+                                                            <a href="#"
+                                                                class="fw-boldest text-gray-600 text-hover-primary">
+                                                                {{ $service->service->name}}
+
+                                                            
+                                                            </a>
+                                                        </div>
+                                                        <!--end::Title-->
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            @endif
+
+
                                             @if($order->orderDetailsCar->type == 'organization')
 
 <tr>

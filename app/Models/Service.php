@@ -10,7 +10,7 @@ class Service extends Model
 {
     use HasFactory,SoftDeletes;
 
-    protected $guarded = [];
+    protected $guarded = ['id'];
     protected $appends = [ 'name'  , 'description' ];
     protected $casts   = [
         'created_at' => 'date:Y-m-d',
