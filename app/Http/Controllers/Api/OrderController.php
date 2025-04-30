@@ -221,7 +221,6 @@ $colors = $car->colors->unique('id');
             'driving_license' => ['required', Rule::in(['available', 'expired', 'doesnt_exist'])],
             'service_id' => ['sometimes', 'array','exists:services,id'],
         ]);
-
         $ids = is_array($request->service_id) 
         ? $request->service_id 
         : explode(',', $request->service_id);
@@ -289,17 +288,16 @@ $colors = $car->colors->unique('id');
         'phone' => ['required', 'string', 'regex:/^(05|5)\d{8}$/'],
 
         'city_id'=>['required','integer','exists:cities,id'],
-        'services' => ['sometimes', 'array','exists:services,id'],
+        'service_id' => ['sometimes', 'array','exists:services,id'],
 
 
        
     ]);
-    $ids = isset($request->services[0])
-    ? explode(',', $request->services[0])
-    : [];
+    $ids = is_array($request->service_id) 
+    ? $request->service_id 
+    : explode(',', $request->service_id);
 
 $services = Service::whereIn('id', $ids)->get();
-
 $car = Car::select('id', 'price', 'brand_id', 'model_id', 'name_' . getLocale())
     ->where('id', $request->car_id)
     ->first();
@@ -361,16 +359,17 @@ public function companyFinance(Request $request)
         'organization_seo'=>['required','string',new NotNumbersOnly()],
         'phone' => ['required', 'string', 'regex:/^(05|5)\d{8}$/'],
         'bank_id'=>['required','integer','exists:banks,id'],
-        'services' => ['sometimes', 'array','exists:services,id'],
+        'service_id' => ['sometimes', 'array','exists:services,id'],
 
 
 
      ]);
-     $ids = isset($request->services[0])
-     ? explode(',', $request->services[0])
-     : [];
+     $ids = is_array($request->service_id) 
+     ? $request->service_id 
+     : explode(',', $request->service_id);
 
- $services = Service::whereIn('id', $ids)->get();
+        $services = Service::whereIn('id', $ids)->get();
+
 
  $car = Car::select('id', 'price', 'brand_id', 'model_id', 'name_' . getLocale())
      ->where('id', $request->car_id)
@@ -383,8 +382,7 @@ public function companyFinance(Request $request)
  }
 
  // Call your logic for creating request services
- $this->handleRequest($request, $car, $services);
-$order = Order::create([
+ $order = Order::create([
     'car_id' => $request->car_id,
     'color_id' => $request->color_id,
      'quantity' => $request->quantity,
@@ -398,6 +396,9 @@ $order = Order::create([
     'status_id' => 8,
      
 ]);
+
+$this->handleRequest($request, $car, $services,$order->id);
+
 
 $this->distribute($order->id);
 // $otp = $this->sendOtp($request, $request->phone,$order->id);
