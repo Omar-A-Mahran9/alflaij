@@ -65,6 +65,19 @@ class Car extends Model
         else
             return $this->attributes['price_field_value'];
     }
+  public function getPriceAfterVatAttribute()
+    {
+ 
+        $price = ($this->discount_price !== null && $this->discount_price > 0) ? $this->discount_price : $this->price;
+
+        if (settings()->getSettings('maintenance_mode') == 1) {
+            return $price * (1 + settings()->getSettings('tax') / 100 );
+        } else {
+            $price=0;
+            return $price;
+        }
+            
+    }
 
     public function colors()
     {
@@ -121,18 +134,7 @@ class Car extends Model
 
         return $haveDiscount && $discountPrice ? $discountPrice : $price;
     }
-    public function getPriceAfterVatAttribute()
-    {
-       
-        $price = ($this->discount_price !== null && $this->discount_price > 0) ? $this->discount_price : $this->price;
-
-        if (settings()->getSettings('maintenance_mode') == 1) {
-            return round($price * (settings()->getSettings('tax') / 100 + 1));
-        } else {
-            $price=0;
-            return $price;
-        }
-    }
+  
     public function favorites()
     {
         return $this->hasMany(Favorite::class);
