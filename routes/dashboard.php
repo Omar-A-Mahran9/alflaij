@@ -105,7 +105,8 @@ Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard', 'as' => 'dash
     // Route::get('trash/{modelName}/{id}/restore', 'TrashController@restore')->name('trash.restore');
     Route::delete('trash/{modelName}/{id}', 'TrashController@forceDelete');
     Route::get('/request/service', [RequestServiceController::class,'index'])->name('requestService.index');
-   
+   Route::get('/export-orders', [OrderController::class, 'exportAllOrders']);
+
 
     Route::get('/Images/{type}', function ($type) {
         $fileUrl = getImagePathFromDirectory($type, 'Orders');

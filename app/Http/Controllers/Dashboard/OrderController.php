@@ -13,7 +13,12 @@ use App\Models\RequestService;
 use App\Models\SettingOrderStatus;
 use App\Traits\NotificationTrait;
 use Auth;
+
+use Maatwebsite\Excel\Facades\Excel;
+
  use DB;
+use App\Exports\OrdersExport;
+
 use Carbon\Carbon;
 use App\Models\Color;
 use Illuminate\Http\Request;
@@ -113,7 +118,11 @@ class OrderController extends Controller
     
         return view('dashboard.orders.index');
     }
-    
+public function exportAllOrders()
+{
+    return Excel::download(new OrdersExport(), 'all_orders.xlsx');
+}
+
     
      public function orders_not_approval(Request $request)
     {
