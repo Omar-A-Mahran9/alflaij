@@ -33,19 +33,20 @@ class CarResource extends JsonResource
        
        
        
-       
-       
-         'price_after_vat' => $price_field_status === PriceFieldStatus::show_details->name
+                      'price_after_vat' => $price_field_status === PriceFieldStatus::show_details->name
     ? (settings()->getSettings('maintenance_mode') == 1
-        ? round(
-            ($this->have_discount == 1 ? (int) $this->discount_price : (int) $this->price) 
-            * (1 + $tax / 100)
-          )
+        ? number_format(
+            ($this->have_discount == 1
+                ? (int) $this->discount_price
+                : ((int) $this->price * (1 + $tax / 100))
+            ),
+            0 // No decimals
+        )
         : null // Force NULL if maintenance_mode == 0
-      )
+    )
     : null,
 
-            
+     
             
             
             
