@@ -94,7 +94,7 @@
                         <th>{{ __('images') }}</th>
                         <th>{{ getLocale() == 'ar' ? __('arabic name') : __('english name') }}</th>
                         <th>{{ __('price') }}</th>
-                        <th>{{ __('Discount price') }}</th>
+                        <th>{{ __('Publish car') }}</th>
                         <th>{{ __('Brand') }}</th>
                         <th>{{ __('Status') }}</th>
                         <th class="min-w-100px">{{ __('actions') }}</th>

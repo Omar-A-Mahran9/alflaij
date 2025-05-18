@@ -139,33 +139,30 @@
                     <div class="row mb-10">
 
                         <!-- begin :: Column -->
-                        <div class="col-md-6 fv-row">
+                         <div class="col-md-6 fv-row">
 
                             <label class="fs-5 fw-bold mb-2">{{ __('Description in arabic') }}</label>
-                            <div class="form-floating">
-                                <textarea class="form-control" rows="4" name="description_ar" id="description_ar_inp" data-kt-autosize="true"></textarea>
-                                <label for="description_ar_inp">{{ __('Enter description in Arabic') }}</label>
-                            </div>
+ 
+                            <textarea     name="description_ar" id="meta_tag_description_ar_inp"
+                                data-kt-autosize="true" class="tinymce"></textarea>
+
                             <p class="text-danger invalid-feedback" id="description_ar"></p>
 
-                        </div>
-                        <!-- end   :: Column -->
 
-                        <!-- begin :: Column -->
+                        </div>
+                     
                         <div class="col-md-6 fv-row">
 
                             <label class="fs-5 fw-bold mb-2">{{ __('Description in english') }}</label>
-                            <div class="form-floating">
+ 
+                            <textarea     name="description_en" id="meta_tag_description_en_inp"
+                                data-kt-autosize="true" class="tinymce"></textarea>
 
-                                <textarea class="form-control" rows="4" name="description_en" id="description_en_inp" data-kt-autosize="true"></textarea>
-                                <label for="description_en_inp">{{ __('Enter description in English') }}</label>
-
-                            </div>
                             <p class="text-danger invalid-feedback" id="description_en"></p>
 
-                        </div>
-                        <!-- end   :: Column -->
 
+                        </div>
+ 
                     </div>
                     <!-- end   :: Row -->
 
@@ -200,6 +197,8 @@
 @endsection
 @push('scripts')
     <script src="{{ asset('dashboard-assets/plugins/custom/tinymce/tinymce.bundle.js') }}"></script>
+        <script src="{{ asset('dashboard-assets/plugins/custom/tinymce/tinymce.bundle.js') }}"></script>
+
     <script>
         $(document).ready(() => {
 

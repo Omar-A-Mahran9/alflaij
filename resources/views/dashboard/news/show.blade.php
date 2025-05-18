@@ -17,13 +17,7 @@
             <!-- end   :: Separator -->
 
             <!-- begin :: Breadcrumb -->
-            <ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
-                <!-- begin :: Item -->
-                <li class="breadcrumb-item text-muted">
-                    {{ __("News data") }}
-                </li>
-                <!-- end   :: Item -->
-            </ul>
+           
             <!-- end   :: Breadcrumb -->
 
         </div>
@@ -102,35 +96,38 @@
                 <!-- end   :: Row -->
 
                 <!-- begin :: Row -->
-                <div class="row mb-10">
+ <div class="row mb-10">
 
-                    <!-- begin :: Column -->
-                    <div class="col-md-6 fv-row">
+                        <!-- begin :: Column -->
+                         <div class="col-md-6 fv-row">
 
-                        <label class="fs-5 fw-bold mb-4">{{ __("Description in arabic") }}</label>
-                        <div id="desc_summernote"  data-name="description_ar"> {!! $news['description_ar'] !!} </div>
-                        <p class="text-danger invalid-feedback" id="description_ar"></p>
+                            <label class="fs-5 fw-bold mb-2">{{ __('Description in arabic') }}</label>
+ 
+                            <textarea     name="description_ar" id="meta_tag_description_ar_inp"
+                                data-kt-autosize="true" class="tinymce">{{ $news->description_ar }}</textarea>
 
+                            <p class="text-danger invalid-feedback" id="description_ar"></p>
+
+
+                        </div>
+                     
+                        <div class="col-md-6 fv-row">
+
+                            <label class="fs-5 fw-bold mb-2">{{ __('Description in english') }}</label>
+ 
+                            <textarea     name="description_en" id="meta_tag_description_en_inp"
+                                data-kt-autosize="true" class="tinymce">{{ $news->description_en }}</textarea>
+
+                            <p class="text-danger invalid-feedback" id="description_en"></p>
+
+
+                        </div>
+ 
                     </div>
-                    <!-- end   :: Column -->
+                    <!-- end   :: Row -->
 
-                    <!-- begin :: Column -->
-                    <div class="col-md-6 fv-row">
-
-                        <label class="fs-5 fw-bold mb-4">{{ __("Description") }}</label>
-                        <div id="desc_summernote" data-name="description_en"> {!! $news['description_en'] !!} </div>
-                        <p class="text-danger invalid-feedback" id="description_en"></p>
-
-                    </div>
-                    <!-- end   :: Column -->
 
                 </div>
-                <!-- end   :: Row -->
-
-
-            </div>
-            <!-- end   :: Inputs wrapper -->
-
             <!-- begin :: Form footer -->
             <div class="form-footer">
 
@@ -149,3 +146,19 @@
 </div>
 
 @endsection
+@push('scripts')
+    <script src="{{ asset('dashboard-assets/plugins/custom/tinymce/tinymce.bundle.js') }}"></script>
+        <script src="{{ asset('dashboard-assets/plugins/custom/tinymce/tinymce.bundle.js') }}"></script>
+    <script>
+        $(document).ready(() => {
+
+            initTinyMc(true);
+
+            new Tagify(document.getElementById('tags_inp'), {
+                originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
+            });
+
+
+        });
+    </script>
+@endpush

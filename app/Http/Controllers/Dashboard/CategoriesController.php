@@ -36,13 +36,14 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $this->authorize('create_categories');
-        $models = CarModel::select('id','name_' . getLocale())->get();
+  public function create()
+{
+    $this->authorize('create_categories');
+    
+    $brands = Brand::select('id', 'name_' . getLocale())->get();
 
-        return view('dashboard.categories.create',compact('models'));
-    }
+    return view('dashboard.categories.create', compact('brands'));
+}
 
     /**
      * Store a newly created resource in storage.

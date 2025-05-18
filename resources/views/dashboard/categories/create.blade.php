@@ -62,7 +62,7 @@
                     <div class="row mb-10">
 
                         <!-- begin :: Column -->
-                        <div class="col-md-4 fv-row">
+                        <div class="col-md-3 fv-row">
 
                             <label class="fs-5 fw-bold mb-2">{{ __('Name in arabic') }}</label>
                             <div class="form-floating">
@@ -77,7 +77,7 @@
                         <!-- end   :: Column -->
 
                         <!-- begin :: Column -->
-                        <div class="col-md-4 fv-row">
+                        <div class="col-md-3 fv-row">
 
                             <label class="fs-5 fw-bold mb-2">{{ __('Name in english') }}</label>
                             <div class="form-floating">
@@ -88,20 +88,29 @@
                             <p class="invalid-feedback" id="name_en"></p>
                         </div>
                         <!-- end   :: Column -->
-                        <div class="col-md-4 fv-row">
+                    {{-- Brand Dropdown --}}
+<div class="col-md-3 fv-row">
+    <label class="fs-5 fw-bold mb-2">{{ __('Brand') }}</label>
+    <select class="form-select" data-control="select2" name="brand_id" id="brand-select"
+        data-placeholder="{{ __('Choose the brand') }}" data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}">
+        <option value="" selected></option>
+        @foreach ($brands as $brand)
+            <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+        @endforeach
+    </select>
+</div>
 
-                            <label class="fs-5 fw-bold mb-2">{{ __('Model') }}</label>
-                            <select class="form-select" data-control="select2" name="car_model_id" id="model-sp"
-                                data-placeholder="{{ __('Choose the model') }}"
-                                data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}">
-                                <option value="" selected></option>
-                                @foreach ($models as $model)
-                                    <option value="{{ $model->id }}"> {{ $model->name }} </option>
-                                @endforeach
-                            </select>
-                            <p class="invalid-feedback" id="car_model_id"></p>
+{{-- Model Dropdown --}}
+<div class="col-md-3 fv-row">
+    <label class="fs-5 fw-bold mb-2">{{ __('Model') }}</label>
+    <select class="form-select" data-control="select2" name="car_model_id" id="model-select"
+        data-placeholder="{{ __('Choose the model') }}" data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}">
+        <option value="" selected></option>
+        {{-- Models will be loaded dynamically here --}}
+    </select>
+    <p class="invalid-feedback" id="car_model_id"></p>
+</div>
 
-                        </div>
 
                     </div>
                     <!-- end   :: Row -->
@@ -209,6 +218,30 @@
     </div>
 @endsection
 @push('scripts')
+<script>
+    $('#brand-select').on('change', function () {
+        const brandId = $(this).val();
+
+        // Clear existing models
+        $('#model-select').empty().append('<option value="" selected></option>');
+
+        if (brandId) {
+            $.ajax({
+                url: '/api/brands/' + brandId + '/models',
+                method: 'GET',
+                success: function (response) {
+                    response.forEach(model => {
+                        $('#model-select').append(`<option value="${model.id}">${model.name}</option>`);
+                    });
+                },
+                error: function () {
+                    alert('Something went wrong while fetching models.');
+                }
+            });
+        }
+    });
+</script>
+
     <script>
         new Tagify(document.getElementById('meta_keyword_ar_inp'), {
             originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')

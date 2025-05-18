@@ -11,6 +11,14 @@ use Illuminate\Validation\ValidationException;
 
 class BrandController extends Controller
 {
+public function getModels($id)
+{
+    $models = \App\Models\CarModel::where('brand_id', $id)
+                ->select('id', 'name_ar','name_en')
+                ->get();
+
+    return response()->json($models);
+}
     public function index(Request $request)
     {
         $this->authorize('view_brands');

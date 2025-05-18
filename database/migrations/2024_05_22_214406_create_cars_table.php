@@ -31,7 +31,7 @@ return new class extends Migration
             $table->unsignedBigInteger('color_id')->nullable()->index('cars_color_id_foreign');
             $table->unsignedBigInteger('kilometers')->nullable();
             $table->integer('year');
-            $table->integer('fuel_tank_capacity')->default(0);
+            $table->text('fuel_tank_capacity');
             $table->enum('gear_shifter', ['manual', 'automatic']);
             $table->enum('car_body', ['hatchback', 'sedan', 'four-wheel-drive', 'commercial', 'family']);
             $table->enum('supplier', ['gulf', 'saudi']);

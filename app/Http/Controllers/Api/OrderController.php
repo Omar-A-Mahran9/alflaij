@@ -58,7 +58,7 @@ $colors = $car->colors->unique('id');
             'id' => $car->id,
             'name'=>$car->name." - ".$car->brand->name." - ".$car->model->name." - ".$car->year,
 'price' => $car->price_field_status == 1 
-    ? round($car->price * (1 + settings()->getSettings('tax') / 100), 2)
+    ? number_format($car->price * (1 + settings()->getSettings('tax') / 100), 2)
     : 0
         ];
     });

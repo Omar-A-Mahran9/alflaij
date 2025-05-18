@@ -26,9 +26,21 @@ class BranchResource extends JsonResource
             $iframeSrc = $matches[1] ?? null; // Assign the extracted src or null if not found
         }
         return [
+            'id'=>$this->id,
+            'phone'=>$this->phone,
+
             'name'=>$this->name,
             'city'=>$this->address,
-            'iframeSrc'=> $iframeSrc
+            'whatsapp'=>$this->whatsapp,
+            'frame'=> $iframeSrc,
+               'facebook' => settings()->getSettings('facebook_url'),
+                  'twitter' => settings()->getSettings('twitter_url'),
+                'instagram' => settings()->getSettings('instagram_url'),
+                'youtube' => settings()->getSettings('youtube_url'),
+                'snapchat' => settings()->getSettings('snapchat_url'),
+                                'email' => settings()->getSettings('email'),
+
+
         ];
     }
 }

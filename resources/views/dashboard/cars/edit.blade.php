@@ -159,14 +159,7 @@
                                         </div>
 
 
-
-
-                                    </div>
-                                    <!-- end   :: Row -->
-
-                                    <!-- begin :: Row -->
-                                    <div class="row mb-10">
-                                        <div class="col-md-3 fv-row">
+ <div class="col-md-3 fv-row">
                                              <label class="fs-5 fw-bold mb-2">{{ __('Category') }}</label>
                                             <select class="form-select" data-control="select2" name="category_id"
                                                 id="category-sp" data-placeholder="{{ __('Choose the category') }}"
@@ -183,43 +176,33 @@
                                             <p class="invalid-feedback" id="category_id"></p>
                                         </div>
 
+                                    </div>
+                                    <!-- end   :: Row -->
+
+                                    <!-- begin :: Row -->
+                                    <div class="row mb-10">
+                                       
+
                                         <!-- begin :: Column -->
-                                        <div class="col-md-3 fv-row">
-
-                                            <label class="fs-5 fw-bold mb-2">{{ __('Car name in arabic') }}</label>
-
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="name_ar_inp"
-                                                    name="name_ar" value="{{ $car['name_ar'] }}"
-                                                    placeholder="example" />
-                                                <label
-                                                    for="card_description_ar_inp">{{ __('Car name in arabic') }}</label>
-                                            </div>
-
-                                            <p class="invalid-feedback" id="name_ar"></p>
-
-                                        </div>
+                                        
                                         <!-- end   :: Column -->
 
                                         <!-- begin :: Column -->
-                                        <div class="col-md-3 fv-row">
-
-                                            <label class="fs-5 fw-bold mb-2">{{ __('Car name in english') }}</label>
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="card_description_en_inp"
-                                                    name="name_en" value="{{ $car['name_en'] }}"
-                                                    placeholder="example" />
-                                                <label
-                                                    for="card_description_en_inp">{{ __('Car name in english') }}</label>
-                                            </div>
-                                            <p class="invalid-feedback" id="name_en"></p>
-
-
-                                        </div>
+                                      
                                         <!-- end   :: Column -->
 
                                         <!-- begin :: Column -->
-                                        <div class="col-md-3 fv-row">
+                                     
+                                        <!-- end   :: Column -->
+
+                                    </div>
+                                    <!-- end   :: Row -->
+
+                                    <!-- begin :: Row -->
+                                    <div class="row mb-10">
+                                        <!-- begin :: Column -->
+
+                                           <div class="col-md-3 fv-row">
 
                                             <label class="fs-5 fw-bold mb-2">{{ __('Year') }}</label>
 
@@ -237,14 +220,6 @@
 
 
                                         </div>
-                                        <!-- end   :: Column -->
-
-                                    </div>
-                                    <!-- end   :: Row -->
-
-                                    <!-- begin :: Row -->
-                                    <div class="row mb-10">
-                                        <!-- begin :: Column -->
                                         <div class="col-md-3 fv-row">
 
                                             <label class="fs-5 fw-bold mb-2">{{ __('fuel type') }}</label>
@@ -285,7 +260,34 @@
 
                                         </div>
                                         <!-- end   :: Column -->
+  <div class="col-md-3 fv-row">
 
+                                                <label class=" fs-5 fw-bold mb-2">{{ __('cylinders') }}</label>
+                                                <div class="form-floating">
+                                                    <input type="text" min="30" class="form-control"
+                                                        id="cylinders_inp" name="cylinders"
+                                                        placeholder="example" value="{{ $car['cylinders'] }}" />
+                                                    <label
+                                                        for="engine_capacity_inp">{{ __('Enter the cylinders') }}</label>
+                                                </div>
+                                                <p class="invalid-feedback" id="cylinders"></p>
+
+
+                                            </div>
+                                             <div class="col-md-3 fv-row">
+
+                                                <label class=" fs-5 fw-bold mb-2">{{ __('Fuel_consumption') }}</label>
+                                                <div class="form-floating">
+                                                    <input type="text" min="30" class="form-control"
+                                                        id="Fuel_consumption_inp" name="Fuel_consumption"
+                                                        placeholder="example" value="{{ $car->Fuel_consumption }}"/>
+                                                    <label
+                                                        for="engine_capacity_inp">{{ __('Enter the Fuel_consumption') }}</label>
+                                                </div>
+                                                <p class="invalid-feedback" id="Fuel_consumption"></p>
+
+
+                                            </div>
                                         <!-- begin :: Column -->
                                         <div class="col-md-3 fv-row">
 
@@ -302,7 +304,14 @@
                                         <!-- end   :: Column -->
 
                                         <!-- begin :: Column -->
-                                        <div class="col-md-3 fv-row">
+                                      
+                                        
+
+                                        <!-- begin :: Column -->
+                                        <div class="row mb-10">
+                                            <!-- begin :: Column -->
+
+                                              <div class="col-md-3 fv-row">
 
                                             <div class="form-check form-switch form-check-custom form-check-solid mb-2">
                                                 <label class="fs-5 fw-bold">{{ __('Discount price') }}</label>
@@ -325,22 +334,11 @@
 
 
                                         </div>
-                                        <!-- end   :: Column -->
-                                        <div class="row mb-10">
-
-
-
-
-                                        </div>
-
-                                        <!-- begin :: Column -->
-                                        <div class="row mb-10">
-                                            <!-- begin :: Column -->
                                             <div class="col-md-4 fv-row">
 
                                                 <label class="fs-5 fw-bold mb-2">{{ __('Engine capacity') }}</label>
                                                 <div class="form-floating">
-                                                    <input type="number" min="30" class="form-control"
+                                                    <input type="text" min="30" class="form-control"
                                                         id="engine_capacity_inp" name="engine_capacity"
                                                         value="{{ $car['engine_capacity'] }}" placeholder="example" />
                                                     <label

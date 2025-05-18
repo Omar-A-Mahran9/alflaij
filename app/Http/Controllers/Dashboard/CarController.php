@@ -126,9 +126,7 @@ class CarController extends Controller
             'description_ar' => ['required', 'string', new NotNumbersOnly()],
             'description_en' => ['required', 'string', new NotNumbersOnly()],
             'category_id' => ['nullable'],
-            'name_ar' => ['required', 'string', 'max:255', new NotNumbersOnly()],
-            'name_en' => ['required', 'string', 'max:255', new NotNumbersOnly()],
-            'year' => ['required'],
+             'year' => ['required'],
             'fuel_type' => ['required'],
             'publish' => ['required'],
             'gear_shifter' => ['required'],
@@ -143,6 +141,8 @@ class CarController extends Controller
             'colors.*.images' => [$colorImagesRequired ? 'required' : 'nullable', 'array', 'min:1'],
             'colors.*.images.*' => ['file', 'image', 'mimes:jpeg,jpg,png,bmp,tiff,webp', 'max:2048'],
             // 'colors.*.stock'=>['required','numeric','min:1'],
+            'cylinders' => ['sometimes', 'string'],
+            'Fuel_consumption' => ['sometimes', 'string'],
             'city_id' => ['required'],
             'engine_capacity' => 'required|string|max:255',
             'car_body' => 'required|string',
@@ -202,6 +202,14 @@ class CarController extends Controller
 
             $data["price_after_tax"] = $data['price'] * (1 + settings()->getSettings('tax') / 100);
         }
+
+            $brand =Brand::find( $data['brand_id']) ?? null;
+            $model =CarModel::find( $data['model_id'] )?? null;
+            $category =Category::find( $data['category_id'] )?? null;
+
+            $data["name_ar"]= $brand->name_ar . $model->name_ar . $category->name_ar;
+            $data["name_en"]= $brand->name_en . $model->name_en . $category->name_en;
+            
         $car = Car::create($data);
         if ($request->hasFile('car_Image')) {
             $image = uploadImage($request->file('car_Image'),"Cars");
@@ -362,6 +370,14 @@ public function update(Request $request, Car $car)
     }
 
     // Update main car data and relationships
+
+
+      $brand =Brand::find( $data['brand_id']) ?? null;
+            $model =CarModel::find( $data['model_id'] )?? null;
+            $category =Category::find( $data['category_id'] )?? null;
+
+            $data["name_ar"]= $brand->name_ar . $model->name_ar . $category->name_ar;
+            $data["name_en"]= $brand->name_en . $model->name_en . $category->name_en;
     $car->update($data);
 
 

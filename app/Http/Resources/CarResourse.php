@@ -110,8 +110,10 @@ class CarResourse extends JsonResource
             'have_discount'=>$this->have_discount,
             'video_url'=>$this->video_url,  
             'price'=>$price_field_status === PriceFieldStatus::show_details->name &&$this->have_discount?(int)($this->discount_price):$this->price,
-
             
+            
+            'cylinders'=>$this->cylinders,  
+            'Fuel_consumption'=>$this->Fuel_consumption,  
             'price_before_discount'=>$price_field_status === PriceFieldStatus::show_details->name && $this->have_discount?(int)$this->price :0,
             
 

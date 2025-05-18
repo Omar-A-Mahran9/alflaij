@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AdsController;
+use App\Http\Controllers\Api\BranchController;
 use App\Http\Controllers\Api\BankController;
 use App\Http\Controllers\Api\CarController;
 use App\Http\Controllers\Api\CategoryController;
@@ -119,6 +120,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('/settings', 'Api\SettingController@setting');
     Route::get('/allsettings', 'Api\SettingController@AllDescription');
     Route::get('/cashing', 'Api\SettingController@cach');
+Route::get('brands/{id}/models', [\App\Http\Controllers\Dashboard\BrandController::class, 'getModels']);
 
 
     //  -------------------- Career -----------------------
@@ -212,6 +214,7 @@ Route::group(['middleware' => ['json.response']], function () {
 
 });
 
+Route::get('branches/{id?}', [BranchController::class, 'get']);
 
 
 Route::post('/update/cars',function(Request $request){
