@@ -124,6 +124,12 @@ public function exportAllOrders()
 }
 
     
+public function exportAllRequestService()
+{
+    return Excel::download(new \App\Exports\RequestServiceExport(), 'all_orders.xlsx');
+}
+
+    
      public function orders_not_approval(Request $request)
     {
          $this->authorize('view_orders');
