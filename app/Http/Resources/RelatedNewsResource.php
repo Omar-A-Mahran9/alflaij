@@ -19,7 +19,7 @@ class RelatedNewsResource extends JsonResource
             'id'=>$this->id,
             'title'=>$this->title,
             'image'=>$this->full_image_path,
-            "description" => $this->description, // Assuming this is the translated attribute
+             'description' => trim(preg_replace('/\s+/', ' ', html_entity_decode(strip_tags($this->description)))),
 
             'created_at'=>$this->created_at->toDateString(),
         ];
