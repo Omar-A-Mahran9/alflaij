@@ -7,9 +7,13 @@
             font-family: Cairo, serif !important;
         }
     </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 @endpush
 @section('content')
     <!-- begin :: Subheader -->
+
+     
     <div class="toolbar">
 
         <div class="container-fluid d-flex flex-stack">
@@ -73,7 +77,12 @@
 
                 </div>
                 <!-- end   :: General Search -->
-
+                <button   style="background: transparent;border:none;" title="Download Excel">
+                    <a href="{{ route('dashboard.export.orders') }}" >
+                        <i class="fas fa-file-excel" style="background color:green; font-size:24px;"></i>
+                    </a>
+                </button>
+             
                 <!-- begin :: Toolbar -->
                 <div class="d-flex justify-content-end" data-kt-docs-table-toolbar="base">
 

@@ -23,7 +23,12 @@ let KTDatatable = (function () {
                 className: "row-selected",
             },
             ajax: {
-                data: function () {
+                data: function (d) {
+
+              d.columns[4].search.value = $('.filter-datatable-inp[data-filter-index="4"]').val() ;
+        
+    
+ 
                     let datatable = $("#kt_datatable");
                     let info = datatable.DataTable().page.info();
                     datatable
@@ -172,17 +177,19 @@ let KTDatatable = (function () {
         });
     };
 
+    
+
     // Filter Datatable
-    let handleFilterDatatable = () => {
-        $(".filter-datatable-inp").each((index, element) => {
-            $(element).change(function () {
-                let columnIndex = $(this).data("filter-index"); // index of the searching column
+let handleFilterDatatable = () => {
+    $('.filter-datatable-inp').on('change', function () {
+        let index = $(this).data('filter-index');
+        let value = $(this).val();
 
-                datatable.column(columnIndex).search($(this).val()).draw();
-            });
-        });
-    };
+       
 
+        $('#kt_datatable').DataTable().column(index).search(value).draw();
+    });
+};
     // Delete record
     let handleDeleteRows = () => {
         $(".delete-row").click(function () {

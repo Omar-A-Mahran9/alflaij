@@ -105,8 +105,12 @@ Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard', 'as' => 'dash
     // Route::get('trash/{modelName}/{id}/restore', 'TrashController@restore')->name('trash.restore');
     Route::delete('trash/{modelName}/{id}', 'TrashController@forceDelete');
     Route::get('/request/service', [RequestServiceController::class,'index'])->name('requestService.index');
-   Route::get('/export-orders', [OrderController::class, 'exportAllOrders']);
-   Route::get('/export-request-service', [OrderController::class, 'exportAllRequestService']);
+   Route::get('/export-orders', [OrderController::class, 'exportAllOrders'])
+   ->name('export.orders');
+   Route::get('/export-request-service', [OrderController::class, 'exportAllRequestService'])
+   ->name('export.request-service');
+   Route::get('/export-subscriber', [OrderController::class, 'exportAllSubscriber'])
+   ->name('export.subscriber');
 
 
     Route::get('/Images/{type}', function ($type) {

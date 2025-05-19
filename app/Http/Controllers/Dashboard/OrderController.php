@@ -18,6 +18,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
  use DB;
 use App\Exports\OrdersExport;
+use App\Exports\SubscriberExport;
 
 use Carbon\Carbon;
 use App\Models\Color;
@@ -122,11 +123,15 @@ public function exportAllOrders()
 {
     return Excel::download(new OrdersExport(), 'all_orders.xlsx');
 }
+public function exportAllSubscriber()
+{
+    return Excel::download(new SubscriberExport(), 'all_Subscribers.xlsx');
+}
 
     
 public function exportAllRequestService()
 {
-    return Excel::download(new \App\Exports\RequestServiceExport(), 'all_orders.xlsx');
+    return Excel::download(new \App\Exports\RequestServiceExport(), 'all_request_orders.xlsx');
 }
 
     

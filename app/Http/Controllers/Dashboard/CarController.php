@@ -31,19 +31,38 @@ use function App\Http\Controllers\store;
 
 class CarController extends Controller
 {
-    public function index(Request $request)
-    {
-        $this->authorize('view_cars');
+public function index(Request $request)
+{
+    $this->authorize('view_cars');
 
-        if ($request->ajax())
-        {
+    if ($request->ajax()) {
+        $data = Car::with(['brand:id,name_' . getLocale()]);
 
-            $cars = getModelData(model: new Car(), relations: ['brand' => ['id', 'name_' . getLocale()]]);
-
-            return response()->json($cars);
+         $filterValue = $request->input('columns.4.search.value');
+        if (!is_null($filterValue) && $filterValue !== '') {
+            if ($filterValue === '0') {
+                $data->where('publish', 0);
+            } else if ($filterValue === '1') {
+                $data->where('publish', 1);
+            } else {
+                $data;
+            }
         }
-        return view('dashboard.cars.index');
+
+         $data->orderBy('created_at', 'desc');
+
+         $total = $data->count();
+        $rows = $data->skip($request->start)->take($request->length)->get();
+
+        return response()->json([
+            "recordsTotal" => $total,
+            "recordsFiltered" => $total,
+            "data" => $rows,
+        ]);
     }
+
+    return view('dashboard.cars.index');
+}
 
     public function create()
     {
@@ -329,7 +348,6 @@ class CarController extends Controller
 public function update(Request $request, Car $car)
 {
     $this->authorize('update_cars');
-dd($request->features);
     $data = $request->except('car_Image', 'deleted_images', 'features', 'car_id', 'tags', 'colors');
     $data['have_discount'] = $request['have_discount'] === "on";
     $data['is_duplicate'] = $request->input('is_duplicate', 0);

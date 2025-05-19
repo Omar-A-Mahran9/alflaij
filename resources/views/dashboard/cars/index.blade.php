@@ -60,8 +60,21 @@
 
                 </div>
                 <!-- end   :: General Search -->
+                        <div class="col-md-3 fv-row">
+<select class="form-select form-select-solid w-200px ms-4 border-gray-300 border-1 filter-datatable-inp"
+    data-filter-index="4"   
+    data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}" data-control="select2"
+    data-placeholder="{{ __('publish car') }}">
+    <option></option>
+    <option value="2" selected>{{ __('All') }}</option>
+    <option value="0" >{{ __('Not-Publish') }}</option>
+    <option value="1">{{ __('Publish') }}</option>
+</select>
 
-                <!-- begin :: Toolbar -->
+                                            
+
+                                        </div>
+
                 <div class="d-flex justify-content-end" data-kt-docs-table-toolbar="base">
 
                     <!-- begin :: Add Button -->
@@ -79,7 +92,6 @@
 
                 </div>
                 <!-- end   :: Toolbar -->
-
 
 
             </div>

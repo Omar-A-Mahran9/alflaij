@@ -59,7 +59,11 @@
                 <!-- end   :: General Search -->
 
 
-
+  <button   style="background: transparent;border:none;" title="Download Excel">
+                    <a href="{{ route('dashboard.export.subscriber') }}" >
+                        <i class="fas fa-file-excel" style="background color:green; font-size:24px;"></i>
+                    </a>
+                </button>
             </div>
             <!-- end   :: Filter -->
 
