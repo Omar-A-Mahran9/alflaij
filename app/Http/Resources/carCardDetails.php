@@ -26,7 +26,7 @@ class carCardDetails extends JsonResource
 'name' => collect([
     $this->brand?->name,
     $this->model?->name,
-])->filter()->implode(' - '),
+])->filter()->implode(' '),
         // "price"=> $this->price,
         'show_status'=>$show_status,
         'price_field_status'=>__($price_field_status) === __('others') ? $this->other_description:__($price_field_status),

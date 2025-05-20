@@ -94,7 +94,7 @@ class CarResourse extends JsonResource
     $this->brand?->name,
     $this->model?->name,
     $this->year,
-])->filter()->implode(' - '),
+])->filter()->implode(' '),
             'description'=> getLocale() == 'ar' ? $this->description_ar : $this->description_en ,
             'publish_date'=>$this->created_at->format('Y-m-d ') ?? '',
             'statue'=>$this->is_new == 1?__('New')  :__('Used') ,
