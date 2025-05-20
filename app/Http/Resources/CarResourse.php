@@ -32,7 +32,7 @@ class CarResourse extends JsonResource
         $price_field_status = PriceFieldStatus::values()[$this->price_field_status]??'available_upon_request';
         $show_status = $price_field_status === PriceFieldStatus::show_details->name ? 0 : 1;
         $features= $this->features->filter(function($feature){
-            return $feature->type === FeatureOrPossibility::feature->value; 
+            return $feature->type === FeatureOrPossibility::feature->value;
         })
         ->map(function ($feature) {
             return [
@@ -40,12 +40,12 @@ class CarResourse extends JsonResource
                 'title'=> $feature->title,
                 'description' => $feature->description,
                 'icon' => getImagePathFromDirectory($feature->icon,'Icons'),
-                
+
 
             ];
         })->toArray();
         $possibilities = $this->features->filter(function($feature){
-            return $feature->type === FeatureOrPossibility::posibility->value; 
+            return $feature->type === FeatureOrPossibility::posibility->value;
         })
         ->map(function ($feature) {
             return [
@@ -53,7 +53,7 @@ class CarResourse extends JsonResource
                 'title'=> $feature->title,
                 'description' => $feature->description,
                 'icon' => getImagePathFromDirectory($feature->icon,'Icons'),
-                
+
 
             ];
         })->toArray();
@@ -78,8 +78,8 @@ class CarResourse extends JsonResource
             ];
         })->values()->toArray();
 
-        
-       
+
+
         // $financeOrdersCountPerCar = Order::where('car_id', $this->id)->whereHas('orderDetailsCar', function ($query) {
         //     $query->where('payment_type', 'finance');
         // })->with('orderDetailsCar')->count();
@@ -90,7 +90,7 @@ class CarResourse extends JsonResource
         return [
             'id' => $this->id,
             'title' => Str::limit($this->name, 35),
-            'main_title' => $this->brand->name.' '.$this->model->name.' '.$this->year,
+            'main_title' => $this->brand->name.' - '.$this->model->name.' - '.$this->year,
             'description'=> getLocale() == 'ar' ? $this->description_ar : $this->description_en ,
             'publish_date'=>$this->created_at->format('Y-m-d ') ?? '',
             'statue'=>$this->is_new == 1?__('New')  :__('Used') ,
@@ -108,14 +108,14 @@ class CarResourse extends JsonResource
             'supplier'=>__($this->supplier),
             'supplier_english'=>$this->supplier,
             'have_discount'=>$this->have_discount,
-            'video_url'=>$this->video_url,  
+            'video_url'=>$this->video_url,
             'price'=>$price_field_status === PriceFieldStatus::show_details->name &&$this->have_discount?number_format($this->discount_price,0):number_format($this->price,0),
-            
-            
-            'cylinders'=>$this->cylinders,  
-            'Fuel_consumption'=>$this->Fuel_consumption,  
+
+
+            'cylinders'=>$this->cylinders,
+            'Fuel_consumption'=>$this->Fuel_consumption,
             'price_before_discount'=>$price_field_status === PriceFieldStatus::show_details->name && $this->have_discount?number_format($this->price ,0):0,
-            
+
 
 //if maintenance_mode = 0 return null if not return result as int
                'price_after_tax' => $price_field_status === PriceFieldStatus::show_details->name
@@ -132,7 +132,7 @@ class CarResourse extends JsonResource
     : null,
 
     // round(
-    //     ($this->have_discount == 1 ? $this->discount_price : $this->price) 
+    //     ($this->have_discount == 1 ? $this->discount_price : $this->price)
     //     * (1 + $tax / 100)
     //   )
 
@@ -144,7 +144,7 @@ class CarResourse extends JsonResource
             'tax'=>settings()->getSettings('maintenance_mode') == 1 ? settings()->getSettings('tax') : 0,
             'show_in_home_page' => (bool) $this->show_in_home_page,
             'car_body'=>__($this->car_body),
-            'fuel_tank_capacity'=>$this->engine_capacity, 
+            'fuel_tank_capacity'=>$this->engine_capacity,
             'brand' => [
                 'id' => $this->brand->id??"",
                 'title'=>$this->brand->name??"",
@@ -165,7 +165,7 @@ class CarResourse extends JsonResource
                 'title'=>$this->city->name??' ',
             ],
             'features' =>!empty($features) ? $features : [],
-            'possibilities'=>!empty($possibilities) ? $possibilities :[],  
+            'possibilities'=>!empty($possibilities) ? $possibilities :[],
             'colors' => !empty($colorDetails) ? $colorDetails   :[],
             'related_car'=> carCardDetails::collection($cars)
         ];
