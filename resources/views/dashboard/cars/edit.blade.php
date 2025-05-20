@@ -76,19 +76,19 @@
                                     <!-- begin :: Column -->
                                     <div class="col-md-12 fv-row d-flex justify-content-evenly">
 
-                                     
-                                       
+
+
                                          <!-- begin :: Row -->
                                      <div class="row mb-10">
                                         <label class="text-center fw-bold mb-4">{{ __('Image') }}</label>
                                         <div class="col-md-12 fv-row d-flex justify-content-evenly">
-                                           <x-dashboard.upload-image-inp name="car_Image" :image="$car->main_image" directory="Cars" 
+                                           <x-dashboard.upload-image-inp name="car_Image" :image="$car->main_image" directory="Cars"
                                                placeholder="default.jpg" type="editable"></x-dashboard.upload-image-inp>
-                                               
+
                                            </div>
                                            <p class="fv-plugins-message-container invalid-feedback text-center mt-2" id="car_Image"></p>
                                            <!-- end   :: Upload image component -->
-                                           
+
                                        </div>
                                        <!-- end   :: Row -->
                                         <!--end::Input group-->
@@ -181,18 +181,18 @@
 
                                     <!-- begin :: Row -->
                                     <div class="row mb-10">
-                                       
+
 
                                         <!-- begin :: Column -->
-                                        
+
                                         <!-- end   :: Column -->
 
                                         <!-- begin :: Column -->
-                                      
+
                                         <!-- end   :: Column -->
 
                                         <!-- begin :: Column -->
-                                     
+
                                         <!-- end   :: Column -->
 
                                     </div>
@@ -304,8 +304,8 @@
                                         <!-- end   :: Column -->
 
                                         <!-- begin :: Column -->
-                                      
-                                        
+
+
 
                                         <!-- begin :: Column -->
                                         <div class="row mb-10">
@@ -346,7 +346,7 @@
                                                 </div>
                                                 <p class="invalid-feedback" id="engine_capacity"></p>
                                             </div>
-                                  
+
                                             <div class="col-md-4 fv-row">
 
                                                 <label class="fs-5 fw-bold mb-2">{{ __('Tags') }}</label>
@@ -462,7 +462,7 @@
                                                         'value' => '3',
                                                         'id' => 'availableUponRequest',
                                                         'checked' =>  $car['price_field_status'] == 3,
-                                                    ], 
+                                                    ],
                                                     [
                                                         'label' => 'unavailable',
                                                         'value' => '4',
@@ -643,7 +643,7 @@
 
                                     <div class="separator separator-dashed my-4"></div>
 
-                                
+
                                     <div class="separator separator-dashed my-4"></div>
 
                                     <!-- end   :: Row -->
@@ -674,10 +674,10 @@
                                     </div>
                                     <!-- end   :: Row -->
 
-                                        
+
                                             <!-- begin :: Wizard Step 2 -->
-                               
-                                         
+
+
                                         <!-- begin :: Row -->
                                         <div class="row mb-10">
                                             <hr>
@@ -745,11 +745,11 @@
                                                 <!--begin::Form group-->
                                                 <div class="form-group">
                                                     <div data-repeater-list="features">
-                                                        
+
                                                         @forelse ($car->features as $feature)
                                                             <div data-repeater-item>
                                                                 <div class="form-group row align-items-center">
-                                                                    <div class="col-md-10">  
+                                                                    <div class="col-md-10">
                                                                         <div class="row align-items-center">
                                                                             <div class="col-md-6 mb-3">
                                                                                 <label class="form-label">{{ __('Type') }}</label>
@@ -767,7 +767,7 @@
                                                                                 </select>
                                                                                 <div class="text-danger m-0 invalid-feedback" id="features_{{$loop->index}}_id"></div>
                                                                             </div>
-                                                                        
+
                                                                             <div class="col-md-6 mb-3">
                                                                                 <label class="form-label">{{ __('Description in arabic') }}</label>
                                                                                 <input type="text" id="features_{{$loop->index}}_description_ar_inp" class="form-control" name="features[{{ $loop->index }}][description_ar]" value="{{ $feature->pivot->description_ar }}" placeholder="{{ __('Description in Arabic') }}" required />
@@ -778,20 +778,20 @@
                                                                             <input type="text" id="features_{{$loop->index}}_description_en_inp" class="form-control" name="features[{{ $loop->index }}][description_en]" value="{{ $feature->pivot->description_en }}" placeholder="{{ __('Description in English') }}" />
                                                                             <div class="text-danger m-0 invalid-feedback" id="features_{{$loop->index}}_description_en"></div>
                                                                             </div>
-                                                                        </div>    
-                                                                    </div>    
+                                                                        </div>
+                                                                    </div>
                                                                     <div class="col-md-2">
                                                                         <div class="text-center">
                                                                             <a href="javascript:;" data-repeater-delete class="btn btn-sm btn-light-danger mt-3">
                                                                                 <i class="far fa-trash-alt"></i>{{__('Delete')}}
-                                                                                
+
                                                                             </a>
-                                                                        </div> 
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         @empty
-                                                        
+
                                                             <div data-repeater-item>
                                                                 <div class="form-group row align-items-center">
                                                                     <div class="col-md-10">
@@ -811,7 +811,7 @@
                                                                                     <!-- Populated via JS -->
                                                                                 </select>
                                                                                 <div class="text-danger m-0 invalid-feedback" id="features_0_id_inp"></div>
-                                                                                
+
                                                                             </div>
                                                                             <div class="col-md-6 mb-3 ">
                                                                                 <label class="form-label">{{ __('Description in arabic') }}</label>
@@ -830,10 +830,10 @@
                                                                         <div class="text-center">
                                                                             <a href="javascript:;" data-repeater-delete class="btn btn-sm btn-light-danger mt-3">
                                                                                 <i class="far fa-trash-alt"></i>{{__('Delete')}}
-                                                                                
+
                                                                             </a>
                                                                         </div>
-                                                                        
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -894,7 +894,7 @@
 @endsection
 @push('scripts')
 <script>
-  
+
      // Function to populate models based on selected brand
      function loadModels(brandId) {
         $('#model-sp').empty().append('<option value="" selected></option>');  // Clear model dropdown
@@ -971,11 +971,11 @@
         });
     </script>
     <script>
-    
+
         $(document).ready(function() {
             // Initialize Repeater before Dropzone
             initializeRepeater();
-            
+
         });
 
         // Function to initialize the Repeater component

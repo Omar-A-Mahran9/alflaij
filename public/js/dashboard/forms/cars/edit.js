@@ -18,25 +18,25 @@ let deletedColorsImages = [];            // This will store deleted images for u
 
 
 $(document).ready(() => {
-    
+
     initializeColorsSp();
- 
-     
+
+
     undoDeleteBtn.click(function () {
         let restoredImage = deletedColorsImages.pop();
         if (!restoredImage) return;
-    
+
         let previousImagesArray = [...updatedColorsImages[restoredImage['color_id']].images];
         previousImagesArray.push(restoredImage['image']);
-    
+
         updatedColorsImages[restoredImage['color_id']].images = previousImagesArray;
-        
+
         // Show the restored image
         $(`#${cleanImageName(restoredImage['image'])}-deleted-image`).removeClass('d-none');
 
         if (deletedColorsImages.length === 0) {
             undoDeleteBtn.prop('disabled', true);
-        } 
+        }
         else {
             undoDeleteBtn.prop('disabled', false);
             $("#no-images-text").addClass('d-none');
@@ -45,31 +45,31 @@ $(document).ready(() => {
     colorsSp.change(function () {
         let currentlySelected = $(this).val(); // Array of selected color IDs
         carColorsDiv.empty(); // Clear existing color divs to avoid duplicates
-    
+
         currentlySelected.forEach((colorId, index) => {
             let selectedColor = colors.find((color) => color['id'] == colorId);
             let colorData = colorsWithUniqueImages.find((color) => color['color_id'] == colorId) || {  images: [] };
-    
+
             let carImagesCount = colorData.images.length > 0 ? `( ${colorData.images.length} )` : '';
-    
+
             carColorsDiv.append(`
                 <div class="rounded border border-3 p-5 mb-4" id="color-${colorId}">
                     <div class="row text-center">
                         <!-- Color Name and Preview -->
                         <div class="col-md-4 fv-row">
                             <h4>${selectedColor['name']}</h4>
-                            <div class="rounded-circle w-80px h-80px m-auto" 
+                            <div class="rounded-circle w-80px h-80px m-auto"
                                  style="border:1px solid lightslategrey;background:${selectedColor['hex_code']}"></div>
                             <input type="hidden" name="colors[${index}][id]" value="${selectedColor['id']}">
                             <p class="invalid-feedback" id="colors_${index}_color"></p>
                         </div>
-    
+
                         <!-- Images Upload Section -->
                         <div class="col-md-4 fv-row">
                             <label class="text-center fw-bold mb-4 d-block">${__("images")}</label>
-                            <input type="file" class="d-none" name="colors[${index}][images][]" multiple 
+                            <input type="file" class="d-none" name="colors[${index}][images][]" multiple
                                    id="images_inp_${selectedColor['id']}">
-                            <button class="btn btn-secondary m-auto" type="button" 
+                            <button class="btn btn-secondary m-auto" type="button"
                                     id="images_upload_btn_${selectedColor['id']}">
                                 <i class="bi bi-upload fs-8"></i> ${carImagesCount || "0 ملف تم تحديثه"}
                             </button>
@@ -78,17 +78,17 @@ $(document).ready(() => {
                             </a>
                             <p class="invalid-feedback" id="colors_${index}_images"></p>
                         </div>
-    
-                      
+
+
                     </div>
                 </div>
             `);
         });
-    
+
         previouslySelected = currentlySelected; // Update the previous selection
     });
-    
-  
+
+
     $("#discount-price-switch").change(function () {
         discountInp.prop("disabled", !$(this).prop("checked"));
     });
@@ -150,7 +150,7 @@ let openImagesModal = (colorId) => {
     let selectedImages = carImageSorted
         .filter(item => item.color_id == colorId)
         .sort((a, b) => a.sort - b.sort);
-       
+
     $("#images-container").empty();
 
     if (selectedImages.length > 0) {
@@ -168,12 +168,12 @@ let openImagesModal = (colorId) => {
 let createImageContainer = (image, colorId,imageId) => {
     let imageContainerId = cleanImageName(image) + "-deleted-image" ;
     let imagePath = getImagePathFromDirectory(image, "Cars");
-   
+
     return `
         <div class="col-md-3 col-12 my-4 text-center" id="${imageContainerId}">
             <div class="image-input image-input-outline">
                 <div class="image-input-wrapper w-100px h-100px draggable draggable-handle" data-color-id="${colorId}"
-                 data-id="${imageId}" 
+                 data-id="${imageId}"
                      style="background-image: url('${imagePath}'); background-size: contain;"></div>
 
                 <label onclick="deleteColorImage(${colorId}, '${image}')"
@@ -189,7 +189,7 @@ let createImageContainer = (image, colorId,imageId) => {
 
 let deleteColorImage = (colorId, imageToDelete) => {
     console.log(colorsWithUniqueImages)
-    // Find the color object in colorsWithUniqueImages by color_id  
+    // Find the color object in colorsWithUniqueImages by color_id
     let selectedColorIndex = colorsWithUniqueImages.findIndex(
         (color) => parseInt(color.color_id) === parseInt(colorId)
     );
@@ -200,15 +200,15 @@ let deleteColorImage = (colorId, imageToDelete) => {
     }
     // Deep clone the color object to avoid affecting other colors
     let selectedColor = { ...colorsWithUniqueImages[selectedColorIndex] };
-    
+
 
     selectedColor.images = [...colorsWithUniqueImages[selectedColorIndex].images];
     deletedColorsImages.push({
         color_id: colorId,
         image: imageToDelete,
     });
-    
-    
+
+
     // Remove the image from the selected color's images array
     selectedColor.images = selectedColor.images.filter((image) => image !== imageToDelete);
 
@@ -223,20 +223,20 @@ let deleteColorImage = (colorId, imageToDelete) => {
 
     // Hide the deleted image in the DOM
     let imageContainerId = cleanImageName(imageToDelete) + "-deleted-image";
-    
+
     $(`#${imageContainerId}`).addClass("d-none");
 
     // Enable the undo button if there’s at least one deleted image
     undoDeleteBtn.prop("disabled", false);
 
     // Check if there are any remaining images, toggle "No images" text accordingly
-   
+
     if (selectedColor.images.length === 0) {
         $("#no-images-text").removeClass("d-none");
     } else {
         $("#no-images-text").addClass("d-none");
     }
-  
+
 };
 
 
@@ -264,7 +264,7 @@ $("#save-imgs-btn").click(function () {
         }
     });
 });
- 
+
 
 
 let validateStep = async (successCallback) => {
@@ -279,7 +279,7 @@ let validateStep = async (successCallback) => {
     if (fileInput && fileInput.files.length > 0) {
         formData.append("car_Image", fileInput.files[0]); // Append the single image
     }
- 
+
     // AJAX request for validation and submission
     $.ajax({
         url: `/dashboard/car-validate/${carId}`, // Adjust to your endpoint
@@ -355,81 +355,81 @@ document.addEventListener("DOMContentLoaded", function () {
     let originalImageOrder = {};
 
     // Initialize drag-and-drop sorting
-    const swappable = new Draggable.Swappable(container, {
-        draggable: ".draggable",
-        handle: ".draggable-handle",
-    });
+    // const swappable = new Draggable.Swappable(container, {
+    //     draggable: ".draggable",
+    //     handle: ".draggable-handle",
+    // });
 
     // Update the reorderedImages array after drag-and-drop
-    swappable.on("swappable:stop", function () {
-        const groupedImages = {}; // Temporary object to group images by color
+    // swappable.on("swappable:stop", function () {
+    //     const groupedImages = {}; // Temporary object to group images by color
 
-        // Group images by color
-        container.querySelectorAll('.draggable').forEach((dragItem) => {
-            const imageId = dragItem.getAttribute('data-id');
-            const colorId = dragItem.getAttribute('data-color-id');
-      
-            if (imageId && colorId) {
-                const imageData = carColors.find(img => img.id == imageId && img.color_id == colorId);
-                
-                if (imageData) {
-                    // Initialize group for the color if not exists
-                    if (!groupedImages[colorId]) {
-                        groupedImages[colorId] = [];
-                    }
+    //     // Group images by color
+    //     container.querySelectorAll('.draggable').forEach((dragItem) => {
+    //         const imageId = dragItem.getAttribute('data-id');
+    //         const colorId = dragItem.getAttribute('data-color-id');
 
-                    // Ensure no duplicates in the group
-                    if (!groupedImages[colorId].some(img => img.id == imageData.id)) {
-                        groupedImages[colorId].push(imageData);
-                    }
-                }
-            }
-        });
-        // Now ensure that every color group has its images sorted correctly
-        reorderedImages = Object.keys(groupedImages).map(colorId => ({
-            color_id: colorId,
-            images: groupedImages[colorId], // Images under each color
-        }));
+    //         if (imageId && colorId) {
+    //             const imageData = carColors.find(img => img.id == imageId && img.color_id == colorId);
 
-        // Log the current sorted images
-        const filteredImages = reorderedImages.filter(colorGroup => colorGroup.images.length > 0);
-       
-        
-        // Save the order of images for each color to prevent overwriting
-        filteredImages.forEach(group => {
-            originalImageOrder[group.color_id] = group.images; // Persist color-specific order
-        });
-      
-        // Prepare the test array with the latest color order
-        let test = [];
-        for (let colorId in originalImageOrder) {
-            test.push({ color_id: colorId, images: originalImageOrder[colorId] });
-        }
+    //             if (imageData) {
+    //                 // Initialize group for the color if not exists
+    //                 if (!groupedImages[colorId]) {
+    //                     groupedImages[colorId] = [];
+    //                 }
 
-        // Log the test array to check if each color is preserved
-        console.log("Test Array with Sorted Colors:", test);
+    //                 // Ensure no duplicates in the group
+    //                 if (!groupedImages[colorId].some(img => img.id == imageData.id)) {
+    //                     groupedImages[colorId].push(imageData);
+    //                 }
+    //             }
+    //         }
+    //     });
+    //     // Now ensure that every color group has its images sorted correctly
+    //     reorderedImages = Object.keys(groupedImages).map(colorId => ({
+    //         color_id: colorId,
+    //         images: groupedImages[colorId], // Images under each color
+    //     }));
 
-        // Now you can use the test array for submission
-        // $("#next-btn").on("click", function (e) {
-        //     e.preventDefault();  // Prevent page reload
+    //     // Log the current sorted images
+    //     const filteredImages = reorderedImages.filter(colorGroup => colorGroup.images.length > 0);
 
-            // Use the test array for the AJAX submission
-            $.ajax({
-                url: window.location.origin + "/dashboard/sort/image", // Dynamically resolve base URL
-                type: "POST",
-                headers: {
-                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
-                },
-                contentType: "application/json",
-                data: JSON.stringify({ images: test }),  // Send the test array for submission
-                success: function (data) {
-                    
-                    console.log("Image order successfully updated:", data);
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error submitting image order:", xhr.responseText);
-                },
-            });
-        // });
-    });
+
+    //     // Save the order of images for each color to prevent overwriting
+    //     filteredImages.forEach(group => {
+    //         originalImageOrder[group.color_id] = group.images; // Persist color-specific order
+    //     });
+
+    //     // Prepare the test array with the latest color order
+    //     let test = [];
+    //     for (let colorId in originalImageOrder) {
+    //         test.push({ color_id: colorId, images: originalImageOrder[colorId] });
+    //     }
+
+    //     // Log the test array to check if each color is preserved
+    //     console.log("Test Array with Sorted Colors:", test);
+
+    //     // Now you can use the test array for submission
+    //     // $("#next-btn").on("click", function (e) {
+    //     //     e.preventDefault();  // Prevent page reload
+
+    //         // Use the test array for the AJAX submission
+    //         $.ajax({
+    //             url: window.location.origin + "/dashboard/sort/image", // Dynamically resolve base URL
+    //             type: "POST",
+    //             headers: {
+    //                 "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
+    //             },
+    //             contentType: "application/json",
+    //             data: JSON.stringify({ images: test }),  // Send the test array for submission
+    //             success: function (data) {
+
+    //                 console.log("Image order successfully updated:", data);
+    //             },
+    //             error: function (xhr, status, error) {
+    //                 console.error("Error submitting image order:", xhr.responseText);
+    //             },
+    //         });
+    //     // });
+    // });
 });

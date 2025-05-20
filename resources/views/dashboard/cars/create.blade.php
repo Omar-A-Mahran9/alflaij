@@ -76,13 +76,13 @@
                                     <div class="row mb-10">
                                      <label class="text-center fw-bold mb-4">{{ __('Image') }}</label>
                                      <div class="col-md-12 fv-row d-flex justify-content-evenly">
-                                        <x-dashboard.upload-image-inp name="car_Image" :image="null" :directory="null" 
+                                        <x-dashboard.upload-image-inp name="car_Image" :image="null" :directory="null"
                                             placeholder="default.jpg" type="editable"></x-dashboard.upload-image-inp>
-                                            
+
                                         </div>
                                         <p class="fv-plugins-message-container invalid-feedback text-center mt-2" id="car_Image"></p>
                                         <!-- end   :: Upload image component -->
-                                        
+
                                     </div>
                                     <!-- end   :: Row -->
 
@@ -159,7 +159,7 @@
                                     <div class="p-8">
 
                                         <!-- begin :: Row -->
-                                       
+
                                         <!-- end   :: Row -->
 
                                         <!-- begin :: Row -->
@@ -232,7 +232,7 @@
                                             <!-- end   :: Column -->
 
                                             <!-- begin :: Column -->
-                                         
+
                                             <!-- end   :: Column -->
 
                                         </div>
@@ -275,7 +275,7 @@
 
 
                                             </div>
- 
+
 
                                              <div class="col-md-4 fv-row">
 
@@ -305,7 +305,7 @@
 
 
                                             </div>
-                                           
+
                                             <!-- begin :: Column -->
                                             <div class="col-md-4 fv-row">
 
@@ -390,7 +390,7 @@
 
                                                 <!-- begin :: Column -->
                                                    <div class="col-md-12 fv-row">
-   
+
                                                        <x-dashboard.radio-btn title="price_field_status" name="price_field_status"
                                                            :radio-btns="[
                                                                [
@@ -410,7 +410,7 @@
                                                                    'value' => '3',
                                                                    'id' => 'availableUponRequest',
                                                                    'checked' => false,
-                                                               ], 
+                                                               ],
                                                                [
                                                                    'label' => 'unavailable',
                                                                    'value' => '4',
@@ -424,12 +424,12 @@
                                                                    'checked' => false,
                                                                ],
                                                            ]" />
-   
-                                                               
+
+
                                                    </div>
-   
+
                                                    <!-- end   :: Column -->
-   
+
                                                </div>
                                                <div id="otherInputs" style="display:none">
                                                <div class="col-md-6 fv-row">
@@ -441,7 +441,7 @@
                                                    </div>
                                                    <p class="text-danger invalid-feedback" id="other_description_ar"></p>
                                                    <!-- end   :: Column -->
-   
+
                                                </div>
                                                <div class="col-md-6 fv-row">
                                                    <label class="fs-5 fw-bold mb-2">{{ __('Description in english') }}</label>
@@ -452,14 +452,14 @@
                                                    </div>
                                                    <p class="text-danger invalid-feedback" id="other_description_en"></p>
                                                    <!-- end   :: Column -->
-   
+
                                                </div>
-                                               </div>                                                       
-   
+                                               </div>
+
                                                    <!-- end :: Row -->
-   
+
                                                <div class="separator separator-dashed my-4"></div>
-   
+
 
                                             <!-- begin :: Row -->
                                             <div class="row">
@@ -535,9 +535,9 @@
                                                 <!-- end   :: Column -->
 
 
-                                                  
+
                                                 </div>
-                                  
+
                                             </div>
                                             <!-- end   :: Row -->
 
@@ -599,7 +599,7 @@
 
                                             <div class="separator separator-dashed my-4"></div>
 
-                                          
+
                                             <div class="separator separator-dashed my-4"></div>
 
                                             <!-- end   :: Row -->
@@ -628,9 +628,9 @@
                                                 <!-- end   :: Column -->
 
                                             </div>
-                                            <!-- end   :: Row -->     
+                                            <!-- end   :: Row -->
                                             <!-- begin :: Row -->
-                                                       
+
                                     <!-- begin :: Wizard Step 2 -->
                                     <div class="p-8" >
                                            <!-- begin  :: Row -->
@@ -669,7 +669,7 @@
 
                                     </div>
                                     <!-- end   :: Wizard Step 2 -->
-                                            <!-- end   :: Row -->     
+                                            <!-- end   :: Row -->
 
 
                                             <!-- begin  :: Row -->
@@ -680,7 +680,7 @@
 
                                             <!-- end    :: Row -->
 
-                                            
+
                                             <!--begin::Repeater-->
                                             <div id="kt_docs_repeater_features">
                                                 <!--begin::Form group-->
@@ -688,7 +688,7 @@
                                                     <div  class="features-repeater" data-repeater-list="features">
                                                         <div data-repeater-item>
                                                             <div class="form-group row align-items-center">
-                                                                <div class="col-md-10">  
+                                                                <div class="col-md-10">
                                                                   <div class="row align-items-center">
 
                                                                         <div class="col-md-6 mb-3">
@@ -715,23 +715,23 @@
 
                                                                             <div class="text-danger m-0 invalid-feedback" id="features_0_description_ar"></div>
                                                                         </div>
-                                                                    
+
                                                                         <div class="col-md-6 mb-3">
                                                                             <label class="form-label">{{__('Description in english')}}</label>
                                                                             <input type="text" class="form-control mb-2 mb-md-0" id="features_0_description_en_inp" name="features[0][description_en]" placeholder="{{__('Description in english')}}" />
                                                                             <div class="text-danger m-0 invalid-feedback" id="features_0_description_en"></div>
-                                                                            
+
                                                                         </div>
-                                                                    </div>   
+                                                                    </div>
                                                                 </div>
 
                                                                 <div class="col-md-2">
                                                                     <div class="text-center">
                                                                         <a href="javascript:;" data-repeater-delete class="btn btn-sm btn-light-danger mt-3" id="features_0_delete_btn">
                                                                             <i class="far fa-trash-alt"></i>{{__('Delete')}}
-                                                                            
+
                                                                         </a>
-                                                                    </div> 
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -805,7 +805,7 @@
             // Select all radio buttons and the "otherInputs" container
             const radioButtons = document.querySelectorAll('input[name="price_field_status"]');
             const otherInputs = document.getElementById("otherInputs");
-    
+
             // Add event listeners to all radio buttons
             radioButtons.forEach(radio => {
                 radio.addEventListener("change", function () {
@@ -818,12 +818,12 @@
             });
         });
     </script>
-    
+
     <script>
-       
+
         $(document).ready(function() {
             $('div[data-repeater-item]:first input , select').on('change', function () {
-               
+
                 var element = $(this);
                 // If the input/select has a value, it's valid
                 if (element.val()) {
@@ -832,12 +832,12 @@
                 } else {
                     element.removeClass('is-valid').addClass('is-invalid');
                     element.siblings('.invalid-feedback').show(); // Show error message if any
-                    
+
                 }
             });
-       
+
             $('#kt_docs_repeater_features').repeater({
-            
+
             initEmpty: false,
             defaultValues: {
                 'text-input': 'foo'
@@ -846,15 +846,15 @@
                 $(this).slideDown();
                 // console.log( this)
                 updateRepeaterIndex();
-                
+
             },
             hide: function(deleteElement) {
             $(this).slideUp(deleteElement, function() {
-                $(this).remove(); 
+                $(this).remove();
                 updateRepeaterIndex(); // Call this after an item is deleted to reindex correctly
             });
             }
-        
+
         });
         document.getElementById('features_0_delete_btn').style.display = 'none'; // Hide delete button for the first item
 
@@ -871,16 +871,16 @@
                     // Clear the second select (options select) before appending new options
                     $currentOptionsSelect.empty();
                     $currentOptionsSelect.append(`<option value="" selected disabled>${__('Select an option')}</option>`);
-    
+
                     console.log(response.options.length);
                     if(response.options.length==0){
                         $currentOptionsSelect.append(`<option value="" selected disabled> ${__('No data')} </option>`);
                     }else{
-            
+
                       //  Populate the second select with the response data
                         $.each(response.options, function(value, name) {
                             $currentOptionsSelect.append('<option value="' + value + '">' + name + '</option>');
-    
+
                         });
                     }
                 },
@@ -891,29 +891,29 @@
         });
 
      // Function to update input names and IDs after adding a new feature
-  
-    function updateRepeaterIndex() {
-        
+
+        function updateRepeaterIndex() {
+
         $('#kt_docs_repeater_features [data-repeater-item]').each(function (index) {
             $(this).find('input, select ,a').each(function () {
                 var name = $(this).attr('name');
                 var id = $(this).attr('id');
-            
-                        
-                if (name) { 
+
+
+                if (name) {
                     name = name.replace(/\[\d+\]/, '[' + index + ']'); // Update the name index
-                    
+
                     $(this).attr('name', name);
                 }
-                
-            
+
+
 
                 if (id) {
                     id = id.replace(/_\d+_/, '_' + index + '_'); // Update the id format with underscores
                     $(this).attr('id', id);
                 }
 
-            
+
             });
 
             // Handle invalid-feedback and label 'for' attributes
@@ -937,7 +937,7 @@
                 }
             });
         });
-    
+
         $('input, select').on('change', function () {
             var element = $(this);
 
@@ -950,7 +950,7 @@
                 element.siblings('.invalid-feedback').show(); // Show error message if any
             }
         });
-    }
+      }
 
 
 
@@ -1003,12 +1003,12 @@
         }
     });
 
-    
+
 });
 
     </script>
         <script>
-         
+
                let colors = @json($colors);
        </script>
 
