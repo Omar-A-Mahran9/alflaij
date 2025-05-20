@@ -7,13 +7,12 @@
             font-family: Cairo, serif !important;
         }
     </style>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 @endpush
 @section('content')
     <!-- begin :: Subheader -->
 
-     
+
     <div class="toolbar">
 
         <div class="container-fluid d-flex flex-stack">
@@ -77,12 +76,20 @@
 
                 </div>
                 <!-- end   :: General Search -->
-                <button   style="background: transparent;border:none;" title="Download Excel">
-                    <a href="{{ route('dashboard.export.orders') }}" >
-                        <i class="fas fa-file-excel" style="background color:green; font-size:24px;"></i>
-                    </a>
-                </button>
-             
+            
+
+
+                <a href="{{ route('dashboard.export.orders') }}" title="Download Excel"
+                    style="display: inline-flex; align-items: center; gap: 6px;
+          padding: 8px 12px; background-color: #28a745; color: white;
+          text-decoration: none; border-radius: 6px;
+          font-size: 16px;">
+                    <i class="fas fa-file-excel me-2 text-white" style="font-size: 15px;"></i>
+                    <span>{{ __('Download Excel') }}</span>
+                </a>
+
+
+
                 <!-- begin :: Toolbar -->
                 <div class="d-flex justify-content-end" data-kt-docs-table-toolbar="base">
 
@@ -173,5 +180,4 @@
 
     <script src="{{ asset('js/dashboard/datatables/datatables.bundle.js') }}"></script>
     <script src="{{ asset('js/dashboard/datatables/orders.js') }}"></script>
-
 @endpush
