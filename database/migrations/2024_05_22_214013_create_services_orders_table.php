@@ -1,35 +1,50 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Exports;
 
-return new class extends Migration
+use App\Models\RequestService;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+
+class RequestServiceExport implements FromCollection, WithMapping, WithHeadings
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function collection()
     {
-        Schema::create('services_orders', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('order_id')->nullable()->index('services_orders_order_id_foreign');
-            $table->unsignedBigInteger('service_id')->nullable()->index('services_orders_service_id_foreign');
-            $table->string('car_model');
-            $table->integer('kilometers_number');
-            $table->timestamps();
-        });
+        return RequestService::with(['service', 'city', 'status'])->get();
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function map($service): array
     {
-        Schema::dropIfExists('services_orders');
+        return [
+            $service->id,
+            $service->name,
+            $service->phone,
+            optional($service->city)->name,
+            optional($service->service)->name,
+            $service->car_model,
+            $service->car_brand,
+            $service->meter_reading,
+            optional($service->status)->name,
+            $service->created_at->format('Y-m-d H:i'),
+            $service->order_id,
+        ];
     }
-};
+
+    public function headings(): array
+    {
+        return [
+            'ID',
+            'Customer Name',
+            'Phone',
+            'City',
+            'Service',
+            'Car Model',
+            'Car Brand',
+            'Meter Reading',
+            'Status',
+            'Created At',
+            'Order ID',
+        ];
+    }
+}

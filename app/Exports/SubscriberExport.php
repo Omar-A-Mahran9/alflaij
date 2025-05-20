@@ -4,36 +4,52 @@ namespace App\Exports;
 
 use App\Models\Subscriber;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class SubscriberExport implements FromCollection
+class SubscriberExport implements FromCollection, WithMapping, WithHeadings, WithStyles
 {
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * Export all subscribers
+     */
     public function collection()
     {
         return Subscriber::all();
     }
 
-        public function map($subscriber): array
+    /**
+     * Map each row
+     */
+    public function map($subscriber): array
     {
         return [
             $subscriber->id,
             $subscriber->email,
-  
-             $subscriber->created_at->format('Y-m-d H:i'),
- 
+            $subscriber->created_at->format('Y-m-d H:i'),
         ];
     }
 
-      public function headings(): array
+    /**
+     * Set headings
+     */
+    public function headings(): array
     {
-
         return [
-            'Id',
-            'Email',
-            'Created At',
+            __('Id'),
+            __('Email'),
+            __('Created At'),
         ];
     }
 
+    /**
+     * Style headings (make bold)
+     */
+    public function styles(Worksheet $sheet)
+    {
+        return [
+            1 => ['font' => ['bold' => true]], // Make first row bold
+        ];
+    }
 }

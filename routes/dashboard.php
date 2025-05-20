@@ -38,7 +38,7 @@ Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard', 'as' => 'dash
     Route::get('categories','CategoriesController@index');
     /** resources routes **/
     /** ajax for features and it can't be after features resource route */
-    Route::get('/features/get-options',[FeatureController::class,'getOptions']); //  add car features and possibilities 
+    Route::get('/features/get-options',[FeatureController::class,'getOptions']); //  add car features and possibilities
     Route::resource('features', 'FeatureController');
     Route::resource('partners','PartnerController');
     Route::resource('orders', 'OrderController');
@@ -144,5 +144,5 @@ Route::group(['prefix' => 'dashboard', 'namespace' => 'Dashboard', 'as' => 'dash
 // Accept GET with optional ID in query string
     Route::get('/moyasar/callback', [\App\Http\Controllers\PaymentController::class, 'handleCallback']);
     Route::get('/thanks', [\App\Http\Controllers\PaymentController::class, 'thanks'])->name('payment.thanks');
-    
+
 });

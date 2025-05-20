@@ -18,12 +18,13 @@ use Maatwebsite\Excel\Facades\Excel;
 
  use DB;
 use App\Exports\OrdersExport;
+use App\Exports\RequestServiceExport;
 use App\Exports\SubscriberExport;
 
 use Carbon\Carbon;
 use App\Models\Color;
 use Illuminate\Http\Request;
- 
+
 class OrderController extends Controller
 {
     use NotificationTrait;
@@ -33,13 +34,13 @@ class OrderController extends Controller
 
         $this->authorize('show_orders');
         $params = $request->all();
-    
+
         if ($request->ajax()) {
             $user = Employee::find(Auth::user()->id);
-    
+
             // Initialize the query builder
             $data = Order::query();
-          
+
             // Check user permissions and set up relations
             if ($user->roles()->whereHas('abilities', function ($query) {
                 $query->where('name', 'view_orders');
@@ -51,11 +52,11 @@ class OrderController extends Controller
                 $data->with(['bank:id,name_ar', 'opened:id,name'])
                     ->where('employee_id', auth()->user()->id);
             }
-    
+
             // Apply filtering by `request->columns[5]`
             if (!empty($request->columns[5]['search']['value'])) {
                 $filterValue = $request->columns[5]['search']['value'];
-    
+
                 if ($filterValue == 'all') {
                     // Retrieve all data without any filter on status_id
                     $data->where('status_id','!=','12');
@@ -83,28 +84,28 @@ class OrderController extends Controller
                     $query->where('type', $request->columns[7]['search']['value']);
                 });
             }
-            
+
             if (!empty($request->columns[6]['search']['value'])) {
                 $dateRange = explode(' - ', $request->columns[6]['search']['value']); // Split the range by " - "
-            
+
                 if (count($dateRange) === 2) {
                     $startDate = $dateRange[0];
                     // Add time '23:59:59' to the end date to cover the entire day
                     $endDate = $dateRange[1] . ' 23:59:59';
-            
+
                     $data->whereBetween(DB::raw('DATE(created_at)'), [$startDate, $endDate]);
-                    
+
                 }
             }
             if (!empty($request->search['value'])) {
-                  
-            
+
+
                 $data->where('name', 'LIKE', '%' . $request->search['value'] . '%');
-                    
+
              }
 
 
-            
+
             $data->orderBy('created_at', 'desc');
 
             // Paginate the data
@@ -113,10 +114,10 @@ class OrderController extends Controller
                 "recordsFiltered" => $data->count(),
                 'data' => $data->skip($params['start'])->take($params['length'])->get(),
             ];
-    
+
             return response()->json($response);
         }
-    
+
         return view('dashboard.orders.index');
     }
 public function exportAllOrders()
@@ -128,13 +129,13 @@ public function exportAllSubscriber()
     return Excel::download(new SubscriberExport(), 'all_Subscribers.xlsx');
 }
 
-    
+
 public function exportAllRequestService()
 {
-    return Excel::download(new \App\Exports\RequestServiceExport(), 'all_request_orders.xlsx');
+    return Excel::download(new RequestServiceExport(), 'all_request_orders.xlsx');
 }
 
-    
+
      public function orders_not_approval(Request $request)
     {
          $this->authorize('view_orders');
@@ -171,7 +172,7 @@ public function exportAllRequestService()
         // {
         //     $approve_amount = ($salary - $commitment) * ($precentage_approve / 100);
         // }
-        $this->authorize('show_orders'); 
+        $this->authorize('show_orders');
         $order->load('employee');
         $employees = Employee::select('id', 'name')->whereHas('roles.abilities', function ($query) {
             $query->where('name', 'show_orders');
@@ -206,7 +207,7 @@ public function exportAllRequestService()
         // dD( $userAssign->name);
         $services = RequestService::where('order_id',$order->id)->get();
 
- 
+
         $color = Color::where('id',$order->color_id)->first();
         return view('dashboard.orders.show', compact('order','services','color','userAssign', 'organization_activity', 'organization_type', 'employees', 'employee'));
     }
@@ -225,7 +226,7 @@ public function exportAllRequestService()
 
     public function changeStatus(Order $order, Request $request)
     {
-     
+
         $notify = [
             'oldstatue' => $order->status_id,
         ];
@@ -239,36 +240,36 @@ public function exportAllRequestService()
         // Now $parts[0] contains the id and $parts[1] contains the name_en
         $id      = $parts[0];
         $name_en = $parts[1];
-       
+
         DB::beginTransaction();
-        
+
        if($order->orderDetailsCar->payment_type=="finance" && $id==2){
         $phone=$order->phone;
         $message = "ﻋزﯾزﻧﺎ اﻟﻌﻣﯾل ﺗم اﺳﺗﻼم طﻠب ﺗﻣوﯾﻠك رﻗم {$order->id} وﺳﯾﺗم اﻟﺗواﺻل ﻣﻌك ﺑﺄﺳرع وﻗت";
         $this->send_message($phone,$message);
        }
-       
+
         if($order->orderDetailsCar->payment_type=="finance" && $id==3){
         $phone=$order->phone;
         $message = "ﻋزﯾزﻧﺎ اﻟﻌﻣﯾل ﯾﺳﻌدﻧﺎ اﺑﻼﻏك ﺑﺎﻟﻣواﻓﻘﺔ ﻋﻠﻰ طﻠب اﻟﺗﻣوﯾل اﻟﺧﺎص ﺑك رﻗم {$order->id} وﺳﯾﺗم اﻟﺗواﺻل ﻣﻌك ﺑﺄﺳرع وﻗت";
         $this->send_message($phone,$message);
        }
-       
+
         if($order->orderDetailsCar->payment_type=="finance" && $id==4){
         $phone=$order->phone;
         $message = "ﻋزﯾزﻧﺎ اﻟﻌﻣﯾل ﻧﺎﺳف اﺑﻼﻏك اﻧﮫ ﺗم رﻓض طﻠب التﻣوﯾل اﻟﺧﺎص ﺑك رﻗم {$order->id} وﺳﯾﺗم اﻟﺗواﺻل ﻣﻌك ﺑﺄﺳرع وﻗت";
         $this->send_message($phone,$message);
        }
-       
+
          if($order->orderDetailsCar->payment_type=="finance" && $id==7){
         $phone=$order->phone;
         $message = "ﻋزﯾزﻧﺎ اﻟﻌﻣﯾل ﯾﺳﻌدﻧﺎ اﺑﻼﻏك اﻧﮫ ﺗم ﺗﻌﻣﯾد طﻠب التﻣوﯾل اﻟﺧﺎص ﺑك رقم {$order->id} وﺳﯾﺗم اﻟﺗواﺻل ﻣﻌك ﺑﺄﺳرع وﻗت";
         $this->send_message($phone,$message);
        }
-       
+
         try
         {
-            
+
             OrderHistory::create([
                 // 'status' => $request['status'],
                 'status' => $name_en,
@@ -293,7 +294,7 @@ public function exportAllRequestService()
 
         } catch (\Exception $exception)
         {
-           
+
             DB::rollBack();
         }
     }
@@ -327,10 +328,10 @@ public function exportAllRequestService()
         $this->newAssignOrderNotification($order);
 
     }
-    
-        
+
+
      function send_message($phone,$message)
-        { 
+        {
         $apiUrl = "https://api.oursms.com/api-a/msgs";
         $token = "e4vHwxheBK6uujxk7G9I";
         $src = 'CODE CAR';
@@ -341,7 +342,7 @@ public function exportAllRequestService()
         مرحبا بك في $appName ...
 $message
 msg;
-                
+
         $response = \Illuminate\Support\Facades\Http::asForm()->post($apiUrl, [
             'token' => $token,
             'src' => $src,
@@ -349,7 +350,7 @@ msg;
             'body' => $body,
         ]);
 
-        
+
 
         if ($response->successful()) {
             // Request successful
@@ -357,7 +358,7 @@ msg;
         } else {
             // Request failed
             echo "Failed to send SMS. Error: " . $response->body();
-        
+
         }
         }
 }
