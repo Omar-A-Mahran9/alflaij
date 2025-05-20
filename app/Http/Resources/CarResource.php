@@ -23,10 +23,12 @@ class CarResource extends JsonResource
         'id' => $this->id,
         "brand"=> $this->brand->name,
         "model"=>$this->model->name,
-'name' =>
-    ($this->brand?->name ?? '') . ' - ' .
-    ($this->model?->name ?? '') . ' - ' .
-    ($this->category?->name ?? ''),        // "price"=> $this->price,
+'name' => collect([
+    $this->brand?->name,
+    $this->model?->name,
+    $this->category?->name,
+])->filter()->implode(' - '),
+     // "price"=> $this->price,
         'show_status'=>$show_status,
         'price_field_status'=>__($price_field_status) === __('others') ? $this->other_description:__($price_field_status),
 
