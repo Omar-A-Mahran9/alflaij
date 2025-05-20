@@ -120,7 +120,6 @@ public function index(Request $request)
 
     public function validateStep(Request $request, Car $car = null)
     {
-
         $discountPrice = $request['discount_price'] ?? 0;
         $price = $request['price'] ?? 0;
 
