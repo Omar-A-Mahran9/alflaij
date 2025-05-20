@@ -120,7 +120,7 @@ public function index(Request $request)
 
     public function validateStep(Request $request, Car $car = null)
     {
-        $discountPrice = $request['discount_price'] ?? 0;
+         $discountPrice = $request['discount_price'] ?? 0;
         $price = $request['price'] ?? 0;
 
         // Check if we're updating an existing car and if it has existing images
@@ -346,8 +346,7 @@ public function index(Request $request)
 
 public function update(Request $request, Car $car)
 {
-    dd($request);
-    $this->authorize('update_cars');
+     $this->authorize('update_cars');
     $data = $request->except('car_Image', 'deleted_images', 'features', 'car_id', 'tags', 'colors');
     $data['have_discount'] = $request['have_discount'] === "on";
     $data['is_duplicate'] = $request->input('is_duplicate', 0);
