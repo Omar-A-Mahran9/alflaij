@@ -20,7 +20,7 @@ class ContactController extends Controller
 
             'name'    => ['required' , 'string',new NotNumbersOnly],
             'phone' => ['required', 'string', 'regex:/^(05|5)\d{8}$/'],         
-            'email'   => 'sometimes|email|max:255',
+'email' => 'nullable|email|max:255',
             'message' => 'required|string',
         ]);
         $data    = $request->toArray();
