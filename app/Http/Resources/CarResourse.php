@@ -90,7 +90,11 @@ class CarResourse extends JsonResource
         return [
             'id' => $this->id,
             'title' => Str::limit($this->name, 35),
-            'main_title' => $this->brand->name.' - '.$this->model->name.' - '.$this->year,
+'main_title' => collect([
+    $this->brand?->name,
+    $this->model?->name,
+    $this->year,
+])->filter()->implode(' - '),
             'description'=> getLocale() == 'ar' ? $this->description_ar : $this->description_en ,
             'publish_date'=>$this->created_at->format('Y-m-d ') ?? '',
             'statue'=>$this->is_new == 1?__('New')  :__('Used') ,
