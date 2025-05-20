@@ -24,9 +24,8 @@ class CarResource extends JsonResource
         "brand"=> $this->brand->name,
         "model"=>$this->model->name,
 'name' =>
-    ($this->brand->name ?? '') . ' - ' .
-    ($this->model->name ?? '') . ' - ' .
-    ($this->category->name ?? ''),
+
+    ($this->category ),
         // "price"=> $this->price,
         'show_status'=>$show_status,
         'price_field_status'=>__($price_field_status) === __('others') ? $this->other_description:__($price_field_status),
