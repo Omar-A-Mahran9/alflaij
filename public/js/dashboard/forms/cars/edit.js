@@ -355,81 +355,81 @@ document.addEventListener("DOMContentLoaded", function () {
     let originalImageOrder = {};
 
     // Initialize drag-and-drop sorting
-    // const swappable = new Draggable.Swappable(container, {
-    //     draggable: ".draggable",
-    //     handle: ".draggable-handle",
-    // });
+    const swappable = new Draggable.Swappable(container, {
+        draggable: ".draggable",
+        handle: ".draggable-handle",
+    });
 
     // Update the reorderedImages array after drag-and-drop
-    // swappable.on("swappable:stop", function () {
-    //     const groupedImages = {}; // Temporary object to group images by color
+    swappable.on("swappable:stop", function () {
+        const groupedImages = {}; // Temporary object to group images by color
 
-    //     // Group images by color
-    //     container.querySelectorAll('.draggable').forEach((dragItem) => {
-    //         const imageId = dragItem.getAttribute('data-id');
-    //         const colorId = dragItem.getAttribute('data-color-id');
+        // Group images by color
+        container.querySelectorAll('.draggable').forEach((dragItem) => {
+            const imageId = dragItem.getAttribute('data-id');
+            const colorId = dragItem.getAttribute('data-color-id');
 
-    //         if (imageId && colorId) {
-    //             const imageData = carColors.find(img => img.id == imageId && img.color_id == colorId);
+            if (imageId && colorId) {
+                const imageData = carColors.find(img => img.id == imageId && img.color_id == colorId);
 
-    //             if (imageData) {
-    //                 // Initialize group for the color if not exists
-    //                 if (!groupedImages[colorId]) {
-    //                     groupedImages[colorId] = [];
-    //                 }
+                if (imageData) {
+                    // Initialize group for the color if not exists
+                    if (!groupedImages[colorId]) {
+                        groupedImages[colorId] = [];
+                    }
 
-    //                 // Ensure no duplicates in the group
-    //                 if (!groupedImages[colorId].some(img => img.id == imageData.id)) {
-    //                     groupedImages[colorId].push(imageData);
-    //                 }
-    //             }
-    //         }
-    //     });
-    //     // Now ensure that every color group has its images sorted correctly
-    //     reorderedImages = Object.keys(groupedImages).map(colorId => ({
-    //         color_id: colorId,
-    //         images: groupedImages[colorId], // Images under each color
-    //     }));
+                    // Ensure no duplicates in the group
+                    if (!groupedImages[colorId].some(img => img.id == imageData.id)) {
+                        groupedImages[colorId].push(imageData);
+                    }
+                }
+            }
+        });
+        // Now ensure that every color group has its images sorted correctly
+        reorderedImages = Object.keys(groupedImages).map(colorId => ({
+            color_id: colorId,
+            images: groupedImages[colorId], // Images under each color
+        }));
 
-    //     // Log the current sorted images
-    //     const filteredImages = reorderedImages.filter(colorGroup => colorGroup.images.length > 0);
+        // Log the current sorted images
+        const filteredImages = reorderedImages.filter(colorGroup => colorGroup.images.length > 0);
 
 
-    //     // Save the order of images for each color to prevent overwriting
-    //     filteredImages.forEach(group => {
-    //         originalImageOrder[group.color_id] = group.images; // Persist color-specific order
-    //     });
+        // Save the order of images for each color to prevent overwriting
+        filteredImages.forEach(group => {
+            originalImageOrder[group.color_id] = group.images; // Persist color-specific order
+        });
 
-    //     // Prepare the test array with the latest color order
-    //     let test = [];
-    //     for (let colorId in originalImageOrder) {
-    //         test.push({ color_id: colorId, images: originalImageOrder[colorId] });
-    //     }
+        // Prepare the test array with the latest color order
+        let test = [];
+        for (let colorId in originalImageOrder) {
+            test.push({ color_id: colorId, images: originalImageOrder[colorId] });
+        }
 
-    //     // Log the test array to check if each color is preserved
-    //     console.log("Test Array with Sorted Colors:", test);
+        // Log the test array to check if each color is preserved
+        console.log("Test Array with Sorted Colors:", test);
 
-    //     // Now you can use the test array for submission
-    //     // $("#next-btn").on("click", function (e) {
-    //     //     e.preventDefault();  // Prevent page reload
+        // Now you can use the test array for submission
+        // $("#next-btn").on("click", function (e) {
+        //     e.preventDefault();  // Prevent page reload
 
-    //         // Use the test array for the AJAX submission
-    //         $.ajax({
-    //             url: window.location.origin + "/dashboard/sort/image", // Dynamically resolve base URL
-    //             type: "POST",
-    //             headers: {
-    //                 "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
-    //             },
-    //             contentType: "application/json",
-    //             data: JSON.stringify({ images: test }),  // Send the test array for submission
-    //             success: function (data) {
+            // Use the test array for the AJAX submission
+            $.ajax({
+                url: window.location.origin + "/dashboard/sort/image", // Dynamically resolve base URL
+                type: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
+                },
+                contentType: "application/json",
+                data: JSON.stringify({ images: test }),  // Send the test array for submission
+                success: function (data) {
 
-    //                 console.log("Image order successfully updated:", data);
-    //             },
-    //             error: function (xhr, status, error) {
-    //                 console.error("Error submitting image order:", xhr.responseText);
-    //             },
-    //         });
-    //     // });
-    // });
+                    console.log("Image order successfully updated:", data);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error submitting image order:", xhr.responseText);
+                },
+            });
+        // });
+    });
 });

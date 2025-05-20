@@ -78,19 +78,21 @@
 
 
 
-                                         <!-- begin :: Row -->
-                                     <div class="row mb-10">
-                                        <label class="text-center fw-bold mb-4">{{ __('Image') }}</label>
-                                        <div class="col-md-12 fv-row d-flex justify-content-evenly">
-                                           <x-dashboard.upload-image-inp name="car_Image" :image="$car->main_image" directory="Cars"
-                                               placeholder="default.jpg" type="editable"></x-dashboard.upload-image-inp>
+                                        <!-- begin :: Row -->
+                                        <div class="row mb-10">
+                                            <label class="text-center fw-bold mb-4">{{ __('Image') }}</label>
+                                            <div class="col-md-12 fv-row d-flex justify-content-evenly">
+                                                <x-dashboard.upload-image-inp name="car_Image" :image="$car->main_image"
+                                                    directory="Cars" placeholder="default.jpg"
+                                                    type="editable"></x-dashboard.upload-image-inp>
 
-                                           </div>
-                                           <p class="fv-plugins-message-container invalid-feedback text-center mt-2" id="car_Image"></p>
-                                           <!-- end   :: Upload image component -->
+                                            </div>
+                                            <p class="fv-plugins-message-container invalid-feedback text-center mt-2"
+                                                id="car_Image"></p>
+                                            <!-- end   :: Upload image component -->
 
-                                       </div>
-                                       <!-- end   :: Row -->
+                                        </div>
+                                        <!-- end   :: Row -->
                                         <!--end::Input group-->
                                     </div>
                                     <!-- end   :: Column -->
@@ -159,8 +161,8 @@
                                         </div>
 
 
- <div class="col-md-3 fv-row">
-                                             <label class="fs-5 fw-bold mb-2">{{ __('Category') }}</label>
+                                        <div class="col-md-3 fv-row">
+                                            <label class="fs-5 fw-bold mb-2">{{ __('Category') }}</label>
                                             <select class="form-select" data-control="select2" name="category_id"
                                                 id="category-sp" data-placeholder="{{ __('Choose the category') }}"
                                                 data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}">
@@ -202,7 +204,7 @@
                                     <div class="row mb-10">
                                         <!-- begin :: Column -->
 
-                                           <div class="col-md-3 fv-row">
+                                        <div class="col-md-3 fv-row">
 
                                             <label class="fs-5 fw-bold mb-2">{{ __('Year') }}</label>
 
@@ -260,34 +262,33 @@
 
                                         </div>
                                         <!-- end   :: Column -->
-  <div class="col-md-3 fv-row">
+                                        <div class="col-md-3 fv-row">
 
-                                                <label class=" fs-5 fw-bold mb-2">{{ __('cylinders') }}</label>
-                                                <div class="form-floating">
-                                                    <input type="text" min="30" class="form-control"
-                                                        id="cylinders_inp" name="cylinders"
-                                                        placeholder="example" value="{{ $car['cylinders'] }}" />
-                                                    <label
-                                                        for="engine_capacity_inp">{{ __('Enter the cylinders') }}</label>
-                                                </div>
-                                                <p class="invalid-feedback" id="cylinders"></p>
-
-
+                                            <label class=" fs-5 fw-bold mb-2">{{ __('cylinders') }}</label>
+                                            <div class="form-floating">
+                                                <input type="text" min="30" class="form-control"
+                                                    id="cylinders_inp" name="cylinders" placeholder="example"
+                                                    value="{{ $car['cylinders'] }}" />
+                                                <label for="engine_capacity_inp">{{ __('Enter the cylinders') }}</label>
                                             </div>
-                                             <div class="col-md-3 fv-row">
-
-                                                <label class=" fs-5 fw-bold mb-2">{{ __('Fuel_consumption') }}</label>
-                                                <div class="form-floating">
-                                                    <input type="text" min="30" class="form-control"
-                                                        id="Fuel_consumption_inp" name="Fuel_consumption"
-                                                        placeholder="example" value="{{ $car->Fuel_consumption }}"/>
-                                                    <label
-                                                        for="engine_capacity_inp">{{ __('Enter the Fuel_consumption') }}</label>
-                                                </div>
-                                                <p class="invalid-feedback" id="Fuel_consumption"></p>
+                                            <p class="invalid-feedback" id="cylinders"></p>
 
 
+                                        </div>
+                                        <div class="col-md-3 fv-row">
+
+                                            <label class=" fs-5 fw-bold mb-2">{{ __('Fuel_consumption') }}</label>
+                                            <div class="form-floating">
+                                                <input type="text" min="30" class="form-control"
+                                                    id="Fuel_consumption_inp" name="Fuel_consumption"
+                                                    placeholder="example" value="{{ $car->Fuel_consumption }}" />
+                                                <label
+                                                    for="engine_capacity_inp">{{ __('Enter the Fuel_consumption') }}</label>
                                             </div>
+                                            <p class="invalid-feedback" id="Fuel_consumption"></p>
+
+
+                                        </div>
                                         <!-- begin :: Column -->
                                         <div class="col-md-3 fv-row">
 
@@ -311,29 +312,31 @@
                                         <div class="row mb-10">
                                             <!-- begin :: Column -->
 
-                                              <div class="col-md-3 fv-row">
+                                            <div class="col-md-3 fv-row">
 
-                                            <div class="form-check form-switch form-check-custom form-check-solid mb-2">
-                                                <label class="fs-5 fw-bold">{{ __('Discount price') }}</label>
-                                                <input class="form-check-input mx-2" style="height: 18px;width:36px;"
-                                                    type="checkbox" name="have_discount"
-                                                    {{ $car['have_discount'] ? 'checked' : '' }}
-                                                    id="discount-price-switch" />
-                                                <label class="form-check-label" for="flexSwitchChecked"></label>
+                                                <div
+                                                    class="form-check form-switch form-check-custom form-check-solid mb-2">
+                                                    <label class="fs-5 fw-bold">{{ __('Discount price') }}</label>
+                                                    <input class="form-check-input mx-2" style="height: 18px;width:36px;"
+                                                        type="checkbox" name="have_discount"
+                                                        {{ $car['have_discount'] ? 'checked' : '' }}
+                                                        id="discount-price-switch" />
+                                                    <label class="form-check-label" for="flexSwitchChecked"></label>
+                                                </div>
+
+                                                <div class="form-floating">
+                                                    <input type="number" min="1" class="form-control"
+                                                        id="discount_price_inp" name="discount_price"
+                                                        value="{{ $car['discount_price'] }}"
+                                                        {{ $car['have_discount'] ? '' : 'disabled' }}
+                                                        placeholder="example" />
+                                                    <label
+                                                        for="discount_price_inp">{{ __('Enter the discount price') }}</label>
+                                                </div>
+                                                <p class="invalid-feedback" id="discount_price"></p>
+
+
                                             </div>
-
-                                            <div class="form-floating">
-                                                <input type="number" min="1" class="form-control"
-                                                    id="discount_price_inp" name="discount_price"
-                                                    value="{{ $car['discount_price'] }}"
-                                                    {{ $car['have_discount'] ? '' : 'disabled' }} placeholder="example" />
-                                                <label
-                                                    for="discount_price_inp">{{ __('Enter the discount price') }}</label>
-                                            </div>
-                                            <p class="invalid-feedback" id="discount_price"></p>
-
-
-                                        </div>
                                             <div class="col-md-4 fv-row">
 
                                                 <label class="fs-5 fw-bold mb-2">{{ __('Engine capacity') }}</label>
@@ -440,452 +443,507 @@
 
 
                                     <div class="separator separator-dashed my-4"></div>
-                                           <!-- begin :: Column -->
-                                           <div class="col-md-12 fv-row">
+                                    <!-- begin :: Column -->
+                                    <div class="col-md-12 fv-row">
 
-                                            <x-dashboard.radio-btn title="price_field_status" name="price_field_status"
-                                                :radio-btns="[
-                                                    [
-                                                        'label' => 'Show details',
-                                                        'value' => '1',
-                                                        'id' => 'showDetails',
-                                                        'checked' => $car['price_field_status'] == 1 ,
-                                                    ],
-                                                    [
-                                                        'label' => 'Competitive price',
-                                                        'value' => '2',
-                                                        'id' => 'competitivePrice',
-                                                        'checked' =>  $car['price_field_status'] == 2,
-                                                    ],
-                                                    [
-                                                        'label' => 'Available upon request',
-                                                        'value' => '3',
-                                                        'id' => 'availableUponRequest',
-                                                        'checked' =>  $car['price_field_status'] == 3,
-                                                    ],
-                                                    [
-                                                        'label' => 'unavailable',
-                                                        'value' => '4',
-                                                        'id' => 'unavailable',
-                                                        'checked' =>  $car['price_field_status'] == 4,
-                                                    ],
-                                                    [
-                                                        'label' => 'others',
-                                                        'value' => '5',
-                                                        'id' => 'others',
-                                                        'checked' =>  $car['price_field_status'] == 5,
-                                                    ],
-                                                ]" />
-
-
-                                        </div>
-                                        <!-- end   :: Column -->
-                                        <div id="otherInputs" style="display: none; margin-top: 15px;">
-                                            <div class="col-md-6 fv-row">
-                                                <label class="fs-5 fw-bold mb-2">{{ __('Description in arabic') }}</label>
-                                                <div class="form-floating">
-                                                    <textarea
-                                                        class="form-control"
-                                                        rows="4"
-                                                        name="other_description_ar"
-                                                        id="other_description_ar_inp"
-                                                        data-kt-autosize="true">{{ old('other_description_ar', $car['other_description_ar'] ?? '') }}</textarea>
-                                                    <label for="other_description_ar_inp">{{ __('Enter description in Arabic') }}</label>
-                                                </div>
-                                                <p class="text-danger invalid-feedback" id="other_description_ar"></p>
-                                            </div>
-                                            <div class="col-md-6 fv-row">
-                                                <label class="fs-5 fw-bold mb-2">{{ __('Description in english') }}</label>
-                                                <div class="form-floating">
-                                                    <textarea
-                                                        class="form-control"
-                                                        rows="4"
-                                                        name="other_description_en"
-                                                        id="other_description_en_inp"
-                                                        data-kt-autosize="true">{{ old('other_description_en', $car['other_description_en'] ?? '') }}</textarea>
-                                                    <label for="other_description_en_inp">{{ __('Enter description in English') }}</label>
-                                                </div>
-                                                <p class="text-danger invalid-feedback" id="other_description_en"></p>
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-                                    <!-- end   :: Row -->
-
-
-                                    <div class="separator separator-dashed my-4"></div>
-                                    <!-- begin :: Row -->
-                                    <!-- begin :: Row -->
-                                    <div class="row">
-
-                                        <!-- begin :: Column -->
-                                        <div class="col-md-12 fv-row">
-
-                                            <x-dashboard.radio-btn title="car style" name="car_body" :radio-btns="[
+                                        <x-dashboard.radio-btn title="price_field_status" name="price_field_status"
+                                            :radio-btns="[
                                                 [
-                                                    'label' => 'hatchback',
-                                                    'value' => 'hatchback',
-                                                    'id' => 'car_style_1',
-                                                    'checked' => $car['car_body'] == 'hatchback',
-                                                ],
-                                                [
-                                                    'label' => 'sedan',
-                                                    'value' => 'sedan',
-                                                    'id' => 'car_style_2',
-                                                    'checked' => $car['car_body'] == 'sedan',
-                                                ],
-                                                [
-                                                    'label' => '4x4',
-                                                    'value' => 'four-wheel-drive',
-                                                    'id' => 'car_style_3',
-                                                    'checked' => $car['car_body'] == 'four-wheel-drive',
-                                                ],
-                                                [
-                                                    'label' => 'family',
-                                                    'value' => 'family',
-                                                    'id' => 'car_style_4',
-                                                    'checked' => $car['car_body'] == 'family',
-                                                ],
-                                                [
-                                                    'label' => 'commercial',
-                                                    'value' => 'commercial',
-                                                    'id' => 'car_style_5',
-                                                    'checked' => $car['car_body'] == 'commercial',
-                                                ],
-                                            ]" />
-
-
-                                        </div>
-                                        <!-- end   :: Column -->
-
-                                    </div>
-                                    <!-- end   :: Row -->
-                                    <div class="separator separator-dashed my-4"></div>
-
-                                    <!-- begin :: Row -->
-                                    <div class="row">
-
-                                        <!-- begin :: Column -->
-                                        <div class="col-md-12 fv-row">
-
-                                            <x-dashboard.radio-btn title="Publish car" name="publish" :radio-btns="[
-                                                [
-                                                    'label' => 'Yes',
+                                                    'label' => 'Show details',
                                                     'value' => '1',
-                                                    'id' => 'publish_yes',
-                                                    'checked' => $car['publish'] == '1',
+                                                    'id' => 'showDetails',
+                                                    'checked' => $car['price_field_status'] == 1,
                                                 ],
                                                 [
-                                                    'label' => 'No',
-                                                    'value' => '0',
-                                                    'id' => 'publish_no',
-                                                    'checked' => $car['publish'] == '0',
+                                                    'label' => 'Competitive price',
+                                                    'value' => '2',
+                                                    'id' => 'competitivePrice',
+                                                    'checked' => $car['price_field_status'] == 2,
+                                                ],
+                                                [
+                                                    'label' => 'Available upon request',
+                                                    'value' => '3',
+                                                    'id' => 'availableUponRequest',
+                                                    'checked' => $car['price_field_status'] == 3,
+                                                ],
+                                                [
+                                                    'label' => 'unavailable',
+                                                    'value' => '4',
+                                                    'id' => 'unavailable',
+                                                    'checked' => $car['price_field_status'] == 4,
+                                                ],
+                                                [
+                                                    'label' => 'others',
+                                                    'value' => '5',
+                                                    'id' => 'others',
+                                                    'checked' => $car['price_field_status'] == 5,
                                                 ],
                                             ]" />
 
+
+                                    </div>
+                                    <!-- end   :: Column -->
+                                    <div id="otherInputs" style="display: none; margin-top: 15px;">
+                                        <div class="col-md-6 fv-row">
+                                            <label class="fs-5 fw-bold mb-2">{{ __('Description in arabic') }}</label>
+                                            <div class="form-floating">
+                                                <textarea class="form-control" rows="4" name="other_description_ar" id="other_description_ar_inp"
+                                                    data-kt-autosize="true">{{ old('other_description_ar', $car['other_description_ar'] ?? '') }}</textarea>
+                                                <label
+                                                    for="other_description_ar_inp">{{ __('Enter description in Arabic') }}</label>
+                                            </div>
+                                            <p class="text-danger invalid-feedback" id="other_description_ar"></p>
                                         </div>
-                                        <!-- end   :: Column -->
+                                        <div class="col-md-6 fv-row">
+                                            <label class="fs-5 fw-bold mb-2">{{ __('Description in english') }}</label>
+                                            <div class="form-floating">
+                                                <textarea class="form-control" rows="4" name="other_description_en" id="other_description_en_inp"
+                                                    data-kt-autosize="true">{{ old('other_description_en', $car['other_description_en'] ?? '') }}</textarea>
+                                                <label
+                                                    for="other_description_en_inp">{{ __('Enter description in English') }}</label>
+                                            </div>
+                                            <p class="text-danger invalid-feedback" id="other_description_en"></p>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <!-- end   :: Row -->
+
+
+                                <div class="separator separator-dashed my-4"></div>
+                                <!-- begin :: Row -->
+                                <!-- begin :: Row -->
+                                <div class="row">
+
+                                    <!-- begin :: Column -->
+                                    <div class="col-md-12 fv-row">
+
+                                        <x-dashboard.radio-btn title="car style" name="car_body" :radio-btns="[
+                                            [
+                                                'label' => 'hatchback',
+                                                'value' => 'hatchback',
+                                                'id' => 'car_style_1',
+                                                'checked' => $car['car_body'] == 'hatchback',
+                                            ],
+                                            [
+                                                'label' => 'sedan',
+                                                'value' => 'sedan',
+                                                'id' => 'car_style_2',
+                                                'checked' => $car['car_body'] == 'sedan',
+                                            ],
+                                            [
+                                                'label' => '4x4',
+                                                'value' => 'four-wheel-drive',
+                                                'id' => 'car_style_3',
+                                                'checked' => $car['car_body'] == 'four-wheel-drive',
+                                            ],
+                                            [
+                                                'label' => 'family',
+                                                'value' => 'family',
+                                                'id' => 'car_style_4',
+                                                'checked' => $car['car_body'] == 'family',
+                                            ],
+                                            [
+                                                'label' => 'commercial',
+                                                'value' => 'commercial',
+                                                'id' => 'car_style_5',
+                                                'checked' => $car['car_body'] == 'commercial',
+                                            ],
+                                        ]" />
 
 
                                     </div>
-                                    <!-- end   :: Row -->
+                                    <!-- end   :: Column -->
 
-                                    <div class="separator separator-dashed my-4"></div>
+                                </div>
+                                <!-- end   :: Row -->
+                                <div class="separator separator-dashed my-4"></div>
 
-                                    <!-- begin :: Row -->
-                                    <div class="row">
+                                <!-- begin :: Row -->
+                                <div class="row">
 
-                                        <!-- begin :: Column -->
-                                        <div class="col-md-12 fv-row">
+                                    <!-- begin :: Column -->
+                                    <div class="col-md-12 fv-row">
 
-                                            <x-dashboard.radio-btn title="Car condition" name="is_new"
-                                                :radio-btns="[
-                                                    [
-                                                        'label' => 'New',
-                                                        'value' => '1',
-                                                        'id' => 'is_new_used_radio_1',
-                                                        'checked' => $car['is_new'] == '1',
-                                                    ],
-                                                    [
-                                                        'label' => 'Used',
-                                                        'value' => '0',
-                                                        'id' => 'is_new_used_radio_2',
-                                                        'checked' => $car['is_new'] == '0',
-                                                    ],
-                                                ]" />
+                                        <x-dashboard.radio-btn title="Publish car" name="publish" :radio-btns="[
+                                            [
+                                                'label' => 'Yes',
+                                                'value' => '1',
+                                                'id' => 'publish_yes',
+                                                'checked' => $car['publish'] == '1',
+                                            ],
+                                            [
+                                                'label' => 'No',
+                                                'value' => '0',
+                                                'id' => 'publish_no',
+                                                'checked' => $car['publish'] == '0',
+                                            ],
+                                        ]" />
 
+                                    </div>
+                                    <!-- end   :: Column -->
+
+
+                                </div>
+                                <!-- end   :: Row -->
+
+                                <div class="separator separator-dashed my-4"></div>
+
+                                <!-- begin :: Row -->
+                                <div class="row">
+
+                                    <!-- begin :: Column -->
+                                    <div class="col-md-12 fv-row">
+
+                                        <x-dashboard.radio-btn title="Car condition" name="is_new" :radio-btns="[
+                                            [
+                                                'label' => 'New',
+                                                'value' => '1',
+                                                'id' => 'is_new_used_radio_1',
+                                                'checked' => $car['is_new'] == '1',
+                                            ],
+                                            [
+                                                'label' => 'Used',
+                                                'value' => '0',
+                                                'id' => 'is_new_used_radio_2',
+                                                'checked' => $car['is_new'] == '0',
+                                            ],
+                                        ]" />
+
+                                    </div>
+                                    <div class="row d-flex align-items-center"
+                                        style="{{ $car['is_new'] ? 'display:none !important' : '' }}"
+                                        id="kilometers-container">
+                                        <div class="col-4">
+                                            <label class="col-form-label fs-5 fw-bold"><i
+                                                    class="bi bi-dash-lg fs-8 mx-3"></i>{{ __('Number of kilometers') }}</label>
                                         </div>
-                                        <div class="row d-flex align-items-center"
-                                            style="{{ $car['is_new'] ? 'display:none !important' : '' }}"
-                                            id="kilometers-container">
-                                            <div class="col-4">
-                                                <label class="col-form-label fs-5 fw-bold"><i
-                                                        class="bi bi-dash-lg fs-8 mx-3"></i>{{ __('Number of kilometers') }}</label>
+                                        <div class="col-2">
+                                            <div class="form-floating">
+                                                <input class="form-control" type="number" min="1"
+                                                    id="kilometers_inp" name="kilometers"
+                                                    value="{{ $car['kilometers'] }}" placeholder="example">
+                                                <label for="kilometers_inp">{{ __('Enter the kilometers') }}</label>
                                             </div>
-                                            <div class="col-2">
-                                                <div class="form-floating">
-                                                    <input class="form-control" type="number" min="1"
-                                                        id="kilometers_inp" name="kilometers"
-                                                        value="{{ $car['kilometers'] }}" placeholder="example">
-                                                    <label for="kilometers_inp">{{ __('Enter the kilometers') }}</label>
+                                        </div>
+                                        <div class="col-4">
+                                            <p class="text-danger m-0 invalid-feedback" id="kilometers"></p>
+                                        </div>
+                                    </div>
+                                    <!-- end   :: Column -->
+
+
+                                </div>
+                                <!-- end   :: Row -->
+
+                                <div class="separator separator-dashed my-4"></div>
+
+
+                                <div class="separator separator-dashed my-4"></div>
+
+                                <!-- end   :: Row -->
+                                <div class="row">
+
+                                    <!-- begin :: Column -->
+                                    <div class="col-md-12 fv-row">
+
+                                        <x-dashboard.radio-btn title="gear shifter" name="gear_shifter"
+                                            :radio-btns="[
+                                                [
+                                                    'label' => 'manual',
+                                                    'value' => 'manual',
+                                                    'id' => 'gear_shifter_manual',
+                                                    'checked' => $car['gear_shifter'] == 'manual',
+                                                ],
+                                                [
+                                                    'label' => 'automatic',
+                                                    'value' => 'automatic',
+                                                    'id' => 'gear_shifter_automatic',
+                                                    'checked' => $car['gear_shifter'] == 'automatic',
+                                                ],
+                                            ]" />
+
+                                    </div>
+                                    <!-- end   :: Column -->
+
+                                </div>
+                                <!-- end   :: Row -->
+
+
+                                <!-- begin :: Wizard Step 2 -->
+
+
+                                <!-- begin :: Row -->
+                                <div class="row mb-10">
+                                    <hr>
+                                    <!-- begin :: Column -->
+                                    <div class="col-md-12 fv-row">
+
+                                        <label class="fs-5 fw-bold mb-2">{{ __('Colors') }}</label>
+
+                                        <select class="form-select" data-control="select2" id="colors-sp" multiple
+                                            data-placeholder="{{ __('Choose the color') }}" data-background-color="#000"
+                                            data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}">
+
+                                            @foreach ($colors as $color)
+                                                <option value="{{ $color->id }}">{{ $color->name }}</option>
+                                            @endforeach
+
+                                        </select>
+                                        <p class="invalid-feedback" id="colors"></p>
+
+                                    </div>
+                                    <!-- end   :: Column -->
+
+                                </div>
+                                <!-- end   :: Row -->
+
+                                <!-- begin :: car color component -->
+                                <div id="car-colors">
+
+                                </div>
+                                <!-- end   :: car color component -->
+
+                                <!-- end     :: edit images modal -->
+                                <div class="modal" tabindex="-1" id="edit-images-modal">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modal-title"></h5>
+                                                <button type="button" class="btn" id="undo-delete-image" disabled> <i
+                                                        class="fa fa-undo"></i> {{ __('undo') }} </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                {{-- <h3 class="text-center my-15 d-none" id="no-images-text">{{ __("There are no images") }}</h3> --}}
+
+                                                <div class="row" id="images-container">
+
                                                 </div>
                                             </div>
-                                            <div class="col-4">
-                                                <p class="text-danger m-0 invalid-feedback" id="kilometers"></p>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">{{ __('Close') }}</button>
+                                                <button type="button" class="btn btn-primary"
+                                                    id="save-imgs-btn">{{ __('Save changes') }}</button>
                                             </div>
                                         </div>
-                                        <!-- end   :: Column -->
-
-
                                     </div>
-                                    <!-- end   :: Row -->
-
-                                    <div class="separator separator-dashed my-4"></div>
-
-
-                                    <div class="separator separator-dashed my-4"></div>
-
-                                    <!-- end   :: Row -->
-                                    <div class="row">
-
-                                        <!-- begin :: Column -->
-                                        <div class="col-md-12 fv-row">
-
-                                            <x-dashboard.radio-btn title="gear shifter" name="gear_shifter"
-                                                :radio-btns="[
-                                                    [
-                                                        'label' => 'manual',
-                                                        'value' => 'manual',
-                                                        'id' => 'gear_shifter_manual',
-                                                        'checked' => $car['gear_shifter'] == 'manual',
-                                                    ],
-                                                    [
-                                                        'label' => 'automatic',
-                                                        'value' => 'automatic',
-                                                        'id' => 'gear_shifter_automatic',
-                                                        'checked' => $car['gear_shifter'] == 'automatic',
-                                                    ],
-                                                ]" />
-
-                                        </div>
-                                        <!-- end   :: Column -->
-
-                                    </div>
-                                    <!-- end   :: Row -->
+                                </div>
+                                <!-- end     :: edit images modal -->
 
 
-                                            <!-- begin :: Wizard Step 2 -->
 
+                                <!-- end   :: Wizard Step 2 -->
+                                <!-- begin  :: Row -->
+                                <div class="row mt-5">
+                                    <hr>
+                                    <div class="mt-5 mb-5">{{ __('features and possibilities') }}</div>
+                                </div>
+                                <!-- end    :: Row -->
+                                <!--begin::Repeater-->
+                                <div id="kt_docs_repeater_basic">
+                                    <!--begin::Form group-->
+                                    <div class="form-group">
+                                        <div data-repeater-list="features">
 
-                                        <!-- begin :: Row -->
-                                        <div class="row mb-10">
-                                            <hr>
-                                            <!-- begin :: Column -->
-                                            <div class="col-md-12 fv-row">
+                                            @forelse ($car->features as $feature)
+                                                <div data-repeater-item>
+                                                    <div class="form-group row align-items-center">
+                                                        <div class="col-md-10">
+                                                            <div class="row align-items-center">
+                                                                <div class="col-md-6 mb-3">
+                                                                    <label class="form-label">{{ __('Type') }}</label>
+                                                                    <select class="form-select select-type"
+                                                                        id="features_{{ $loop->index }}_type_inp"name="features[{{ $loop->index }}][type]"
+                                                                        data-placeholder="Select an option">
+                                                                        <option value="1"
+                                                                            {{ $feature->type == 1 ? 'selected' : '' }}>
+                                                                            {{ __('possibility') }}</option>
+                                                                        <option value="2"
+                                                                            {{ $feature->type == 2 ? 'selected' : '' }}>
+                                                                            {{ __('feature') }}</option>
+                                                                    </select>
+                                                                    <div
+                                                                        class="text-danger m-0 invalid-feedback"id="features_{{ $loop->index }}_type">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 mb-3">
+                                                                    <label
+                                                                        class="form-label">{{ __('Select Options') }}</label>
+                                                                    <select id="features_{{ $loop->index }}_id_inp"
+                                                                        name="features[{{ $loop->index }}][id]"
+                                                                        class="form-select select-options"
+                                                                        data-selected-id="{{ $feature->id }}">
+                                                                        <option value="" selected disabled>
+                                                                            {{ __('Select an option') }}</option>
+                                                                        <!-- Populated via JS -->
+                                                                    </select>
+                                                                    <div class="text-danger m-0 invalid-feedback"
+                                                                        id="features_{{ $loop->index }}_id"></div>
+                                                                </div>
 
-                                                <label class="fs-5 fw-bold mb-2">{{ __("Colors") }}</label>
+                                                                <div class="col-md-6 mb-3">
+                                                                    <label
+                                                                        class="form-label">{{ __('Description in arabic') }}</label>
+                                                                    <input type="text"
+                                                                        id="features_{{ $loop->index }}_description_ar_inp"
+                                                                        class="form-control"
+                                                                        name="features[{{ $loop->index }}][description_ar]"
+                                                                        value="{{ $feature->pivot->description_ar }}"
+                                                                        placeholder="{{ __('Description in Arabic') }}"
+                                                                        required />
+                                                                    <div class="text-danger m-0 invalid-feedback"
+                                                                        id="features_{{ $loop->index }}_description_ar">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 mb-3">
+                                                                    <label
+                                                                        class="form-label">{{ __('Description in english') }}</label>
+                                                                    <input type="text"
+                                                                        id="features_{{ $loop->index }}_description_en_inp"
+                                                                        class="form-control"
+                                                                        name="features[{{ $loop->index }}][description_en]"
+                                                                        value="{{ $feature->pivot->description_en }}"
+                                                                        placeholder="{{ __('Description in English') }}" />
+                                                                    <div class="text-danger m-0 invalid-feedback"
+                                                                        id="features_{{ $loop->index }}_description_en">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <div class="text-center">
+                                                                <a href="javascript:;" data-repeater-delete
+                                                                    class="btn btn-sm btn-light-danger mt-3">
+                                                                    <i class="far fa-trash-alt"></i>{{ __('Delete') }}
 
-                                                <select class="form-select" data-control="select2" id="colors-sp" multiple data-placeholder="{{ __("Choose the color") }}" data-background-color="#000" data-dir="{{ isArabic() ? 'rtl' : 'ltr' }}">
-
-                                                    @foreach( $colors as $color)
-                                                        <option value="{{ $color->id }}" >{{ $color->name }}</option>
-                                                    @endforeach
-
-                                                </select>
-                                                <p class="invalid-feedback" id="colors" ></p>
-
-                                            </div>
-                                            <!-- end   :: Column -->
-
-                                        </div>
-                                        <!-- end   :: Row -->
-
-                                        <!-- begin :: car color component -->
-                                        <div id="car-colors">
-
-                                        </div>
-                                        <!-- end   :: car color component -->
-
-                                        <!-- end     :: edit images modal -->
-                                        <div class="modal" tabindex="-1" id="edit-images-modal">
-                                            <div class="modal-dialog modal-lg"  >
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="modal-title" ></h5>
-                                                        <button type="button" class="btn" id="undo-delete-image" disabled > <i class="fa fa-undo"></i> {{ __("undo") }} </button>
+                                                                </a>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="modal-body" >
-                                                        {{-- <h3 class="text-center my-15 d-none" id="no-images-text">{{ __("There are no images") }}</h3> --}}
+                                                </div>
+                                            @empty
 
-                                                        <div class="row" id="images-container">
+                                                <div data-repeater-item>
+                                                    <div class="form-group row align-items-center">
+                                                        <div class="col-md-10">
+                                                            <div class="row align-items-center">
+                                                                <div class="col-md-6 mb-3 ">
+                                                                    <label class="form-label">{{ __('Type') }}</label>
+                                                                    <select id="features_0_type_inp"
+                                                                        class="form-select select-type"
+                                                                        name="features[0][type]"
+                                                                        data-placeholder="Select an option">
+                                                                        <option value="1">{{ __('possibility') }}
+                                                                        </option>
+                                                                        <option value="2">{{ __('feature') }}
+                                                                        </option>
+                                                                    </select>
+                                                                    <div class="text-danger m-0 invalid-feedback"
+                                                                        id="features_0_type"></div>
+                                                                </div>
+                                                                <div class="col-md-6 mb-3 ">
+                                                                    <label
+                                                                        class="form-label"id="features_0_id_inp">{{ __('Select Options') }}</label>
+                                                                    <select name="features[0][id]"
+                                                                        class="form-select select-options"id="features_0_id">
+                                                                        <option value="" selected disabled>
+                                                                            {{ __('Select an option') }}</option>
+                                                                        <!-- Populated via JS -->
+                                                                    </select>
+                                                                    <div class="text-danger m-0 invalid-feedback"
+                                                                        id="features_0_id_inp"></div>
+
+                                                                </div>
+                                                                <div class="col-md-6 mb-3 ">
+                                                                    <label
+                                                                        class="form-label">{{ __('Description in arabic') }}</label>
+                                                                    <input type="text"
+                                                                        id="features_0_description_ar_inp"
+                                                                        class="form-control"
+                                                                        name="features[0][description_ar]"
+                                                                        placeholder="{{ __('Description in arabic') }}"
+                                                                        required />
+                                                                    <div class="text-danger m-0 invalid-feedback"
+                                                                        id="features_0_description_ar"></div>
+                                                                </div>
+                                                                <div class="col-md-6 mb-3 ">
+
+                                                                    <label
+                                                                        class="form-label">{{ __('Description in english') }}</label>
+                                                                    <input type="text"
+                                                                        id="features_0_description_en_inp"
+                                                                        class="form-control"
+                                                                        name="features[0][description_en]"
+                                                                        placeholder="{{ __('Description in english') }}" />
+                                                                    <div
+                                                                        class="text-danger m-0 invalid-feedback"id="features_0_description_en">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <div class="text-center">
+                                                                <a href="javascript:;" data-repeater-delete
+                                                                    class="btn btn-sm btn-light-danger mt-3">
+                                                                    <i class="far fa-trash-alt"></i>{{ __('Delete') }}
+
+                                                                </a>
+                                                            </div>
 
                                                         </div>
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Close") }}</button>
-                                                        <button type="button" class="btn btn-primary" id="save-imgs-btn">{{ __("Save changes") }}</button>
-                                                    </div>
                                                 </div>
-                                            </div>
+                                            @endforelse
                                         </div>
-                                        <!-- end     :: edit images modal -->
-
-
                                     </div>
-                                    <!-- end   :: Wizard Step 2 -->
-                                              <!-- begin  :: Row -->
-                                          <div class="row mt-5">
-                                            <hr>
-                                            <div class="mt-5 mb-5">{{__('features and possibilities')}}</div>
-                                        </div>
-                                        <!-- end    :: Row -->
-                                            <!--begin::Repeater-->
-                                            <div id="kt_docs_repeater_basic">
-                                                <!--begin::Form group-->
-                                                <div class="form-group">
-                                                    <div data-repeater-list="features">
-
-                                                        @forelse ($car->features as $feature)
-                                                            <div data-repeater-item>
-                                                                <div class="form-group row align-items-center">
-                                                                    <div class="col-md-10">
-                                                                        <div class="row align-items-center">
-                                                                            <div class="col-md-6 mb-3">
-                                                                                <label class="form-label">{{ __('Type') }}</label>
-                                                                                <select class="form-select select-type" id="features_{{$loop->index}}_type_inp"name="features[{{ $loop->index }}][type]" data-placeholder="Select an option">
-                                                                                    <option value="1" {{ $feature->type == 1 ? 'selected' : '' }}>{{ __("possibility") }}</option>
-                                                                                    <option value="2" {{ $feature->type == 2 ? 'selected' : '' }}>{{ __("feature") }}</option>
-                                                                                </select>
-                                                                                <div class="text-danger m-0 invalid-feedback"id="features_{{$loop->index}}_type"></div>
-                                                                            </div>
-                                                                            <div class="col-md-6 mb-3">
-                                                                                <label class="form-label">{{ __('Select Options') }}</label>
-                                                                                <select id="features_{{$loop->index}}_id_inp" name="features[{{ $loop->index }}][id]" class="form-select select-options" data-selected-id="{{ $feature->id }}">
-                                                                                    <option value="" selected disabled>{{ __("Select an option") }}</option>
-                                                                                    <!-- Populated via JS -->
-                                                                                </select>
-                                                                                <div class="text-danger m-0 invalid-feedback" id="features_{{$loop->index}}_id"></div>
-                                                                            </div>
-
-                                                                            <div class="col-md-6 mb-3">
-                                                                                <label class="form-label">{{ __('Description in arabic') }}</label>
-                                                                                <input type="text" id="features_{{$loop->index}}_description_ar_inp" class="form-control" name="features[{{ $loop->index }}][description_ar]" value="{{ $feature->pivot->description_ar }}" placeholder="{{ __('Description in Arabic') }}" required />
-                                                                                <div class="text-danger m-0 invalid-feedback" id="features_{{$loop->index}}_description_ar"></div>
-                                                                            </div>
-                                                                            <div class="col-md-6 mb-3">
-                                                                            <label class="form-label">{{ __('Description in english') }}</label>
-                                                                            <input type="text" id="features_{{$loop->index}}_description_en_inp" class="form-control" name="features[{{ $loop->index }}][description_en]" value="{{ $feature->pivot->description_en }}" placeholder="{{ __('Description in English') }}" />
-                                                                            <div class="text-danger m-0 invalid-feedback" id="features_{{$loop->index}}_description_en"></div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-2">
-                                                                        <div class="text-center">
-                                                                            <a href="javascript:;" data-repeater-delete class="btn btn-sm btn-light-danger mt-3">
-                                                                                <i class="far fa-trash-alt"></i>{{__('Delete')}}
-
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        @empty
-
-                                                            <div data-repeater-item>
-                                                                <div class="form-group row align-items-center">
-                                                                    <div class="col-md-10">
-                                                                        <div class="row align-items-center">
-                                                                            <div class="col-md-6 mb-3 ">
-                                                                                <label class="form-label">{{ __('Type') }}</label>
-                                                                                <select id="features_0_type_inp" class="form-select select-type" name="features[0][type]" data-placeholder="Select an option">
-                                                                                    <option value="1">{{ __("possibility") }}</option>
-                                                                                    <option value="2">{{ __("feature") }}</option>
-                                                                                </select>
-                                                                                <div class="text-danger m-0 invalid-feedback" id="features_0_type"></div>
-                                                                            </div>
-                                                                            <div class="col-md-6 mb-3 ">
-                                                                                <label class="form-label"id="features_0_id_inp">{{ __('Select Options') }}</label>
-                                                                                <select name="features[0][id]" class="form-select select-options"id="features_0_id">
-                                                                                    <option value="" selected disabled>{{ __("Select an option") }}</option>
-                                                                                    <!-- Populated via JS -->
-                                                                                </select>
-                                                                                <div class="text-danger m-0 invalid-feedback" id="features_0_id_inp"></div>
-
-                                                                            </div>
-                                                                            <div class="col-md-6 mb-3 ">
-                                                                                <label class="form-label">{{ __('Description in arabic') }}</label>
-                                                                                <input type="text" id="features_0_description_ar_inp" class="form-control" name="features[0][description_ar]"  placeholder="{{ __('Description in arabic') }}" required />
-                                                                                <div class="text-danger m-0 invalid-feedback" id="features_0_description_ar"></div>
-                                                                            </div>
-                                                                            <div class="col-md-6 mb-3 ">
-
-                                                                                <label class="form-label">{{ __('Description in english') }}</label>
-                                                                                <input type="text" id="features_0_description_en_inp" class="form-control" name="features[0][description_en]" placeholder="{{ __('Description in english') }}" />
-                                                                                <div class="text-danger m-0 invalid-feedback"id="features_0_description_en" ></div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-2">
-                                                                        <div class="text-center">
-                                                                            <a href="javascript:;" data-repeater-delete class="btn btn-sm btn-light-danger mt-3">
-                                                                                <i class="far fa-trash-alt"></i>{{__('Delete')}}
-
-                                                                            </a>
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        @endforelse
-                                                    </div>
-                                                </div>
-                                                <!--end::Form group-->
-                                                <div class="form-group mt-5">
-                                                    <a href="javascript:;" data-repeater-create class="btn btn-light-primary">
-                                                        <i class="fa fa-plus "></i> {{__('Add')}}
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <!--end::Repeater-->
-
-
-                                </div>
-
-
-                                <div class="d-flex justify-content-between border-top py-10 px-10">
-
-                                    <div>
-
-                                        <button type="button"
-                                            class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4 step-btn"
-                                            id="next-btn" data-btn-type="next">
-
-                                            <span class="indicator-label">{{ __('Save') }}</span>
-
-                                            <!-- begin :: Indicator -->
-                                            <span class="indicator-progress">{{ __('Please wait ...') }}
-                                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
-                                            </span>
-                                            <!-- end   :: Indicator -->
-
-                                        </button>
-
+                                    <!--end::Form group-->
+                                    <div class="form-group mt-5">
+                                        <a href="javascript:;" data-repeater-create class="btn btn-light-primary">
+                                            <i class="fa fa-plus "></i> {{ __('Add') }}
+                                        </a>
                                     </div>
                                 </div>
-                                <!-- end   :: Wizard Actions -->
-                            </form>
-                            <!-- end   :: Wizard Form -->
+                                <!--end::Repeater-->
+
+
+                        </div>
+
+                    </div>
+                    <div class="d-flex justify-content-between border-top py-10 px-10">
+
+                        <div>
+
+                            <button type="button"
+                                class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4 step-btn"
+                                id="next-btn" data-btn-type="next">
+
+                                <span class="indicator-label">{{ __('Save') }}</span>
+
+                                <!-- begin :: Indicator -->
+                                <span class="indicator-progress">{{ __('Please wait ...') }}
+                                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span>
+                                <!-- end   :: Indicator -->
+
+                            </button>
 
                         </div>
                     </div>
+                    <!-- end   :: Wizard Actions -->
+                    </form>
+                    <!-- end   :: Wizard Form -->
 
                 </div>
-
             </div>
 
         </div>
-        <!-- end   :: Wizard -->
+
+    </div>
+
+    </div>
+    <!-- end   :: Wizard -->
     </div>
 
     </div>
@@ -893,64 +951,66 @@
     <!-- end   :: Card -->
 @endsection
 @push('scripts')
-<script>
-
-     // Function to populate models based on selected brand
-     function loadModels(brandId) {
-        $('#model-sp').empty().append('<option value="" selected></option>');  // Clear model dropdown
-
-        if (brandId) {
-            $.ajax({
-                url: '/dashboard/get-models/' + brandId,  // Fetch models based on selected brand
-                type: 'GET',
-                success: function(data) {
-                    // Populate model dropdown
-                    $.each(data, function(key, value) {
-                        $('#model-sp').append('<option value="' + value.id + '">' + value.name + '</option>');
-                    });
-
-                    // After loading models, set the selected model (if any)
-                    var selectedModelId = "{{ $car['model_id'] }}";  // Get the selected model from the server-side (Laravel Blade)
-                    if (selectedModelId) {
-                        $('#model-sp').val(selectedModelId);  // Set the selected model
-                    }
-                }
-            });
-        }
-    }
-
-    // Trigger AJAX when brand is changed
-    $('#brand-sp').on('change', function() {
-        var brandId = $(this).val();
-        loadModels(brandId);  // Call the function to load models based on selected brand
-    });
-
-    // On page load, if there's a selected brand, trigger the models loading
-    var selectedBrandId = "{{ $car['brand_id'] }}";  // Get selected brand ID from server-side (Laravel Blade)
-    if (selectedBrandId) {
-        $('#brand-sp').val(selectedBrandId);  // Set the selected brand
-        loadModels(selectedBrandId);  // Load models for the selected brand
-    }
-
-    // Model to Category dropdown change
-    $('#model-sp').on('change', function() {
-        var modelId = $(this).val();
-        $('#category-sp').empty().append('<option value="" selected></option>');
-        if (modelId) {
-            $.ajax({
-                url: '/dashboard/get-categories/' + modelId,
-                type: 'GET',
-                success: function(data) {
-                    $.each(data, function(key, value) {
-                        $('#category-sp').append('<option value="' + value.id + '">' + value.name + '</option>');
-                    });
-                }
-            });
-        }
-    });
-</script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        // Function to populate models based on selected brand
+        function loadModels(brandId) {
+            $('#model-sp').empty().append('<option value="" selected></option>'); // Clear model dropdown
+
+            if (brandId) {
+                $.ajax({
+                    url: '/dashboard/get-models/' + brandId, // Fetch models based on selected brand
+                    type: 'GET',
+                    success: function(data) {
+                        // Populate model dropdown
+                        $.each(data, function(key, value) {
+                            $('#model-sp').append('<option value="' + value.id + '">' + value.name +
+                                '</option>');
+                        });
+
+                        // After loading models, set the selected model (if any)
+                        var selectedModelId =
+                            "{{ $car['model_id'] }}"; // Get the selected model from the server-side (Laravel Blade)
+                        if (selectedModelId) {
+                            $('#model-sp').val(selectedModelId); // Set the selected model
+                        }
+                    }
+                });
+            }
+        }
+
+        // Trigger AJAX when brand is changed
+        $('#brand-sp').on('change', function() {
+            var brandId = $(this).val();
+            loadModels(brandId); // Call the function to load models based on selected brand
+        });
+
+        // On page load, if there's a selected brand, trigger the models loading
+        var selectedBrandId = "{{ $car['brand_id'] }}"; // Get selected brand ID from server-side (Laravel Blade)
+        if (selectedBrandId) {
+            $('#brand-sp').val(selectedBrandId); // Set the selected brand
+            loadModels(selectedBrandId); // Load models for the selected brand
+        }
+
+        // Model to Category dropdown change
+        $('#model-sp').on('change', function() {
+            var modelId = $(this).val();
+            $('#category-sp').empty().append('<option value="" selected></option>');
+            if (modelId) {
+                $.ajax({
+                    url: '/dashboard/get-categories/' + modelId,
+                    type: 'GET',
+                    success: function(data) {
+                        $.each(data, function(key, value) {
+                            $('#category-sp').append('<option value="' + value.id + '">' + value
+                                .name + '</option>');
+                        });
+                    }
+                });
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
             const radioButtons = document.querySelectorAll('input[name="price_field_status"]');
             const otherInputs = document.getElementById("otherInputs");
 
@@ -960,7 +1020,7 @@
             }
 
             radioButtons.forEach(radio => {
-                radio.addEventListener("change", function () {
+                radio.addEventListener("change", function() {
                     if (this.id === "others" && this.checked) {
                         otherInputs.style.display = "flex";
                     } else {
@@ -971,7 +1031,6 @@
         });
     </script>
     <script>
-
         $(document).ready(function() {
             // Initialize Repeater before Dropzone
             initializeRepeater();
@@ -1032,13 +1091,17 @@
                 $.ajax({
                     url: '/dashboard/features/get-options',
                     type: 'GET',
-                    data: { type: type },
+                    data: {
+                        type: type
+                    },
                     success: function(response) {
                         $optionsSelect.empty();
-                        $optionsSelect.append('<option value="" disabled>{{ __("Select an option") }}</option>');
+                        $optionsSelect.append(
+                            '<option value="" disabled>{{ __('Select an option') }}</option>');
                         $.each(response.options, function(feature_id, name) {
                             var selected = feature_id == selectedOptionId ? 'selected' : '';
-                            $optionsSelect.append('<option value="' + feature_id + '" ' + selected + '>' + name + '</option>');
+                            $optionsSelect.append('<option value="' + feature_id + '" ' + selected +
+                                '>' + name + '</option>');
                         });
                     },
                     error: function(error) {
@@ -1059,19 +1122,16 @@
                 });
             }
         }
-
-
-
     </script>
     <script src="{{ asset('dashboard-assets/plugins/custom/tinymce/tinymce.bundle.js') }}"></script>
     <script>
         let carId = "{{ $car->id }}";
         let colors = @json($colors);
-        let carColors= @json($carImageSorted );//@json($car->colors->pluck('pivot'));
+        let carColors = @json($carImageSorted); //@json($car->colors->pluck('pivot'));
         let carColorsIds = @json($car->colors->pluck('id'));
-        let carImageSorted =@json($carImageSorted );
+        let carImageSorted = @json($carImageSorted);
 
-        let  colorsWithUniqueImages =  @json($colorsWithUniqueImages);
+        let colorsWithUniqueImages = @json($colorsWithUniqueImages);
         let brands = @json($brands);
         let selectedModelId = @json($car['model_id']);
         let selectedCategoryId = @json($car['category_id']);
@@ -1088,7 +1148,7 @@
 
             brandsSp.trigger('change', selectedModelId); // trigger brand selectpicker
 
-             initializeColorsSp(); // draw colors containers with their images
+            initializeColorsSp(); // draw colors containers with their images
             initTinyMc({
                 editingInp: true
             });
@@ -1106,5 +1166,4 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/jquery.repeater@1.2.1/jquery.repeater.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable/lib/draggable.bundle.legacy.js"></script>
-
 @endpush
