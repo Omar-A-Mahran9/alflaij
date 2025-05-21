@@ -225,7 +225,8 @@ public function index(Request $request)
             $model =CarModel::find( $data['model_id'] )?? null;
             $category =Category::find( $data['category_id'] )?? null;
 
-            $data["name_ar"]= $brand->name_ar .' '. $model->name_ar .' '. $category->name_ar;
+
+                  $data["name_ar"]= $brand->name_ar .' '. $model->name_ar .' '. $category->name_ar;
             $data["name_en"]= $brand->name_en .' '. $model->name_en .' '. $category->name_en;
 
         $car = Car::create($data);
