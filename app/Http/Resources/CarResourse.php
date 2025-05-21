@@ -93,7 +93,7 @@ class CarResourse extends JsonResource
 'main_title' => collect([
     $this->brand?->name,
     $this->model?->name,
-    $this->year,
+    $this->category?->name,
 ])->filter()->implode(' '),
             'description'=> getLocale() == 'ar' ? $this->description_ar : $this->description_en ,
             'publish_date'=>$this->created_at->format('Y-m-d ') ?? '',
