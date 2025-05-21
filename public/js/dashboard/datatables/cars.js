@@ -26,9 +26,9 @@ let KTDatatable = (function () {
                 data: function (d) {
 
               d.columns[4].search.value = $('.filter-datatable-inp[data-filter-index="4"]').val() ;
-        
-    
- 
+
+
+
                     let datatable = $("#kt_datatable");
                     let info = datatable.DataTable().page.info();
                     datatable
@@ -43,7 +43,7 @@ let KTDatatable = (function () {
             columns: [
                 { data: "id" },
                 { data: "main_image" },
-                { data: "name_" + locale },
+                { data: "name_en" },
                 { data: "price" },
                 { data: "publish" },
                 { data: "brand.name", name: "brand_id" ,orderable: false},
@@ -61,11 +61,11 @@ let KTDatatable = (function () {
                     }
                 },
                 {
-    targets: 4,
-    render: function (data, type, row) {
-        return data === 1 ? __("Active") : __("Inactive");
-    }
-},
+                    targets: 4,
+                    render: function (data, type, row) {
+                        return data === 1 ? __("Active") : __("Inactive");
+                    }
+                },
 
                 {
                     targets: 3,
@@ -126,8 +126,8 @@ let KTDatatable = (function () {
 
                                 </div>
                                 <!--end::Menu item-->
-                    
-                              
+
+
 
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-3">
@@ -177,7 +177,7 @@ let KTDatatable = (function () {
         });
     };
 
-    
+
 
     // Filter Datatable
 let handleFilterDatatable = () => {
@@ -185,7 +185,7 @@ let handleFilterDatatable = () => {
         let index = $(this).data('filter-index');
         let value = $(this).val();
 
-       
+
 
         $('#kt_datatable').DataTable().column(index).search(value).draw();
     });
