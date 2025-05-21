@@ -43,7 +43,7 @@ let KTDatatable = (function () {
             columns: [
                 { data: "id" },
                 { data: "main_image" },
-                { data: "name_en" },
+                { data: "name_" + locale },
                 { data: "price" },
                 { data: "publish" },
                 { data: "brand.name", name: "brand_id" ,orderable: false},
@@ -61,11 +61,11 @@ let KTDatatable = (function () {
                     }
                 },
                 {
-                    targets: 4,
-                    render: function (data, type, row) {
-                        return data === 1 ? __("Active") : __("Inactive");
-                    }
-                },
+            targets: 4,
+            render: function (data, type, row) {
+                return data === 1 ? __("Active") : __("Inactive");
+            }
+        },
 
                 {
                     targets: 3,
