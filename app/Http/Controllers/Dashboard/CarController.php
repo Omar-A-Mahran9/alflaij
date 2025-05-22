@@ -347,7 +347,7 @@ public function index(Request $request)
 
 public function update(Request $request, Car $car)
 {
-     $this->authorize('update_cars');
+      $this->authorize('update_cars');
     $data = $request->except('car_Image', 'deleted_images', 'features', 'car_id', 'tags', 'colors');
     $data['have_discount'] = $request['have_discount'] === "on";
     $data['is_duplicate'] = $request->input('is_duplicate', 0);
@@ -406,8 +406,8 @@ public function update(Request $request, Car $car)
             $data["name_en"]= $brand->name_en .' '. $model->name_en .' '. $category->name_en;
     $car->update($data);
 
-        $car->features()->attach($filteredFeatures?? []);
-    // $car->features()->sync($filteredFeatures?? []);
+        $car->features()->sync($filteredFeatures ?? []);
+
     if(settings()->getSettings('maintenance_mode') == 1){
 
         $car->price_after_tax = $car->price * (1 + settings()->getSettings('tax') / 100);
